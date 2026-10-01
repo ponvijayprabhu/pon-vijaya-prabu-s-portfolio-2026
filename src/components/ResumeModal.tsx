@@ -10,8 +10,6 @@ import {
   Linkedin,
   Loader2
 } from 'lucide-react';
-import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 
 export const ResumeModal: React.FC = () => {
   const { profile, isResumeOpen, setIsResumeOpen, accent } = usePortfolio();
@@ -38,72 +36,25 @@ export const ResumeModal: React.FC = () => {
   };
 
   /**
-   * Generates and downloads the official resume in PDF format (.pdf)
-   * Captures the live resume document directly from the DOM for pixel-perfect fidelity.
+   * Downloads the official, genuine 1-page vector PDF resume file directly
+   * Exactly matching the official resume document.
    */
-  const handleDownloadPdf = async () => {
-    if (isGeneratingPdf) return;
+  const handleDownloadPdf = () => {
     setIsGeneratingPdf(true);
-
     try {
-      const resumeEl = document.getElementById('printable-resume');
-      if (!resumeEl) {
-        window.print();
-        return;
-      }
-
-      // Scroll element to top before capture
-      const originalScrollTop = resumeEl.scrollTop;
-      resumeEl.scrollTop = 0;
-
-      const canvas = await html2canvas(resumeEl, {
-        scale: 2, // 2x Retina resolution
-        useCORS: true,
-        backgroundColor: '#FFFFFF',
-        logging: false,
-        scrollX: 0,
-        scrollY: 0,
-      });
-
-      resumeEl.scrollTop = originalScrollTop;
-
-      const imgData = canvas.toDataURL('image/jpeg', 0.98);
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4',
-      });
-
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const margin = 8;
-      const contentWidth = pdfWidth - margin * 2;
-      const contentHeight = (canvas.height * contentWidth) / canvas.width;
-
-      if (contentHeight <= pdfHeight - margin * 2) {
-        pdf.addImage(imgData, 'JPEG', margin, margin, contentWidth, contentHeight);
-      } else {
-        let heightLeft = contentHeight;
-        let position = margin;
-
-        pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
-        heightLeft -= (pdfHeight - margin * 2);
-
-        while (heightLeft > 0) {
-          position = heightLeft - contentHeight + margin;
-          pdf.addPage();
-          pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
-          heightLeft -= (pdfHeight - margin * 2);
-        }
-      }
-
-      pdf.save('Pon_Vijaya_Prabu_S_Resume.pdf');
+      const base = import.meta.env.BASE_URL || '/';
+      const pdfPath = `${base.replace(/\/$/, '')}/Pon_Vijaya_Prabu_S_Resume.pdf`;
+      const link = document.createElement('a');
+      link.href = pdfPath;
+      link.setAttribute('download', 'Pon_Vijaya_Prabu_S_Resume.pdf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (err) {
-      console.error('Error generating PDF:', err);
-      // Fallback to browser print
+      console.error('Error downloading resume PDF:', err);
       window.print();
     } finally {
-      setIsGeneratingPdf(false);
+      setTimeout(() => setIsGeneratingPdf(false), 400);
     }
   };
 
@@ -130,7 +81,7 @@ export const ResumeModal: React.FC = () => {
               style={{ backgroundColor: accent }}
             />
             <span className="font-mono text-xs tracking-wider uppercase font-semibold text-[#CBC7BD]">
-              Pon Vijaya Prabu S — Verified Resume
+              Pon Vijaya Prabu S — Official Resume
             </span>
           </div>
 
@@ -139,15 +90,15 @@ export const ResumeModal: React.FC = () => {
             <button
               onClick={handleDownloadPdf}
               disabled={isGeneratingPdf}
-              aria-label="Download resume in PDF format"
+              aria-label="Download resume in official PDF format"
               className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-md transition-all hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
               style={{ backgroundColor: accent }}
-              title="Download Resume (.pdf format)"
+              title="Download Official Resume PDF"
             >
               {isGeneratingPdf ? (
                 <>
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
-                  <span>Generating PDF...</span>
+                  <span>Downloading PDF...</span>
                 </>
               ) : (
                 <>
@@ -630,7 +581,7 @@ export const ResumeModal: React.FC = () => {
         {/* ========================================================================= */}
         <div className="no-print pt-2 px-2 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-[#8C8981]">
           <span>
-            Contact: <strong className="text-[#F2EFE8]">{profile.phone}</strong> ·{' '}
+            Direct: <strong className="text-[#F2EFE8]">{profile.phone}</strong> ·{' '}
             <strong className="text-[#F2EFE8]">{profile.email}</strong>
           </span>
 
@@ -644,7 +595,7 @@ export const ResumeModal: React.FC = () => {
               {isGeneratingPdf ? (
                 <>
                   <Loader2 className="w-3 h-3 animate-spin" />
-                  <span>Downloading...</span>
+                  <span>Downloading PDF...</span>
                 </>
               ) : (
                 <>
