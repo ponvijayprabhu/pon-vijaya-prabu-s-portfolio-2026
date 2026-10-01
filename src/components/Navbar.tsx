@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Menu, X, FileText } from 'lucide-react';
 import { getAssetUrl, defaultAvatar } from '../utils/assetHelper';
 
 export const Navbar: React.FC = () => {
-  const { profile, accent, updateProfile } = usePortfolio();
+  const { profile, accent, updateProfile, setIsResumeOpen } = usePortfolio();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -96,6 +96,13 @@ export const Navbar: React.FC = () => {
           >
             About
           </a>
+          <button
+            onClick={() => setIsResumeOpen(true)}
+            className="text-sm font-medium text-[#9E9B93] hover:text-[#F2EFE8] transition-colors whitespace-nowrap flex items-center gap-1.5 cursor-pointer"
+          >
+            <span>Resume</span>
+            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accent }} />
+          </button>
           <a
             href="#contact"
             className="text-sm font-medium text-[#9E9B93] hover:text-[#F2EFE8] transition-colors whitespace-nowrap"
@@ -104,11 +111,20 @@ export const Navbar: React.FC = () => {
           </a>
         </nav>
 
-        {/* Zone 3: Single Clean CTA Button (Let's connect ↗) */}
-        <div className="flex items-center gap-2.5">
+        {/* Zone 3: Resume + Single Clean CTA Button (Let's connect ↗) */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          <button
+            onClick={() => setIsResumeOpen(true)}
+            className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold text-[#CBC7BD] border border-[#2E2E2A] bg-[#161614] hover:text-[#F2EFE8] hover:border-[#4A4A44] transition-all cursor-pointer shadow-sm"
+            title="View & Print Verified CV"
+          >
+            <FileText className="w-3.5 h-3.5 text-[#8C8981]" />
+            <span>Resume / CV</span>
+          </button>
+
           <a
             href="#contact"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-bold text-[#0D0D0C] transition-all hover:scale-105 active:scale-95 shadow-md"
+            className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold text-[#0D0D0C] transition-all hover:scale-105 active:scale-95 shadow-md"
             style={{ backgroundColor: accent }}
           >
             <span>Let's connect</span>
@@ -129,6 +145,17 @@ export const Navbar: React.FC = () => {
       {/* Mobile Menu Dropdown */}
       {mobileMenuOpen && (
         <div className="md:hidden border-b border-[#22221F] bg-[#111110] px-6 py-4 flex flex-col gap-3">
+          <button
+            onClick={() => {
+              setIsResumeOpen(true);
+              setMobileMenuOpen(false);
+            }}
+            className="text-base text-left text-[#F2EFE8] py-1 font-semibold flex items-center gap-2 cursor-pointer"
+            style={{ color: accent }}
+          >
+            <FileText className="w-4 h-4" />
+            <span>View & Print Verified CV</span>
+          </button>
           <a
             href="#work"
             onClick={() => setMobileMenuOpen(false)}

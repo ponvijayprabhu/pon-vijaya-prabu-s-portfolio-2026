@@ -94,3 +94,100 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3E3E38;
 }
+
+/* ========================================================================= */
+/* PRINT STYLESHEET: Pristine A4 / Letter Resume Output                      */
+/* ========================================================================= */
+@media print {
+  @page {
+    margin: 10mm 12mm;
+    size: A4 portrait;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #111827 !important;
+    font-size: 10pt !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Hide regular UI elements */
+  header,
+  nav,
+  main,
+  footer,
+  #top,
+  #work,
+  #services,
+  #about,
+  #contact,
+  .no-print {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Unconstrain resume modal container */
+  .resume-modal-backdrop {
+    position: static !important;
+    inset: auto !important;
+    background: #ffffff !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+    display: block !important;
+  }
+
+  .resume-modal-content {
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+  }
+
+  .resume-scroll-container {
+    max-height: none !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+  }
+
+  /* Card and text overrides for print */
+  .resume-print-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .resume-print-text-dark {
+    color: #111827 !important;
+  }
+
+  .resume-print-text-muted {
+    color: #4b5563 !important;
+  }
+
+  .resume-print-pill {
+    background: #f3f4f6 !important;
+    color: #1f2937 !important;
+    border: 1px solid #d1d5db !important;
+  }
+
+  .resume-avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

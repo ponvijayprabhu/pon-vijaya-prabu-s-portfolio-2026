@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
-import { ArrowUpRight, ArrowDown } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, FileText } from 'lucide-react';
 import { getAssetUrl, defaultHeroPortrait } from '../utils/assetHelper';
 
 export const Hero: React.FC = () => {
-  const { profile, accent } = usePortfolio();
+  const { profile, accent, setIsResumeOpen } = usePortfolio();
 
   // Mouse tracking state for fluid parallax kinetic movement
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
@@ -179,6 +179,14 @@ export const Hero: React.FC = () => {
             >
               See my work
             </a>
+
+            <button
+              onClick={() => setIsResumeOpen(true)}
+              className="inline-flex items-center gap-2 px-5 py-3.5 rounded-full text-sm font-medium text-[#D1CEC7] border border-[#2E2E2A] bg-[#161614]/80 hover:text-[#F5F2EB] hover:border-[#4A4A44] transition-colors cursor-pointer"
+            >
+              <FileText className="w-4 h-4 text-[#8C8981]" />
+              <span>Resume</span>
+            </button>
           </div>
         </div>
 
