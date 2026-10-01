@@ -18,21 +18,17 @@ The repository is already configured with relative asset paths (`base: './'`) an
 Run the following commands in your project terminal:
 
 ```bash
-git init
-git add .
-git commit -m "Initial commit: UI/UX Portfolio for Pon Vijaya Prabu S"
+git remote add origin https://github.com/ponvijayprabhu/pon-vijaya-prabu-s-portfolio-2026.git
 git branch -M main
-git remote add origin https://github.com/ponvijayprabhu/portfolio.git
 git push -u origin main
 ```
-*(Replace `portfolio.git` with your repository name if different)*
 
 ### Step 3: Enable GitHub Pages in 2 clicks
-1. Open your repository on GitHub.
+1. Open your repository on GitHub: [https://github.com/ponvijayprabhu/pon-vijaya-prabu-s-portfolio-2026](https://github.com/ponvijayprabhu/pon-vijaya-prabu-s-portfolio-2026)
 2. Go to **Settings** > **Pages** (in the left sidebar).
 3. Under **Build and deployment** > **Source**, choose **GitHub Actions**.
 4. That's it! GitHub will automatically trigger the included workflow in `.github/workflows/deploy.yml` and publish your live website at:
-   `https://ponvijayprabhu.github.io/portfolio/` (or `https://ponvijayprabhu.github.io/`).
+   `https://ponvijayprabhu.github.io/pon-vijaya-prabu-s-portfolio-2026/`.
 
 ---
 
