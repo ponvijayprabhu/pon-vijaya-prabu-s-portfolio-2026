@@ -8,19 +8,10 @@ import {
   Phone,
   Globe,
   Linkedin,
-  Award,
-  GraduationCap,
-  Briefcase,
-  Wrench,
-  CheckCircle,
-  FileText,
   Sun,
   Moon,
-  MapPin,
-  Loader2,
-  Sparkles
+  Loader2
 } from 'lucide-react';
-import { getAssetUrl, defaultAvatar } from '../utils/assetHelper';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
@@ -50,8 +41,8 @@ export const ResumeModal: React.FC = () => {
   };
 
   /**
-   * Generates and downloads the resume strictly in PDF format (.pdf)
-   * Captures a high-resolution, pixel-perfect executive white paper document.
+   * Generates and downloads the exact official resume strictly as a PDF file (.pdf)
+   * Captures the high-resolution, pixel-accurate executive layout matching the user's official resume.
    */
   const handleDownloadPdf = async () => {
     if (isGeneratingPdf) return;
@@ -64,12 +55,12 @@ export const ResumeModal: React.FC = () => {
         return;
       }
 
-      // Create an offscreen A4 container to ensure consistent white-paper rendering
+      // Clone node to create a clean white A4 page offscreen for pixel-perfect export
       const clone = resumeEl.cloneNode(true) as HTMLElement;
       clone.id = 'temp-pdf-export-node';
-      clone.style.width = '794px'; // Standard A4 width at 96 DPI
+      clone.style.width = '794px'; // Standard A4 width (210mm @ 96 DPI)
       clone.style.maxWidth = '794px';
-      clone.style.padding = '28px 32px';
+      clone.style.padding = '36px 42px';
       clone.style.background = '#FFFFFF';
       clone.style.color = '#111827';
       clone.style.position = 'fixed';
@@ -78,22 +69,22 @@ export const ResumeModal: React.FC = () => {
       clone.style.zIndex = '-9999';
       clone.style.maxHeight = 'none';
       clone.style.overflow = 'visible';
+      clone.style.border = 'none';
+      clone.style.boxShadow = 'none';
 
-      // Override colors for print clarity
-      const allTexts = clone.querySelectorAll('*');
-      allTexts.forEach((el) => {
-        const htmlEl = el as HTMLElement;
-        if (htmlEl.classList.contains('bg-dark-card')) {
-          htmlEl.style.backgroundColor = '#F9FAFB';
-          htmlEl.style.borderColor = '#E5E7EB';
-          htmlEl.style.color = '#111827';
+      // Force white paper styles on all child elements in clone
+      const allElements = clone.querySelectorAll('*');
+      allElements.forEach((el) => {
+        const hEl = el as HTMLElement;
+        if (hEl.dataset.themeColor === 'accent') {
+          hEl.style.color = '#111827';
         }
       });
 
       document.body.appendChild(clone);
 
       const canvas = await html2canvas(clone, {
-        scale: 2, // 2x Retina resolution
+        scale: 2.2, // Ultra-sharp 2.2x resolution
         useCORS: true,
         backgroundColor: '#FFFFFF',
         logging: false,
@@ -101,7 +92,7 @@ export const ResumeModal: React.FC = () => {
 
       document.body.removeChild(clone);
 
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const imgData = canvas.toDataURL('image/jpeg', 0.96);
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -110,15 +101,13 @@ export const ResumeModal: React.FC = () => {
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-      const margin = 10;
+      const margin = 8;
       const contentWidth = pdfWidth - margin * 2;
       const contentHeight = (canvas.height * contentWidth) / canvas.width;
 
       if (contentHeight <= pdfHeight - margin * 2) {
-        // Fits cleanly onto a single A4 page
         pdf.addImage(imgData, 'JPEG', margin, margin, contentWidth, contentHeight);
       } else {
-        // Multi-page handling with proper margins
         let heightLeft = contentHeight;
         let position = margin;
 
@@ -133,11 +122,9 @@ export const ResumeModal: React.FC = () => {
         }
       }
 
-      // Download ONLY in .pdf format
       pdf.save('Pon_Vijaya_Prabu_S_Resume.pdf');
     } catch (err) {
       console.error('Error generating PDF:', err);
-      // Fallback to browser print/save PDF
       window.print();
     } finally {
       setIsGeneratingPdf(false);
@@ -151,14 +138,14 @@ export const ResumeModal: React.FC = () => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="resume-title"
-      className="resume-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#0D0D0C]/90 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200"
+      className="resume-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-[#0D0D0C]/90 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200"
       onClick={() => setIsResumeOpen(false)}
     >
       <div
-        className={`resume-modal-content relative w-full max-w-4xl my-auto rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-7 overflow-hidden flex flex-col transition-colors duration-200 ${
+        className={`resume-modal-content relative w-full max-w-4xl my-auto rounded-2xl shadow-2xl p-4 sm:p-6 overflow-hidden flex flex-col transition-colors duration-200 ${
           isPaper
             ? 'bg-[#FFFFFF] text-[#111827] border border-[#E5E7EB]'
-            : 'bg-[#141412] text-[#F2EFE8] border border-[#2A2A26]'
+            : 'bg-[#121210] text-[#F2EFE8] border border-[#2A2A26]'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
@@ -170,7 +157,7 @@ export const ResumeModal: React.FC = () => {
             isPaper ? 'border-[#E5E7EB]' : 'border-[#242420]'
           }`}
         >
-          {/* Left: Status & View Toggle */}
+          {/* Status & View Switcher */}
           <div className="flex items-center gap-2.5">
             <span
               className="w-2.5 h-2.5 rounded-full shrink-0"
@@ -181,10 +168,10 @@ export const ResumeModal: React.FC = () => {
                 isPaper ? 'text-[#4B5563]' : 'text-[#8C8981]'
               }`}
             >
-              Verified CV · Pon Vijaya Prabu S
+              Official Resume · Pon Vijaya Prabu S
             </span>
 
-            {/* Paper / Dark Mode Toggle */}
+            {/* Paper / Studio Mode Switcher */}
             <div
               className={`hidden sm:flex items-center p-0.5 rounded-full border text-xs font-medium ml-2 ${
                 isPaper ? 'bg-[#F3F4F6] border-[#E5E7EB]' : 'bg-[#1C1C1A] border-[#2A2A26]'
@@ -192,24 +179,24 @@ export const ResumeModal: React.FC = () => {
             >
               <button
                 onClick={() => setViewMode('paper')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-full transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full transition-all cursor-pointer ${
                   isPaper
                     ? 'bg-white text-[#111827] shadow-sm font-semibold'
                     : 'text-[#8C8981] hover:text-[#F2EFE8]'
                 }`}
-                title="White Paper Print-Ready View"
+                title="Exact White Paper Resume View"
               >
                 <Sun className="w-3 h-3" />
                 <span>Paper View</span>
               </button>
               <button
                 onClick={() => setViewMode('dark')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-full transition-all ${
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full transition-all cursor-pointer ${
                   !isPaper
                     ? 'bg-[#2A2A26] text-[#F2EFE8] shadow-sm font-semibold'
                     : 'text-[#6B7280] hover:text-[#111827]'
                 }`}
-                title="Dark Studio View"
+                title="Studio Dark Theme"
               >
                 <Moon className="w-3 h-3" />
                 <span>Studio View</span>
@@ -217,9 +204,8 @@ export const ResumeModal: React.FC = () => {
             </div>
           </div>
 
-          {/* Right: Download PDF & Print Buttons */}
+          {/* Action Buttons: PDF Download Only & Print */}
           <div className="flex items-center gap-2">
-            {/* Primary Action: Download PDF Only */}
             <button
               onClick={handleDownloadPdf}
               disabled={isGeneratingPdf}
@@ -241,7 +227,6 @@ export const ResumeModal: React.FC = () => {
               )}
             </button>
 
-            {/* Secondary Action: Print */}
             <button
               onClick={handlePrint}
               aria-label="Print resume"
@@ -271,452 +256,417 @@ export const ResumeModal: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* RESUME DOCUMENT CONTAINER (COMPACT, NO BOTTOM GAP, CRISP A4 ALIGNMENT)   */}
+        {/* RESUME DOCUMENT CONTAINER (MATCHES OFFICIAL RESUME PDF 1:1)               */}
         {/* ========================================================================= */}
         <div
           id="printable-resume"
-          className="resume-scroll-container flex flex-col gap-4 sm:gap-5 max-h-[calc(84vh-115px)] overflow-y-auto pr-1 sm:pr-2"
+          className="resume-scroll-container max-h-[calc(84vh-100px)] overflow-y-auto pr-1 sm:pr-2 flex flex-col font-sans"
         >
-          {/* Header Row: Portrait + Identity + Direct Contact Matrix */}
-          <div
-            className={`resume-avoid-break flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b ${
-              isPaper ? 'border-[#E5E7EB]' : 'border-[#22221F]'
-            }`}
-          >
-            {/* Identity with Portrait */}
-            <div className="flex items-center gap-3.5">
-              <img
-                src={getAssetUrl(profile.avatarUrl)}
-                alt={profile.name}
-                referrerPolicy="no-referrer"
-                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 shadow-sm shrink-0 ${
-                  isPaper ? 'border-[#E5E7EB]' : 'border-[#2E2E2A]'
-                }`}
-                onError={(e) => {
-                  if (e.currentTarget.src !== defaultAvatar) {
-                    e.currentTarget.src = defaultAvatar;
-                  }
-                }}
-              />
-              <div>
-                <h1
-                  id="resume-title"
-                  className={`text-xl sm:text-2xl font-extrabold tracking-tight resume-print-text-dark ${
-                    isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'
-                  }`}
-                >
-                  {profile.name}
-                </h1>
-                <p
-                  className="text-xs sm:text-sm font-semibold mt-0.5"
-                  style={{ color: isPaper ? '#1F2937' : accent }}
-                >
-                  {profile.title} <span className="opacity-75 font-normal">· Canvendor Solutions</span>
-                </p>
-                <div
-                  className={`flex items-center gap-1.5 text-xs mt-0.5 ${
-                    isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                  }`}
-                >
-                  <MapPin className="w-3 h-3 shrink-0" />
-                  <span>{profile.location}</span>
-                </div>
+          {/* ===================================================================== */}
+          {/* HEADER: NAME, TITLE, AND CONTACT BADGES MATRIX                        */}
+          {/* ===================================================================== */}
+          <div className="resume-avoid-break flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-3 border-b-2 border-current">
+            {/* Left: Name and Title with Underline */}
+            <div className="flex flex-col">
+              <h1
+                id="resume-title"
+                className="text-2xl sm:text-3xl lg:text-4xl font-serif tracking-tight font-bold uppercase leading-none"
+              >
+                PON VIJAYA PRABU S
+              </h1>
+              <div className="w-full h-[1.5px] bg-current my-1.5" />
+              <div className="text-base sm:text-lg font-serif italic text-inherit font-medium">
+                UI/UX Designer
               </div>
             </div>
 
-            {/* Direct Contact Matrix */}
-            <div
-              className={`flex flex-col gap-1 text-xs ${
-                isPaper ? 'text-[#4B5563]' : 'text-[#ABA79E]'
-              }`}
-            >
+            {/* Right: Contact Details with Circular Icon Badges */}
+            <div className="flex flex-col sm:items-end gap-1.5 text-xs">
               <a
                 href={`tel:${profile.phone}`}
                 className="flex items-center gap-2 hover:underline transition-colors"
               >
-                <Phone className="w-3.5 h-3.5 text-[#8C8981] shrink-0" />
-                <span className="font-medium text-inherit">{profile.phone}</span>
+                <span className="font-sans font-medium text-inherit">{profile.phone}</span>
+                <span className="w-5 h-5 rounded-full bg-current/10 flex items-center justify-center shrink-0">
+                  <Phone className="w-3 h-3 text-current" />
+                </span>
               </a>
+
               <a
                 href={`mailto:${profile.email}`}
                 className="flex items-center gap-2 hover:underline transition-colors"
               >
-                <Mail className="w-3.5 h-3.5 text-[#8C8981] shrink-0" />
-                <span className="font-medium text-inherit">{profile.email}</span>
+                <span className="font-sans font-medium text-inherit underline underline-offset-2">{profile.email}</span>
+                <span className="w-5 h-5 rounded-full bg-current/10 flex items-center justify-center shrink-0">
+                  <Mail className="w-3 h-3 text-current" />
+                </span>
               </a>
+
               <a
                 href={profile.socials.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 hover:underline transition-colors"
               >
-                <Linkedin className="w-3.5 h-3.5 text-[#8C8981] shrink-0" />
-                <span>linkedin.com/in/pon-vijay-prabhu3774</span>
+                <span className="font-sans text-inherit underline underline-offset-2">www.linkedin.com/in/pon-vijay-prabhu3774</span>
+                <span className="w-5 h-5 rounded-full bg-current/10 flex items-center justify-center shrink-0">
+                  <Linkedin className="w-3 h-3 text-current" />
+                </span>
               </a>
+
               <a
-                href="https://ponvijayprabhu.github.io/pon-vijaya-prabu-s-portfolio-2026/"
+                href="https://ponvijayprabhu.github.io/Pon-vijaya-prabu-S-portfolio/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 hover:underline transition-colors truncate max-w-xs"
               >
-                <Globe className="w-3.5 h-3.5 text-[#8C8981] shrink-0" />
-                <span>ponvijayprabhu.github.io/portfolio</span>
+                <span className="font-sans text-inherit underline underline-offset-2">https://ponvijayprabhu.github.io/Pon-vijaya-prabu-S-portfolio/</span>
+                <span className="w-5 h-5 rounded-full bg-current/10 flex items-center justify-center shrink-0">
+                  <Globe className="w-3 h-3 text-current" />
+                </span>
               </a>
             </div>
           </div>
 
-          {/* Professional Summary */}
-          <div className="resume-avoid-break flex flex-col gap-1.5">
-            <h2
-              className={`text-xs font-mono uppercase tracking-widest font-bold ${
-                isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-              }`}
-            >
-              Professional Summary
-            </h2>
-            <p
-              className={`text-xs sm:text-sm leading-relaxed ${
-                isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'
-              }`}
-            >
-              {profile.bioSubtext}
+          {/* ===================================================================== */}
+          {/* PROFESSIONAL SUMMARY (CENTERED WITH DIVIDER LINES)                    */}
+          {/* ===================================================================== */}
+          <div className="resume-avoid-break py-3 text-center">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <div className="flex-1 h-[1px] bg-current/25" />
+              <h2 className="text-xs sm:text-sm font-serif tracking-[0.2em] uppercase font-bold text-inherit">
+                PROFESSIONAL SUMMARY
+              </h2>
+              <div className="flex-1 h-[1px] bg-current/25" />
+            </div>
+            <p className="text-xs sm:text-[13px] leading-relaxed max-w-3xl mx-auto opacity-90">
+              Passionate UI/UX Designer with experience in designing responsive web and mobile applications using Figma. Skilled in wireframing, prototyping, and creating user-centered interfaces that improve usability and user experience.
             </p>
           </div>
 
-          {/* 2-Column Balanced Grid (Left: Work & Internships | Right: Education, Skills, Certs, Apprenticeships) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
-            {/* Left Column (7 cols): Work Experience & Internships */}
-            <div className="lg:col-span-7 flex flex-col gap-4">
-              {/* Work Experience */}
-              <div className="flex flex-col gap-2.5">
-                <h2
-                  className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
-                    isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                  }`}
-                >
-                  <Briefcase className="w-3.5 h-3.5 text-[#8C8981]" /> Work Experience
-                </h2>
+          {/* ===================================================================== */}
+          {/* TWO COLUMNS SEPARATED BY A VERTICAL DIVIDER                           */}
+          {/* ===================================================================== */}
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 pt-1 border-t border-current/20">
+            {/* ------------------------------------------------------------------- */}
+            {/* LEFT COLUMN: EDUCATION, TOOLS, CORE SKILLS, CERTS, LANGUAGES        */}
+            {/* ------------------------------------------------------------------- */}
+            <div className="md:col-span-5 flex flex-col gap-4 md:pr-4 md:border-r border-current/20">
+              {/* EDUCATION */}
+              <div className="resume-avoid-break flex flex-col gap-2">
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    EDUCATION
+                  </h3>
+                </div>
 
-                <div
-                  className={`resume-avoid-break bg-dark-card p-3.5 rounded-xl border flex flex-col gap-2 ${
-                    isPaper
-                      ? 'bg-[#F9FAFB] border-[#E5E7EB]'
-                      : 'bg-[#181816] border-[#262622]'
-                  }`}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                    <span
-                      className={`font-bold text-sm ${
-                        isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'
-                      }`}
-                    >
-                      UI/UX Designer
-                    </span>
-                    <span
-                      className={`font-mono text-xs font-semibold ${
-                        isPaper ? 'text-[#2563EB]' : 'text-[#D4F36B]'
-                      }`}
-                    >
-                      Nov 2025 – Present
-                    </span>
+                <div className="flex flex-col gap-2.5 text-xs">
+                  {/* Bachelor */}
+                  <div>
+                    <div className="font-bold uppercase tracking-tight text-[11px] leading-tight">
+                      BACHELOR IN MECHANICAL ENGINEERING
+                    </div>
+                    <div className="opacity-80 text-[11px]">Stella Mary's college of engineering</div>
+                    <div className="opacity-70 text-[10.5px]">Nagercoil, Kanyakumari</div>
+                    <div className="font-medium text-[10.5px] mt-0.5">2022-2025</div>
                   </div>
-                  <div
-                    className={`text-xs font-semibold ${
-                      isPaper ? 'text-[#4B5563]' : 'text-[#CBC7BD]'
-                    }`}
-                  >
-                    Canvendor software solutions private limited — Nagercoil, India
+
+                  {/* Diploma */}
+                  <div>
+                    <div className="font-bold uppercase tracking-tight text-[11px] leading-tight">
+                      DIPLOMA IN MECHANICAL ENGINEERING
+                    </div>
+                    <div className="opacity-80 text-[11px]">N.M.S Kamaraj polytechnic college</div>
+                    <div className="opacity-70 text-[10.5px]">Nagercoil, Kanyakumari</div>
+                    <div className="font-medium text-[10.5px] mt-0.5">2019-2022</div>
                   </div>
-                  <ul
-                    className={`flex flex-col gap-1.5 pt-0.5 text-xs ${
-                      isPaper ? 'text-[#374151]' : 'text-[#A8A59E]'
-                    }`}
-                  >
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-[#2563EB]" />
-                      <span>
-                        Designed web and mobile interfaces for <strong>EMR Healthcare</strong>, <strong>AI Chat Assistants</strong>, <strong>HRMS Enterprise</strong>, and <strong>Logistics</strong> platforms.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-[#2563EB]" />
-                      <span>
-                        Created intuitive wireframes, responsive design systems, interactive Figma prototypes, and developer token specs.
-                      </span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-[#2563EB]" />
-                      <span>
-                        Conducted usability testing, refined navigation architectures, and delivered pixel-perfect handoffs to frontend engineers.
-                      </span>
-                    </li>
-                  </ul>
+
+                  {/* SSLC */}
+                  <div>
+                    <div className="font-bold uppercase tracking-tight text-[11px] leading-tight">
+                      SSLC
+                    </div>
+                    <div className="opacity-80 text-[11px]">Sri Ramji Matric.Hr.Sec.School</div>
+                    <div className="opacity-70 text-[10.5px]">Ganapathipuram, Kanyakumari</div>
+                    <div className="font-medium text-[10.5px] mt-0.5">2019</div>
+                  </div>
                 </div>
               </div>
 
-              {/* Internship Experience */}
-              <div className="flex flex-col gap-2.5">
-                <h2
-                  className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
-                    isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                  }`}
-                >
-                  <Briefcase className="w-3.5 h-3.5 text-[#8C8981]" /> Internship Experience
-                </h2>
-
-                {/* Canvendor Intern */}
-                <div
-                  className={`resume-avoid-break bg-dark-card p-3.5 rounded-xl border flex flex-col gap-2 ${
-                    isPaper
-                      ? 'bg-[#F9FAFB] border-[#E5E7EB]'
-                      : 'bg-[#181816] border-[#262622]'
-                  }`}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                    <span
-                      className={`font-bold text-sm ${
-                        isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'
-                      }`}
-                    >
-                      UI/UX Design Intern
-                    </span>
-                    <span className="font-mono text-xs text-[#6B7280]">
-                      Jun 2025 – Oct 2025
-                    </span>
-                  </div>
-                  <div
-                    className={`text-xs font-semibold ${
-                      isPaper ? 'text-[#4B5563]' : 'text-[#CBC7BD]'
-                    }`}
-                  >
-                    Canvendor software solutions private limited — Nagercoil
-                  </div>
-                  <ul
-                    className={`flex flex-col gap-1.5 pt-0.5 text-xs ${
-                      isPaper ? 'text-[#374151]' : 'text-[#A8A59E]'
-                    }`}
-                  >
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-[#6B7280]" />
-                      <span>Assisted in designing responsive web and mobile interfaces using Figma component libraries.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-[#6B7280]" />
-                      <span>Created wireframes and interactive prototypes for active client deployments.</span>
-                    </li>
-                  </ul>
+              {/* DESIGN TOOLS */}
+              <div className="resume-avoid-break flex flex-col gap-1.5">
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    DESIGN TOOLS
+                  </h3>
                 </div>
+                <ul className="text-xs flex flex-col gap-1 pl-1">
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Figma</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Adobe XD</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Adobe Photoshop</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Adobe Illustrator</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Canva</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Miro</span>
+                  </li>
+                </ul>
+              </div>
 
-                {/* AK Infopark Intern */}
-                <div
-                  className={`resume-avoid-break bg-dark-card p-3 rounded-xl border flex flex-col gap-1.5 ${
-                    isPaper
-                      ? 'bg-[#F9FAFB] border-[#E5E7EB]'
-                      : 'bg-[#181816] border-[#262622]'
-                  }`}
-                >
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                    <span
-                      className={`font-bold text-sm ${
-                        isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'
-                      }`}
-                    >
-                      UI/UX Design Intern
-                    </span>
-                    <span className="font-mono text-xs text-[#6B7280]">
-                      Jan 2025
-                    </span>
-                  </div>
-                  <div
-                    className={`text-xs font-semibold ${
-                      isPaper ? 'text-[#4B5563]' : 'text-[#CBC7BD]'
-                    }`}
-                  >
-                    AK Infopark private limited — Nagercoil
-                  </div>
-                  <p
-                    className={`text-xs ${
-                      isPaper ? 'text-[#374151]' : 'text-[#A8A59E]'
-                    }`}
-                  >
-                    Designed responsive web and mobile interfaces in Figma with interactive component states.
-                  </p>
+              {/* CORE UI/UX SKILLS */}
+              <div className="resume-avoid-break flex flex-col gap-1.5">
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    CORE UI/UX SKILLS
+                  </h3>
+                </div>
+                <ul className="text-xs flex flex-col gap-1 pl-1">
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>User Research</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Wireframing</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Prototyping</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>User Flows</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Responsive Design</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* CERTIFICATIONS */}
+              <div className="resume-avoid-break flex flex-col gap-1.5">
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    CERTIFICATIONS
+                  </h3>
+                </div>
+                <ul className="text-xs flex flex-col gap-1.5 pl-1">
+                  <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current mt-1 shrink-0" />
+                    <span>UI/UX Design Certification</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current mt-1 shrink-0" />
+                    <span>AI and Machine Learning Fundamentals (2024)</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current mt-1 shrink-0" />
+                    <span>Internet of Things (IoT) Certification (2024)</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current mt-1 shrink-0" />
+                    <span>Non-Destructive Testing (NDT) Level 2 Certification (2024)</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current mt-1 shrink-0" />
+                    <span>Master CAM-CNC Lathe and Milling Certification (2023)</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* LANGUAGES */}
+              <div className="resume-avoid-break flex flex-col gap-1.5">
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    LANGUAGES
+                  </h3>
+                </div>
+                <div className="flex items-center gap-4 text-xs font-medium pl-1 text-[11.5px]">
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                    <span>Tamil</span>
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current" />
+                    <span>English</span>
+                  </span>
                 </div>
               </div>
             </div>
 
-            {/* Right Column (5 cols): Education, Skills, Certs & Engineering Background */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
-              {/* Education */}
-              <div className="flex flex-col gap-2">
-                <h2
-                  className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
-                    isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                  }`}
-                >
-                  <GraduationCap className="w-3.5 h-3.5 text-[#8C8981]" /> Education
-                </h2>
-                <div className="flex flex-col gap-2">
-                  {profile.education.map((edu, i) => (
-                    <div
-                      key={i}
-                      className={`resume-avoid-break bg-dark-card p-2.5 rounded-xl border ${
-                        isPaper
-                          ? 'bg-[#F9FAFB] border-[#E5E7EB]'
-                          : 'bg-[#181816] border-[#262622]'
-                      }`}
-                    >
-                      <div className="flex justify-between items-start text-xs">
-                        <span
-                          className={`font-bold ${
-                            isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'
-                          }`}
-                        >
-                          {edu.degree}
-                        </span>
-                        <span className="font-mono text-[10px] text-[#6B7280] shrink-0 ml-2">
-                          {edu.year}
-                        </span>
-                      </div>
-                      <div
-                        className={`text-xs mt-0.5 ${
-                          isPaper ? 'text-[#4B5563]' : 'text-[#CBC7BD]'
-                        }`}
-                      >
-                        {edu.institution}
-                      </div>
-                      <div className="text-[11px] text-[#6B7280]">{edu.location}</div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Design Tools & Core Skills */}
+            {/* ------------------------------------------------------------------- */}
+            {/* RIGHT COLUMN: WORK EXPERIENCE, INTERNSHIPS, SOFT SKILLS             */}
+            {/* ------------------------------------------------------------------- */}
+            <div className="md:col-span-7 flex flex-col gap-4 md:pl-2">
+              {/* WORK EXPERIENCE */}
               <div className="resume-avoid-break flex flex-col gap-2">
-                <h2
-                  className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
-                    isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                  }`}
-                >
-                  <Wrench className="w-3.5 h-3.5 text-[#8C8981]" /> Tools & Skills
-                </h2>
-                <div className="flex flex-wrap gap-1.5">
-                  {profile.designTools.map((tool, i) => (
-                    <span
-                      key={i}
-                      className={`px-2 py-0.5 text-xs rounded-md font-semibold border ${
-                        isPaper
-                          ? 'bg-[#F3F4F6] text-[#1F2937] border-[#E5E7EB]'
-                          : 'bg-[#20201D] text-[#E0DDD5] border-[#2E2E2A]'
-                      }`}
-                    >
-                      {tool}
-                    </span>
-                  ))}
-                  {profile.coreSkills.map((skill, i) => (
-                    <span
-                      key={i}
-                      className={`px-2 py-0.5 text-xs rounded-md border ${
-                        isPaper
-                          ? 'bg-[#F9FAFB] text-[#374151] border-[#E5E7EB]'
-                          : 'bg-[#181816] text-[#CBC7BD] border-[#262622]'
-                      }`}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              {/* Certifications */}
-              <div className="resume-avoid-break flex flex-col gap-1.5">
-                <h2
-                  className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
-                    isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                  }`}
-                >
-                  <Award className="w-3.5 h-3.5 text-[#8C8981]" /> Certifications
-                </h2>
-                <div
-                  className={`flex flex-col gap-1 text-xs ${
-                    isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'
-                  }`}
-                >
-                  {profile.certifications.map((cert, i) => (
-                    <div
-                      key={i}
-                      className={`flex justify-between items-center py-0.5 border-b last:border-0 ${
-                        isPaper ? 'border-[#E5E7EB]' : 'border-[#20201D]'
-                      }`}
-                    >
-                      <span>{cert.name}</span>
-                      {cert.year && (
-                        <span className="font-mono text-[10px] text-[#6B7280]">
-                          {cert.year}
-                        </span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Languages & Soft Skills */}
-              <div className="resume-avoid-break grid grid-cols-2 gap-2 text-xs">
-                <div>
-                  <h3
-                    className={`font-mono text-[10px] uppercase font-bold mb-0.5 ${
-                      isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                    }`}
-                  >
-                    Languages
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    WORK EXPERIENCE
                   </h3>
-                  <div className={isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'}>
-                    {profile.languages.join(', ')}
-                  </div>
                 </div>
 
-                <div>
-                  <h3
-                    className={`font-mono text-[10px] uppercase font-bold mb-0.5 ${
-                      isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                    }`}
-                  >
-                    Soft Skills
-                  </h3>
-                  <div className={isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'}>
-                    Problem Solving, Team Collaboration, Communication
+                <div className="flex flex-col gap-1 text-xs">
+                  <div className="font-bold text-[13px] leading-snug">
+                    UI/UX Designer
                   </div>
+                  <div className="font-semibold opacity-90 text-[12px]">
+                    Canvendor software solutions private limited - Nagercoil
+                  </div>
+                  <div className="opacity-70 text-[11px] font-mono">
+                    (Nov 2025) Present
+                  </div>
+                  <ul className="flex flex-col gap-1 pt-1 text-[11.5px] leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Designed web and mobile interfaces for EMR, AI, HRMS, logistics, and landing page projects.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Created wireframes, user flows, and interactive prototypes using Figma.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Collaborated with developers to deliver responsive and user-friendly designs.</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
-              {/* Engineering Apprenticeships (Clean balanced bottom block) */}
-              <div
-                className={`resume-avoid-break bg-dark-card p-2.5 rounded-xl border flex flex-col gap-1.5 ${
-                  isPaper
-                    ? 'bg-[#F9FAFB] border-[#E5E7EB]'
-                    : 'bg-[#181816] border-[#262622]'
-                }`}
-              >
-                <div className="text-[10px] font-mono uppercase font-bold text-[#8C8981]">
-                  Apprenticeships (Systems Thinking)
+              {/* INTERNSHIP EXPERIENCE */}
+              <div className="resume-avoid-break flex flex-col gap-2.5">
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    INTERNSHIP EXPERIENCE
+                  </h3>
                 </div>
-                <div className="text-xs flex flex-col gap-1 text-[#6B7280]">
-                  <div className="flex justify-between">
-                    <span className="font-medium text-inherit">R.K. Motors (BOSCH Center), Nagercoil</span>
-                    <span className="font-mono text-[10px]">2024</span>
+
+                {/* Canvendor Intern */}
+                <div className="flex flex-col gap-1 text-xs">
+                  <div className="font-bold text-[12.5px] leading-snug">
+                    UI/UX Design Intern
                   </div>
-                  <div className="flex justify-between">
-                    <span className="font-medium text-inherit">Bajaj Bike Service Center, Nagercoil</span>
-                    <span className="font-mono text-[10px]">2023</span>
+                  <div className="font-semibold opacity-90 text-[12px]">
+                    Canvendor software solutions private limited - Nagercoil
                   </div>
+                  <div className="opacity-70 text-[11px] font-mono">
+                    Nagercoil, (Jun 2025 – Oct 2025)
+                  </div>
+                  <ul className="flex flex-col gap-1 pt-1 text-[11.5px] leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Assisted in designing responsive web and mobile interfaces using Figma.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Created wireframes and interactive prototypes for client projects.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Contributed to EMR Healthcare System and HRMS Platform UI design projects.</span>
+                    </li>
+                  </ul>
                 </div>
+
+                {/* AK Infopark */}
+                <div className="flex flex-col gap-1 text-xs pt-1 border-t border-current/15">
+                  <div className="font-bold text-[12px]">
+                    AK Infopark private limited
+                  </div>
+                  <div className="opacity-70 text-[11px] font-mono">
+                    Nagercoil, (Jan 2025 )
+                  </div>
+                  <ul className="flex flex-col gap-1 pt-0.5 text-[11.5px] leading-relaxed">
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Designed responsive web and mobile interfaces using Figma.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-current mt-1.5 shrink-0" />
+                      <span>Created wireframes and prototypes to improve user experience.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* R.K. Motors */}
+                <div className="flex flex-col gap-0.5 text-xs pt-1 border-t border-current/15">
+                  <div className="font-bold text-[12px]">
+                    R.K. Motors (BOSCH Car Service Center), Nagercoil
+                  </div>
+                  <div className="opacity-70 text-[11px] font-mono">
+                    (Jul 2024)
+                  </div>
+                  <p className="text-[11.5px] opacity-90 pl-3">
+                    • Assisted in vehicle diagnostics, maintenance, and repair operations.
+                  </p>
+                </div>
+
+                {/* Bajaj Bike Service */}
+                <div className="flex flex-col gap-0.5 text-xs pt-1 border-t border-current/15">
+                  <div className="font-bold text-[12px]">
+                    Bajaj Bike Service Center, Nagercoil
+                  </div>
+                  <div className="opacity-70 text-[11px] font-mono">
+                    (Jul 2023)
+                  </div>
+                  <p className="text-[11.5px] opacity-90 pl-3">
+                    Gained practical experience in motorcycle maintenance and workshop operations.
+                  </p>
+                </div>
+              </div>
+
+              {/* SOFT SKILLS */}
+              <div className="resume-avoid-break flex flex-col gap-1.5 pt-1 border-t border-current/20">
+                <div className="pb-1 border-b border-current/30">
+                  <h3 className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-inherit">
+                    SOFT SKILLS
+                  </h3>
+                </div>
+                <ul className="text-xs flex flex-col gap-1 pl-1">
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Problem Solving</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Leadership</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Project & Time Management</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Team Collaboration</span>
+                  </li>
+                  <li className="flex items-center gap-2 text-[11.5px]">
+                    <span className="w-1.5 h-1.5 rounded-full bg-current shrink-0" />
+                    <span>Communication</span>
+                  </li>
+                </ul>
               </div>
             </div>
           </div>
         </div>
 
         {/* ========================================================================= */}
-        {/* TIGHT BOTTOM BAR (NO GAP, DIRECTLY ATTACHED, HIDDEN IN PRINT)             */}
+        {/* MODAL FOOTER (NO GAP, DIRECTLY ANCHORED)                                  */}
         {/* ========================================================================= */}
         <div
           className={`no-print pt-3 mt-3 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs ${
