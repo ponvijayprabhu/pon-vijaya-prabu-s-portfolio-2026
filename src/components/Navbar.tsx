@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { getAssetUrl, defaultAvatar } from '../utils/assetHelper';
 
 export const Navbar: React.FC = () => {
   const { profile, accent, updateProfile } = usePortfolio();
@@ -32,11 +33,13 @@ export const Navbar: React.FC = () => {
           >
             <div className="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden border border-[#2E2E2A] bg-[#161614] shadow-md group-hover/avatar:border-[#CEFD4B] transition-all">
               <img
-                src={profile.avatarUrl || '/avatar.png'}
+                src={getAssetUrl(profile.avatarUrl)}
                 alt={profile.name}
                 className="w-full h-full object-cover object-top"
                 onError={(e) => {
-                  e.currentTarget.src = '/avatar.png';
+                  if (e.currentTarget.src !== defaultAvatar) {
+                    e.currentTarget.src = defaultAvatar;
+                  }
                 }}
               />
             </div>

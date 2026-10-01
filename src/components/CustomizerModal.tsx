@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { X, RotateCcw, Check, Sparkles } from 'lucide-react';
 import { AccentColor } from '../types/portfolio';
+import { getAssetUrl, defaultHeroPortrait, defaultAvatar } from '../utils/assetHelper';
 
 const ACCENT_OPTIONS: { label: string; value: AccentColor }[] = [
   { label: 'Volt Lime', value: '#D4F36B' },
@@ -98,11 +99,13 @@ export const CustomizerModal: React.FC = () => {
           {/* Profile Photo Uploader */}
           <div className="flex items-center gap-4 p-3 rounded-2xl bg-[#181816] border border-[#282824]">
             <img
-              src={avatarUrl}
+              src={getAssetUrl(avatarUrl)}
               alt="Preview"
               className="w-14 h-14 rounded-xl object-cover border border-[#3A3934] shrink-0"
               onError={(e) => {
-                e.currentTarget.src = '/account_avatar.jpg';
+                if (e.currentTarget.src !== defaultHeroPortrait) {
+                  e.currentTarget.src = defaultHeroPortrait;
+                }
               }}
             />
             <div className="flex-1 flex flex-col gap-1.5">

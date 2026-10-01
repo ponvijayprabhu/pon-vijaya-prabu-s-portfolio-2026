@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { X, Printer, Download, Mail, Phone, Globe, Linkedin, Award, GraduationCap, Briefcase, Wrench, CheckCircle } from 'lucide-react';
+import { getAssetUrl, defaultAvatar } from '../utils/assetHelper';
 
 export const ResumeModal: React.FC = () => {
   const { profile, isResumeOpen, setIsResumeOpen, accent } = usePortfolio();
@@ -74,12 +75,14 @@ export const ResumeModal: React.FC = () => {
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b border-[#22221F]">
             <div className="flex items-center gap-4">
               <img
-                src={profile.avatarUrl || '/profile.jpg'}
+                src={getAssetUrl(profile.avatarUrl)}
                 alt={profile.name}
                 referrerPolicy="no-referrer"
                 className="w-20 h-20 rounded-2xl object-cover border-2 border-[#2E2E2A] shadow-lg shrink-0"
                 onError={(e) => {
-                  e.currentTarget.src = 'https://github.com/ponvijayprabhu.png';
+                  if (e.currentTarget.src !== defaultAvatar) {
+                    e.currentTarget.src = defaultAvatar;
+                  }
                 }}
               />
               <div>

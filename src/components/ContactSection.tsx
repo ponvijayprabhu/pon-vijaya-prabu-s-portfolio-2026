@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { ArrowUpRight, ArrowUp, Send, CheckCircle2, Mail, Clock, MapPin } from 'lucide-react';
+import { getAssetUrl, defaultAvatar } from '../utils/assetHelper';
 
 export const ContactSection: React.FC = () => {
   const { profile, accent } = usePortfolio();
@@ -87,12 +88,14 @@ export const ContactSection: React.FC = () => {
               className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-[#3A3934] shadow-2xl flex items-center justify-center shrink-0 bg-[#161614]"
             >
               <img
-                src={profile.avatarUrl || '/profile.jpg'}
+                src={getAssetUrl(profile.avatarUrl)}
                 alt={profile.name}
                 referrerPolicy="no-referrer"
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.currentTarget.src = 'https://github.com/ponvijayprabhu.png';
+                  if (e.currentTarget.src !== defaultAvatar) {
+                    e.currentTarget.src = defaultAvatar;
+                  }
                 }}
               />
             </span>

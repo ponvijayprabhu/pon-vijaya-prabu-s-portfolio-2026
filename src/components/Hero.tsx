@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { ArrowUpRight, ArrowDown } from 'lucide-react';
+import { getAssetUrl, defaultHeroPortrait } from '../utils/assetHelper';
 
 export const Hero: React.FC = () => {
   const { profile, accent } = usePortfolio();
@@ -130,16 +131,20 @@ export const Hero: React.FC = () => {
         }}
       >
         <img
-          src={profile.avatarUrl || '/Image.png'}
+          src={getAssetUrl(profile.avatarUrl)}
           alt={`Portrait of ${profile.name}`}
           referrerPolicy="no-referrer"
+          loading="eager"
+          decoding="async"
           style={{
             transform: 'scale(1.15)',
             transformOrigin: 'center bottom',
           }}
           className="max-h-full w-auto max-w-full object-contain object-bottom drop-shadow-[0_25px_60px_rgba(0,0,0,0.9)] transition-all duration-300 pointer-events-auto select-none"
           onError={(e) => {
-            e.currentTarget.src = '/Image.png';
+            if (e.currentTarget.src !== defaultHeroPortrait) {
+              e.currentTarget.src = defaultHeroPortrait;
+            }
           }}
         />
       </div>

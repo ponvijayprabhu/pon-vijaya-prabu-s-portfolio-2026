@@ -19,7 +19,7 @@ interface PortfolioContextType {
   setActiveCategory: (cat: string) => void;
 }
 
-const STORAGE_KEY = 'portfolio_profile_custom_data_v7';
+const STORAGE_KEY = 'portfolio_profile_custom_data_v8';
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
 
@@ -33,7 +33,9 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           !parsed.avatarUrl ||
           parsed.avatarUrl === '/account_avatar.jpg' ||
           parsed.avatarUrl === '/my.jpg' ||
-          parsed.avatarUrl === '/profile.jpg'
+          parsed.avatarUrl === '/profile.jpg' ||
+          parsed.avatarUrl === '/Image.png' ||
+          parsed.avatarUrl === 'Image.png'
         ) {
           parsed.avatarUrl = '/Image.png';
         }
