@@ -17,14 +17,17 @@ import {
   Sun,
   Moon,
   MapPin,
-  ExternalLink
+  Loader2,
+  Sparkles
 } from 'lucide-react';
 import { getAssetUrl, defaultAvatar } from '../utils/assetHelper';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 export const ResumeModal: React.FC = () => {
   const { profile, isResumeOpen, setIsResumeOpen, accent } = usePortfolio();
-  // View mode: 'paper' (Clean White Paper CV) or 'dark' (Dark Studio View)
   const [viewMode, setViewMode] = useState<'paper' | 'dark'>('paper');
+  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -46,177 +49,99 @@ export const ResumeModal: React.FC = () => {
     window.print();
   };
 
-  // Generate a clean offline-ready HTML file of the resume that can be opened or saved
-  const handleDownloadHtml = () => {
-    const htmlContent = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>${profile.name} — UI/UX Designer Resume</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    @page { margin: 12mm 15mm; size: A4; }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      color: #111827;
-      background: #ffffff;
-      line-height: 1.45;
-      font-size: 13px;
-      padding: 32px 40px;
-      max-width: 900px;
-      margin: 0 auto;
+  /**
+   * Generates and downloads the resume strictly in PDF format (.pdf)
+   * Captures a high-resolution, pixel-perfect executive white paper document.
+   */
+  const handleDownloadPdf = async () => {
+    if (isGeneratingPdf) return;
+    setIsGeneratingPdf(true);
+
+    try {
+      const resumeEl = document.getElementById('printable-resume');
+      if (!resumeEl) {
+        window.print();
+        return;
+      }
+
+      // Create an offscreen A4 container to ensure consistent white-paper rendering
+      const clone = resumeEl.cloneNode(true) as HTMLElement;
+      clone.id = 'temp-pdf-export-node';
+      clone.style.width = '794px'; // Standard A4 width at 96 DPI
+      clone.style.maxWidth = '794px';
+      clone.style.padding = '28px 32px';
+      clone.style.background = '#FFFFFF';
+      clone.style.color = '#111827';
+      clone.style.position = 'fixed';
+      clone.style.top = '-9999px';
+      clone.style.left = '-9999px';
+      clone.style.zIndex = '-9999';
+      clone.style.maxHeight = 'none';
+      clone.style.overflow = 'visible';
+
+      // Override colors for print clarity
+      const allTexts = clone.querySelectorAll('*');
+      allTexts.forEach((el) => {
+        const htmlEl = el as HTMLElement;
+        if (htmlEl.classList.contains('bg-dark-card')) {
+          htmlEl.style.backgroundColor = '#F9FAFB';
+          htmlEl.style.borderColor = '#E5E7EB';
+          htmlEl.style.color = '#111827';
+        }
+      });
+
+      document.body.appendChild(clone);
+
+      const canvas = await html2canvas(clone, {
+        scale: 2, // 2x Retina resolution
+        useCORS: true,
+        backgroundColor: '#FFFFFF',
+        logging: false,
+      });
+
+      document.body.removeChild(clone);
+
+      const imgData = canvas.toDataURL('image/jpeg', 0.95);
+      const pdf = new jsPDF({
+        orientation: 'portrait',
+        unit: 'mm',
+        format: 'a4',
+      });
+
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = pdf.internal.pageSize.getHeight();
+      const margin = 10;
+      const contentWidth = pdfWidth - margin * 2;
+      const contentHeight = (canvas.height * contentWidth) / canvas.width;
+
+      if (contentHeight <= pdfHeight - margin * 2) {
+        // Fits cleanly onto a single A4 page
+        pdf.addImage(imgData, 'JPEG', margin, margin, contentWidth, contentHeight);
+      } else {
+        // Multi-page handling with proper margins
+        let heightLeft = contentHeight;
+        let position = margin;
+
+        pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
+        heightLeft -= (pdfHeight - margin * 2);
+
+        while (heightLeft > 0) {
+          position = heightLeft - contentHeight + margin;
+          pdf.addPage();
+          pdf.addImage(imgData, 'JPEG', margin, position, contentWidth, contentHeight);
+          heightLeft -= (pdfHeight - margin * 2);
+        }
+      }
+
+      // Download ONLY in .pdf format
+      pdf.save('Pon_Vijaya_Prabu_S_Resume.pdf');
+    } catch (err) {
+      console.error('Error generating PDF:', err);
+      // Fallback to browser print/save PDF
+      window.print();
+    } finally {
+      setIsGeneratingPdf(false);
     }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 2px solid #111827;
-      padding-bottom: 18px;
-      margin-bottom: 20px;
-    }
-    .name { font-size: 28px; font-weight: 800; color: #111827; letter-spacing: -0.5px; }
-    .role { font-size: 15px; font-weight: 600; color: #4b5563; margin-top: 2px; }
-    .contact { font-size: 11.5px; color: #4b5563; text-align: right; line-height: 1.6; }
-    .contact a { color: #111827; text-decoration: none; font-weight: 500; }
-    .section-title {
-      font-size: 11px;
-      font-family: 'JetBrains Mono', monospace;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      font-weight: 700;
-      color: #6b7280;
-      margin-bottom: 10px;
-      padding-bottom: 4px;
-      border-bottom: 1px solid #e5e7eb;
-    }
-    .summary { margin-bottom: 22px; font-size: 12.5px; color: #374151; line-height: 1.6; }
-    .grid { display: grid; grid-template-columns: 7fr 5fr; gap: 24px; }
-    .card { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px 14px; margin-bottom: 12px; }
-    .card-header { display: flex; justify-content: space-between; font-weight: 700; font-size: 13px; color: #111827; }
-    .card-sub { font-size: 11.5px; font-weight: 600; color: #4b5563; margin-top: 2px; }
-    .bullets { margin-top: 8px; padding-left: 16px; font-size: 11.5px; color: #374151; }
-    .bullets li { margin-bottom: 4px; }
-    .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-    .tag { background: #f3f4f6; border: 1px solid #e5e7eb; padding: 3px 8px; border-radius: 6px; font-size: 11px; color: #1f2937; font-weight: 500; }
-    .print-bar { background: #111827; color: #ffffff; padding: 10px 16px; border-radius: 8px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
-    .print-btn { background: #22c55e; color: #000; border: none; padding: 6px 14px; border-radius: 6px; font-weight: 700; cursor: pointer; font-size: 12px; }
-    @media print { .print-bar { display: none; } body { padding: 0; } }
-  </style>
-</head>
-<body>
-  <div class="print-bar">
-    <span>Pon Vijaya Prabu S — Verified UI/UX Resume</span>
-    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
-  </div>
-  <div class="header">
-    <div>
-      <div class="name">${profile.name}</div>
-      <div class="role">${profile.title}</div>
-    </div>
-    <div class="contact">
-      <div>📞 ${profile.phone}</div>
-      <div>✉️ <a href="mailto:${profile.email}">${profile.email}</a></div>
-      <div>📍 ${profile.location}</div>
-      <div>🔗 <a href="${profile.socials.linkedin}" target="_blank">LinkedIn Profile</a></div>
-    </div>
-  </div>
-
-  <div class="section-title">Professional Summary</div>
-  <p class="summary">${profile.bioSubtext}</p>
-
-  <div class="grid">
-    <div>
-      <div class="section-title">Work Experience</div>
-      <div class="card">
-        <div class="card-header">
-          <span>UI/UX Designer</span>
-          <span style="font-family: monospace; font-size: 11px;">Nov 2025 – Present</span>
-        </div>
-        <div class="card-sub">Canvendor software solutions private limited — Nagercoil</div>
-        <ul class="bullets">
-          <li>Designed web and mobile interfaces for EMR Healthcare, AI, HRMS, logistics, and landing page projects.</li>
-          <li>Created wireframes, user flows, and high-fidelity interactive prototypes in Figma.</li>
-          <li>Collaborated closely with developers to deliver tokenized, responsive, user-friendly UI designs.</li>
-        </ul>
-      </div>
-
-      <div class="section-title">Internship Experience</div>
-      <div class="card">
-        <div class="card-header">
-          <span>UI/UX Design Intern</span>
-          <span style="font-family: monospace; font-size: 11px;">Jun 2025 – Oct 2025</span>
-        </div>
-        <div class="card-sub">Canvendor software solutions private limited — Nagercoil</div>
-        <ul class="bullets">
-          <li>Assisted in designing responsive web and mobile interfaces using Figma.</li>
-          <li>Created wireframes and interactive prototypes for client projects.</li>
-          <li>Contributed to EMR Healthcare System and HRMS Platform UI design projects.</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="card-header">
-          <span>UI/UX Design Intern</span>
-          <span style="font-family: monospace; font-size: 11px;">Jan 2025</span>
-        </div>
-        <div class="card-sub">AK Infopark private limited — Nagercoil</div>
-        <ul class="bullets">
-          <li>Designed responsive web and mobile interfaces using Figma.</li>
-          <li>Created wireframes and prototypes to enhance usability and conversion.</li>
-        </ul>
-      </div>
-    </div>
-
-    <div>
-      <div class="section-title">Education</div>
-      ${profile.education.map(edu => `
-        <div class="card" style="margin-bottom: 8px;">
-          <div class="card-header" style="font-size: 12px;">
-            <span>${edu.degree}</span>
-            <span style="font-family: monospace; font-size: 10px;">${edu.year}</span>
-          </div>
-          <div class="card-sub" style="font-size: 11px;">${edu.institution}</div>
-          <div style="font-size: 10.5px; color: #6b7280;">${edu.location}</div>
-        </div>
-      `).join('')}
-
-      <div class="section-title" style="margin-top: 14px;">Design Tools</div>
-      <div class="tag-container">
-        ${profile.designTools.map(t => `<span class="tag">${t}</span>`).join('')}
-      </div>
-
-      <div class="section-title">Core UI/UX Skills</div>
-      <div class="tag-container">
-        ${profile.coreSkills.map(s => `<span class="tag">${s}</span>`).join('')}
-      </div>
-
-      <div class="section-title">Certifications</div>
-      <div style="font-size: 11.5px; color: #374151; margin-bottom: 12px;">
-        ${profile.certifications.map(c => `<div style="padding: 3px 0; border-bottom: 1px dotted #e5e7eb;">• ${c.name} ${c.year ? `(${c.year})` : ''}</div>`).join('')}
-      </div>
-
-      <div class="section-title">Languages</div>
-      <div style="font-size: 11.5px; color: #4b5563;">
-        ${profile.languages.join(' · ')}
-      </div>
-    </div>
-  </div>
-</body>
-</html>`;
-
-    const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8;' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.setAttribute('download', `Pon_Vijaya_Prabu_S_Resume.html`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
   };
 
   const isPaper = viewMode === 'paper';
@@ -226,11 +151,11 @@ export const ResumeModal: React.FC = () => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="resume-title"
-      className="resume-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-8 bg-[#0D0D0C]/90 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200"
+      className="resume-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 bg-[#0D0D0C]/90 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200"
       onClick={() => setIsResumeOpen(false)}
     >
       <div
-        className={`resume-modal-content relative w-full max-w-4xl my-auto rounded-3xl shadow-2xl p-5 sm:p-8 md:p-10 overflow-hidden flex flex-col gap-6 transition-colors duration-200 ${
+        className={`resume-modal-content relative w-full max-w-4xl my-auto rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-7 overflow-hidden flex flex-col transition-colors duration-200 ${
           isPaper
             ? 'bg-[#FFFFFF] text-[#111827] border border-[#E5E7EB]'
             : 'bg-[#141412] text-[#F2EFE8] border border-[#2A2A26]'
@@ -241,12 +166,12 @@ export const ResumeModal: React.FC = () => {
         {/* TOP CONTROLS & ACTION BAR (HIDDEN IN PRINT)                               */}
         {/* ========================================================================= */}
         <div
-          className={`no-print flex flex-wrap items-center justify-between gap-3 pb-4 border-b transition-colors ${
+          className={`no-print flex flex-wrap items-center justify-between gap-3 pb-3 mb-3 border-b transition-colors ${
             isPaper ? 'border-[#E5E7EB]' : 'border-[#242420]'
           }`}
         >
           {/* Left: Status & View Toggle */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             <span
               className="w-2.5 h-2.5 rounded-full shrink-0"
               style={{ backgroundColor: accent }}
@@ -292,37 +217,49 @@ export const ResumeModal: React.FC = () => {
             </div>
           </div>
 
-          {/* Right: Print, Download, Close Buttons */}
+          {/* Right: Download PDF & Print Buttons */}
           <div className="flex items-center gap-2">
+            {/* Primary Action: Download PDF Only */}
             <button
-              onClick={handlePrint}
-              aria-label="Print or save as PDF"
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-md transition-transform hover:-translate-y-0.5 active:translate-y-0"
+              onClick={handleDownloadPdf}
+              disabled={isGeneratingPdf}
+              aria-label="Download resume in PDF format"
+              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-md transition-all hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
               style={{ backgroundColor: accent }}
-              title="Print or Save PDF (Ctrl+P / Cmd+P)"
+              title="Download Resume (.pdf format)"
             >
-              <Printer className="w-3.5 h-3.5" />
-              <span>Print / Save PDF</span>
+              {isGeneratingPdf ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Generating PDF...</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3.5 h-3.5 stroke-[2.5]" />
+                  <span>Download PDF</span>
+                </>
+              )}
             </button>
 
+            {/* Secondary Action: Print */}
             <button
-              onClick={handleDownloadHtml}
-              aria-label="Download offline CV file"
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+              onClick={handlePrint}
+              aria-label="Print resume"
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors cursor-pointer ${
                 isPaper
                   ? 'border-[#D1D5DB] bg-[#F9FAFB] text-[#374151] hover:bg-[#F3F4F6]'
                   : 'border-[#2E2E2A] bg-[#1C1C1A] text-[#CBC7BD] hover:text-[#F2EFE8]'
               }`}
-              title="Download Offline HTML Resume"
+              title="Print (Ctrl+P / Cmd+P)"
             >
-              <Download className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Download CV</span>
+              <Printer className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Print</span>
             </button>
 
             <button
               onClick={() => setIsResumeOpen(false)}
               aria-label="Close CV modal"
-              className={`p-1.5 rounded-full border transition-colors ${
+              className={`p-1.5 rounded-full border transition-colors cursor-pointer ${
                 isPaper
                   ? 'border-[#D1D5DB] bg-[#F9FAFB] text-[#6B7280] hover:text-[#111827]'
                   : 'border-[#2E2E2A] bg-[#1C1C1A] text-[#ABA79E] hover:text-[#F2EFE8]'
@@ -334,25 +271,25 @@ export const ResumeModal: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* RESUME DOCUMENT CONTAINER (PRINTS ACCURATELY ON A4)                       */}
+        {/* RESUME DOCUMENT CONTAINER (COMPACT, NO BOTTOM GAP, CRISP A4 ALIGNMENT)   */}
         {/* ========================================================================= */}
         <div
           id="printable-resume"
-          className="resume-scroll-container flex flex-col gap-7 max-h-[76vh] overflow-y-auto pr-1 sm:pr-2"
+          className="resume-scroll-container flex flex-col gap-4 sm:gap-5 max-h-[calc(84vh-115px)] overflow-y-auto pr-1 sm:pr-2"
         >
           {/* Header Row: Portrait + Identity + Direct Contact Matrix */}
           <div
-            className={`resume-avoid-break flex flex-col md:flex-row md:items-center justify-between gap-6 pb-6 border-b ${
+            className={`resume-avoid-break flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b ${
               isPaper ? 'border-[#E5E7EB]' : 'border-[#22221F]'
             }`}
           >
             {/* Identity with Portrait */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-3.5">
               <img
                 src={getAssetUrl(profile.avatarUrl)}
                 alt={profile.name}
                 referrerPolicy="no-referrer"
-                className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 shadow-md shrink-0 ${
+                className={`w-14 h-14 sm:w-16 sm:h-16 rounded-2xl object-cover border-2 shadow-sm shrink-0 ${
                   isPaper ? 'border-[#E5E7EB]' : 'border-[#2E2E2A]'
                 }`}
                 onError={(e) => {
@@ -364,20 +301,20 @@ export const ResumeModal: React.FC = () => {
               <div>
                 <h1
                   id="resume-title"
-                  className={`text-2xl sm:text-3xl font-extrabold tracking-tight resume-print-text-dark ${
+                  className={`text-xl sm:text-2xl font-extrabold tracking-tight resume-print-text-dark ${
                     isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'
                   }`}
                 >
                   {profile.name}
                 </h1>
                 <p
-                  className="text-sm sm:text-base font-semibold mt-0.5"
+                  className="text-xs sm:text-sm font-semibold mt-0.5"
                   style={{ color: isPaper ? '#1F2937' : accent }}
                 >
                   {profile.title} <span className="opacity-75 font-normal">· Canvendor Solutions</span>
                 </p>
                 <div
-                  className={`flex items-center gap-1.5 text-xs mt-1 ${
+                  className={`flex items-center gap-1.5 text-xs mt-0.5 ${
                     isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                   }`}
                 >
@@ -389,7 +326,7 @@ export const ResumeModal: React.FC = () => {
 
             {/* Direct Contact Matrix */}
             <div
-              className={`flex flex-col gap-1.5 text-xs ${
+              className={`flex flex-col gap-1 text-xs ${
                 isPaper ? 'text-[#4B5563]' : 'text-[#ABA79E]'
               }`}
             >
@@ -429,7 +366,7 @@ export const ResumeModal: React.FC = () => {
           </div>
 
           {/* Professional Summary */}
-          <div className="resume-avoid-break flex flex-col gap-2">
+          <div className="resume-avoid-break flex flex-col gap-1.5">
             <h2
               className={`text-xs font-mono uppercase tracking-widest font-bold ${
                 isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
@@ -446,22 +383,22 @@ export const ResumeModal: React.FC = () => {
             </p>
           </div>
 
-          {/* 2-Column Split: Experience (Left) vs Skills & Education (Right) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-7">
-            {/* Left Column (7 cols): Work & Internship Experience */}
-            <div className="lg:col-span-7 flex flex-col gap-6">
+          {/* 2-Column Balanced Grid (Left: Work & Internships | Right: Education, Skills, Certs, Apprenticeships) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+            {/* Left Column (7 cols): Work Experience & Internships */}
+            <div className="lg:col-span-7 flex flex-col gap-4">
               {/* Work Experience */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2.5">
                 <h2
                   className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
                     isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                   }`}
                 >
-                  <Briefcase className="w-4 h-4 text-[#8C8981]" /> Work Experience
+                  <Briefcase className="w-3.5 h-3.5 text-[#8C8981]" /> Work Experience
                 </h2>
 
                 <div
-                  className={`resume-avoid-break p-4 rounded-2xl border flex flex-col gap-2.5 ${
+                  className={`resume-avoid-break bg-dark-card p-3.5 rounded-xl border flex flex-col gap-2 ${
                     isPaper
                       ? 'bg-[#F9FAFB] border-[#E5E7EB]'
                       : 'bg-[#181816] border-[#262622]'
@@ -491,7 +428,7 @@ export const ResumeModal: React.FC = () => {
                     Canvendor software solutions private limited — Nagercoil, India
                   </div>
                   <ul
-                    className={`flex flex-col gap-1.5 pt-1 text-xs ${
+                    className={`flex flex-col gap-1.5 pt-0.5 text-xs ${
                       isPaper ? 'text-[#374151]' : 'text-[#A8A59E]'
                     }`}
                   >
@@ -518,18 +455,18 @@ export const ResumeModal: React.FC = () => {
               </div>
 
               {/* Internship Experience */}
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2.5">
                 <h2
                   className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
                     isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                   }`}
                 >
-                  <Briefcase className="w-4 h-4 text-[#8C8981]" /> Internship Experience
+                  <Briefcase className="w-3.5 h-3.5 text-[#8C8981]" /> Internship Experience
                 </h2>
 
                 {/* Canvendor Intern */}
                 <div
-                  className={`resume-avoid-break p-4 rounded-2xl border flex flex-col gap-2.5 ${
+                  className={`resume-avoid-break bg-dark-card p-3.5 rounded-xl border flex flex-col gap-2 ${
                     isPaper
                       ? 'bg-[#F9FAFB] border-[#E5E7EB]'
                       : 'bg-[#181816] border-[#262622]'
@@ -555,7 +492,7 @@ export const ResumeModal: React.FC = () => {
                     Canvendor software solutions private limited — Nagercoil
                   </div>
                   <ul
-                    className={`flex flex-col gap-1.5 pt-1 text-xs ${
+                    className={`flex flex-col gap-1.5 pt-0.5 text-xs ${
                       isPaper ? 'text-[#374151]' : 'text-[#A8A59E]'
                     }`}
                   >
@@ -572,7 +509,7 @@ export const ResumeModal: React.FC = () => {
 
                 {/* AK Infopark Intern */}
                 <div
-                  className={`resume-avoid-break p-4 rounded-2xl border flex flex-col gap-2.5 ${
+                  className={`resume-avoid-break bg-dark-card p-3 rounded-xl border flex flex-col gap-1.5 ${
                     isPaper
                       ? 'bg-[#F9FAFB] border-[#E5E7EB]'
                       : 'bg-[#181816] border-[#262622]'
@@ -597,59 +534,33 @@ export const ResumeModal: React.FC = () => {
                   >
                     AK Infopark private limited — Nagercoil
                   </div>
-                  <ul
-                    className={`flex flex-col gap-1.5 pt-1 text-xs ${
+                  <p
+                    className={`text-xs ${
                       isPaper ? 'text-[#374151]' : 'text-[#A8A59E]'
                     }`}
                   >
-                    <li className="flex items-start gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0 bg-[#6B7280]" />
-                      <span>Designed intuitive responsive web and mobile application prototypes in Figma.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                {/* Practical Engineering Background */}
-                <div
-                  className={`resume-avoid-break p-3.5 rounded-2xl border flex flex-col gap-2 ${
-                    isPaper
-                      ? 'bg-[#F9FAFB] border-[#E5E7EB]'
-                      : 'bg-[#181816] border-[#262622]'
-                  }`}
-                >
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#6B7280]">
-                    Engineering Apprenticeships (Applied Systems Thinking)
-                  </div>
-                  <div className="text-xs text-[#4B5563] flex flex-col gap-1.5">
-                    <div className="flex justify-between">
-                      <span className="font-semibold text-inherit">R.K. Motors (BOSCH Car Service), Nagercoil</span>
-                      <span className="font-mono text-[10px]">Jul 2024</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="font-semibold text-inherit">Bajaj Bike Service Center, Nagercoil</span>
-                      <span className="font-mono text-[10px]">Jul 2023</span>
-                    </div>
-                  </div>
+                    Designed responsive web and mobile interfaces in Figma with interactive component states.
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Right Column (5 cols): Education, Tools, Skills & Certifications */}
-            <div className="lg:col-span-5 flex flex-col gap-5">
+            {/* Right Column (5 cols): Education, Skills, Certs & Engineering Background */}
+            <div className="lg:col-span-5 flex flex-col gap-4">
               {/* Education */}
-              <div className="flex flex-col gap-2.5">
+              <div className="flex flex-col gap-2">
                 <h2
                   className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
                     isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                   }`}
                 >
-                  <GraduationCap className="w-4 h-4 text-[#8C8981]" /> Education
+                  <GraduationCap className="w-3.5 h-3.5 text-[#8C8981]" /> Education
                 </h2>
-                <div className="flex flex-col gap-2.5">
+                <div className="flex flex-col gap-2">
                   {profile.education.map((edu, i) => (
                     <div
                       key={i}
-                      className={`resume-avoid-break p-3 rounded-xl border ${
+                      className={`resume-avoid-break bg-dark-card p-2.5 rounded-xl border ${
                         isPaper
                           ? 'bg-[#F9FAFB] border-[#E5E7EB]'
                           : 'bg-[#181816] border-[#262622]'
@@ -680,20 +591,20 @@ export const ResumeModal: React.FC = () => {
                 </div>
               </div>
 
-              {/* Design Tools */}
+              {/* Design Tools & Core Skills */}
               <div className="resume-avoid-break flex flex-col gap-2">
                 <h2
                   className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
                     isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                   }`}
                 >
-                  <Wrench className="w-4 h-4 text-[#8C8981]" /> Design Tools
+                  <Wrench className="w-3.5 h-3.5 text-[#8C8981]" /> Tools & Skills
                 </h2>
                 <div className="flex flex-wrap gap-1.5">
                   {profile.designTools.map((tool, i) => (
                     <span
                       key={i}
-                      className={`px-2.5 py-1 text-xs rounded-md font-medium border ${
+                      className={`px-2 py-0.5 text-xs rounded-md font-semibold border ${
                         isPaper
                           ? 'bg-[#F3F4F6] text-[#1F2937] border-[#E5E7EB]'
                           : 'bg-[#20201D] text-[#E0DDD5] border-[#2E2E2A]'
@@ -702,23 +613,10 @@ export const ResumeModal: React.FC = () => {
                       {tool}
                     </span>
                   ))}
-                </div>
-              </div>
-
-              {/* Core UI/UX Skills */}
-              <div className="resume-avoid-break flex flex-col gap-2">
-                <h2
-                  className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
-                    isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
-                  }`}
-                >
-                  <CheckCircle className="w-4 h-4 text-[#8C8981]" /> Core UI/UX Skills
-                </h2>
-                <div className="flex flex-wrap gap-1.5">
                   {profile.coreSkills.map((skill, i) => (
                     <span
                       key={i}
-                      className={`px-2.5 py-1 text-xs rounded-md border ${
+                      className={`px-2 py-0.5 text-xs rounded-md border ${
                         isPaper
                           ? 'bg-[#F9FAFB] text-[#374151] border-[#E5E7EB]'
                           : 'bg-[#181816] text-[#CBC7BD] border-[#262622]'
@@ -731,13 +629,13 @@ export const ResumeModal: React.FC = () => {
               </div>
 
               {/* Certifications */}
-              <div className="resume-avoid-break flex flex-col gap-2">
+              <div className="resume-avoid-break flex flex-col gap-1.5">
                 <h2
                   className={`text-xs font-mono uppercase tracking-widest font-bold flex items-center gap-2 ${
                     isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                   }`}
                 >
-                  <Award className="w-4 h-4 text-[#8C8981]" /> Certifications
+                  <Award className="w-3.5 h-3.5 text-[#8C8981]" /> Certifications
                 </h2>
                 <div
                   className={`flex flex-col gap-1 text-xs ${
@@ -747,7 +645,7 @@ export const ResumeModal: React.FC = () => {
                   {profile.certifications.map((cert, i) => (
                     <div
                       key={i}
-                      className={`flex justify-between items-center py-1 border-b last:border-0 ${
+                      className={`flex justify-between items-center py-0.5 border-b last:border-0 ${
                         isPaper ? 'border-[#E5E7EB]' : 'border-[#20201D]'
                       }`}
                     >
@@ -763,38 +661,53 @@ export const ResumeModal: React.FC = () => {
               </div>
 
               {/* Languages & Soft Skills */}
-              <div className="resume-avoid-break grid grid-cols-2 gap-3 pt-1">
+              <div className="resume-avoid-break grid grid-cols-2 gap-2 text-xs">
                 <div>
                   <h3
-                    className={`text-[11px] font-mono uppercase font-bold mb-1 ${
+                    className={`font-mono text-[10px] uppercase font-bold mb-0.5 ${
                       isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                     }`}
                   >
                     Languages
                   </h3>
-                  <div
-                    className={`text-xs ${
-                      isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'
-                    }`}
-                  >
+                  <div className={isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'}>
                     {profile.languages.join(', ')}
                   </div>
                 </div>
 
                 <div>
                   <h3
-                    className={`text-[11px] font-mono uppercase font-bold mb-1 ${
+                    className={`font-mono text-[10px] uppercase font-bold mb-0.5 ${
                       isPaper ? 'text-[#6B7280]' : 'text-[#8C8981]'
                     }`}
                   >
                     Soft Skills
                   </h3>
-                  <div
-                    className={`text-xs ${
-                      isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'
-                    }`}
-                  >
-                    {profile.softSkills.join(', ')}
+                  <div className={isPaper ? 'text-[#374151]' : 'text-[#CBC7BD]'}>
+                    Problem Solving, Team Collaboration, Communication
+                  </div>
+                </div>
+              </div>
+
+              {/* Engineering Apprenticeships (Clean balanced bottom block) */}
+              <div
+                className={`resume-avoid-break bg-dark-card p-2.5 rounded-xl border flex flex-col gap-1.5 ${
+                  isPaper
+                    ? 'bg-[#F9FAFB] border-[#E5E7EB]'
+                    : 'bg-[#181816] border-[#262622]'
+                }`}
+              >
+                <div className="text-[10px] font-mono uppercase font-bold text-[#8C8981]">
+                  Apprenticeships (Systems Thinking)
+                </div>
+                <div className="text-xs flex flex-col gap-1 text-[#6B7280]">
+                  <div className="flex justify-between">
+                    <span className="font-medium text-inherit">R.K. Motors (BOSCH Center), Nagercoil</span>
+                    <span className="font-mono text-[10px]">2024</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-medium text-inherit">Bajaj Bike Service Center, Nagercoil</span>
+                    <span className="font-mono text-[10px]">2023</span>
                   </div>
                 </div>
               </div>
@@ -803,25 +716,36 @@ export const ResumeModal: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* BOTTOM MODAL BAR (HIDDEN IN PRINT)                                       */}
+        {/* TIGHT BOTTOM BAR (NO GAP, DIRECTLY ATTACHED, HIDDEN IN PRINT)             */}
         {/* ========================================================================= */}
         <div
-          className={`no-print pt-4 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs ${
+          className={`no-print pt-3 mt-3 border-t flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs ${
             isPaper ? 'border-[#E5E7EB] text-[#6B7280]' : 'border-[#242420] text-[#8C8981]'
           }`}
         >
           <span>
-            Contact: <strong className={isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'}>{profile.phone}</strong> ·{' '}
+            Direct: <strong className={isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'}>{profile.phone}</strong> ·{' '}
             <strong className={isPaper ? 'text-[#111827]' : 'text-[#F2EFE8]'}>{profile.email}</strong>
           </span>
 
           <div className="flex items-center gap-2">
             <button
-              onClick={handlePrint}
-              className="px-4 py-2 rounded-full font-bold text-[#0D0D0C] shadow-lg transition-transform hover:-translate-y-0.5"
+              onClick={handleDownloadPdf}
+              disabled={isGeneratingPdf}
+              className="px-4 py-1.5 rounded-full font-bold text-[#0D0D0C] shadow-md transition-all hover:scale-105 active:scale-95 disabled:opacity-70 flex items-center gap-1.5 cursor-pointer"
               style={{ backgroundColor: accent }}
             >
-              Print / Save PDF (Ctrl+P)
+              {isGeneratingPdf ? (
+                <>
+                  <Loader2 className="w-3 h-3 animate-spin" />
+                  <span>Downloading...</span>
+                </>
+              ) : (
+                <>
+                  <Download className="w-3 h-3 stroke-[2.5]" />
+                  <span>Download PDF</span>
+                </>
+              )}
             </button>
           </div>
         </div>
