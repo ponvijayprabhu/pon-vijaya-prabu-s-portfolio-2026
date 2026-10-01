@@ -19,7 +19,7 @@ interface PortfolioContextType {
   setActiveCategory: (cat: string) => void;
 }
 
-const STORAGE_KEY = 'portfolio_profile_custom_data_v9';
+const STORAGE_KEY = 'portfolio_profile_custom_data_v10';
 
 const PortfolioContext = createContext<PortfolioContextType | undefined>(undefined);
 

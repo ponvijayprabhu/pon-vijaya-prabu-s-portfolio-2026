@@ -260,14 +260,14 @@ export const ResumeModal: React.FC = () => {
                       <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2022-2025</div>
                     </div>
 
-                    {/* Diploma */}
+                    {/* MBA */}
                     <div>
                       <div className="font-bold uppercase tracking-tight text-[11px] text-[#111827] leading-tight">
-                        DIPLOMA IN MECHANICAL ENGINEERING
+                        MASTER OF BUSINESS ADMINISTRATION (MBA)
                       </div>
-                      <div className="text-[11px] text-[#4B5563]">N.M.S Kamaraj polytechnic college</div>
-                      <div className="text-[10.5px] text-[#6B7280]">Nagercoil, Kanyakumari</div>
-                      <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2019-2022</div>
+                      <div className="text-[11px] text-[#4B5563]">Currently Pursuing</div>
+                      <div className="text-[10.5px] text-[#6B7280]">Tamil Nadu, India</div>
+                      <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2025 – Present</div>
                     </div>
 
                     {/* SSLC */}

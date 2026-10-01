@@ -100,10 +100,10 @@ export const AboutSection: React.FC = () => {
               fontVariantNumeric: 'tabular-nums',
             }}
           >
-            Dip.
+            MBA
           </span>
           <span className="text-sm sm:text-base text-[#ABA79E]">
-            Diploma in Mechanical Engineering from N.M.S Kamaraj (2019–2022)
+            Currently pursuing Master of Business Administration
           </span>
         </div>
       </div>
