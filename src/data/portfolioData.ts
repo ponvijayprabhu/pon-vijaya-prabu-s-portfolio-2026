@@ -44,16 +44,16 @@ export const initialProfile: PortfolioProfile = {
   ],
   education: [
     {
-      degree: 'MASTER OF BUSINESS ADMINISTRATION (MBA)',
-      institution: 'Currently Pursuing',
-      location: 'Tamil Nadu, India',
-      year: '2025 – Present',
-    },
-    {
       degree: 'BACHELOR IN MECHANICAL ENGINEERING',
       institution: "Stella Mary's college of engineering",
       location: 'Nagercoil, Kanyakumari',
       year: '2022-2025',
+    },
+    {
+      degree: 'DIPLOMA IN MECHANICAL ENGINEERING',
+      institution: 'N.M.S Kamaraj polytechnic college',
+      location: 'Nagercoil, Kanyakumari',
+      year: '2019-2022',
     },
     {
       degree: 'SSLC',

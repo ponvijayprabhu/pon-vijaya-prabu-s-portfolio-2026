@@ -43,7 +43,7 @@ function generatePdf() {
 
   // Subtitle
   y += 5.5;
-  doc.setFont('times', 'italic');
+  doc.setFont('times', 'normal');
   doc.setFontSize(12.5);
   doc.text('UI/UX Designer', marginX, y);
 
@@ -177,21 +177,21 @@ function generatePdf() {
   doc.text('2022-2025', leftColX, leftY);
   leftY += 4.5;
 
-  // MBA
+  // Diploma
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(7.8);
   doc.setTextColor(dark[0], dark[1], dark[2]);
-  doc.text('MASTER OF BUSINESS ADMINISTRATION (MBA)', leftColX, leftY);
+  doc.text('DIPLOMA IN MECHANICAL ENGINEERING', leftColX, leftY);
   leftY += 3.5;
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(7.5);
   doc.setTextColor(muted[0], muted[1], muted[2]);
-  doc.text('Currently Pursuing', leftColX, leftY);
+  doc.text('N.M.S Kamaraj polytechnic college', leftColX, leftY);
   leftY += 3.2;
-  doc.text('Tamil Nadu, India', leftColX, leftY);
+  doc.text('Nagercoil, Kanyakumari', leftColX, leftY);
   leftY += 3.2;
   doc.setFont('helvetica', 'bold');
-  doc.text('2025 - Present', leftColX, leftY);
+  doc.text('2019-2022', leftColX, leftY);
   leftY += 4.5;
 
   // SSLC

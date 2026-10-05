@@ -154,7 +154,7 @@ export const ResumeModal: React.FC = () => {
                 </h1>
                 <div className="w-full h-[1px] bg-[#111827] my-1.5" />
                 <div
-                  className="text-base sm:text-lg font-serif italic text-[#1F2937] font-medium"
+                  className="text-base sm:text-lg font-serif text-[#1F2937] font-normal"
                   style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
                 >
                   UI/UX Designer
@@ -260,14 +260,14 @@ export const ResumeModal: React.FC = () => {
                       <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2022-2025</div>
                     </div>
 
-                    {/* MBA */}
+                    {/* Diploma */}
                     <div>
                       <div className="font-bold uppercase tracking-tight text-[11px] text-[#111827] leading-tight">
-                        MASTER OF BUSINESS ADMINISTRATION (MBA)
+                        DIPLOMA IN MECHANICAL ENGINEERING
                       </div>
-                      <div className="text-[11px] text-[#4B5563]">Currently Pursuing</div>
-                      <div className="text-[10.5px] text-[#6B7280]">Tamil Nadu, India</div>
-                      <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2025 – Present</div>
+                      <div className="text-[11px] text-[#4B5563]">N.M.S Kamaraj polytechnic college</div>
+                      <div className="text-[10.5px] text-[#6B7280]">Nagercoil, Kanyakumari</div>
+                      <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2019-2022</div>
                     </div>
 
                     {/* SSLC */}
