@@ -2,6 +2,7 @@ import { jsPDF } from 'jspdf';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { execSync } from 'child_process';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -19,6 +20,21 @@ function generatePdf() {
     fs.copyFileSync(userOwnPdf, path.join(outDir, 'PON VIJAYA PRABU S own.pdf'));
     fs.copyFileSync(userOwnPdf, path.join(outDir, 'PON_VIJAYA_PRABU_S_own.pdf'));
     fs.copyFileSync(userOwnPdf, path.join(outDir, 'Pon_Vijaya_Prabu_S_Resume.pdf'));
+
+    // Render high-res 300 DPI preview image for bulletproof in-app viewing
+    try {
+      const gsPreviewOut = path.join(outDir, 'resume-preview.png');
+      const gsCmd = `gs -dNOPAUSE -dBATCH -sDEVICE=png16m -r300 -sOutputFile="${gsPreviewOut}" "${userOwnPdf}"`;
+      execSync(gsCmd, { stdio: 'ignore' });
+      const srcAssetsDir = path.join(__dirname, '..', 'src', 'assets');
+      if (fs.existsSync(srcAssetsDir)) {
+        fs.copyFileSync(gsPreviewOut, path.join(srcAssetsDir, 'resume-preview.png'));
+      }
+      console.log('Successfully generated 300DPI resume-preview.png!');
+    } catch (e) {
+      console.warn('Ghostscript note:', e.message);
+    }
+
     console.log('Successfully synchronized user own.pdf to all public endpoints!');
     return;
   }

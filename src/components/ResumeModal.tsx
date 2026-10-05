@@ -11,13 +11,18 @@ import {
   Loader2,
   ExternalLink,
   FileText,
-  Eye
+  Eye,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw
 } from 'lucide-react';
+import resumePreviewImg from '../assets/resume-preview.png';
 
 export const ResumeModal: React.FC = () => {
   const { profile, isResumeOpen, setIsResumeOpen, accent } = usePortfolio();
-  const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
-  const [viewMode, setViewMode] = useState<'pdf' | 'web'>('pdf');
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [viewMode, setViewMode] = useState<'original' | 'web'>('original');
+  const [zoomLevel, setZoomLevel] = useState<number>(100);
 
   const base = import.meta.env.BASE_URL || '/';
   const pdfUrl = `${base.replace(/\/$/, '')}/PON%20VIJAYA%20PRABU%20S%20own.pdf`;
@@ -38,43 +43,15 @@ export const ResumeModal: React.FC = () => {
 
   if (!isResumeOpen) return null;
 
-  /**
-   * Prints the official "PON VIJAYA PRABU S own.pdf" directly.
-   * If iframe printing isn't supported by the client browser, falls back to window.print().
-   */
   const handlePrint = () => {
-    try {
-      let printIframe = document.getElementById('resume-pdf-print-iframe') as HTMLIFrameElement;
-      if (!printIframe) {
-        printIframe = document.createElement('iframe');
-        printIframe.id = 'resume-pdf-print-iframe';
-        printIframe.style.position = 'fixed';
-        printIframe.style.right = '0';
-        printIframe.style.bottom = '0';
-        printIframe.style.width = '0';
-        printIframe.style.height = '0';
-        printIframe.style.border = 'none';
-        document.body.appendChild(printIframe);
-      }
-      printIframe.src = pdfUrl;
-      printIframe.onload = () => {
-        try {
-          printIframe.contentWindow?.focus();
-          printIframe.contentWindow?.print();
-        } catch {
-          window.print();
-        }
-      };
-    } catch {
-      window.print();
-    }
+    window.print();
   };
 
   /**
    * Downloads the user's authentic "PON VIJAYA PRABU S own.pdf" document directly.
    */
   const handleDownloadPdf = () => {
-    setIsGeneratingPdf(true);
+    setIsDownloading(true);
     try {
       const link = document.createElement('a');
       link.href = pdfUrl;
@@ -86,8 +63,20 @@ export const ResumeModal: React.FC = () => {
       console.error('Error downloading resume PDF:', err);
       window.open(pdfUrl, '_blank');
     } finally {
-      setTimeout(() => setIsGeneratingPdf(false), 400);
+      setTimeout(() => setIsDownloading(false), 400);
     }
+  };
+
+  const handleZoomIn = () => {
+    setZoomLevel(prev => Math.min(prev + 20, 180));
+  };
+
+  const handleZoomOut = () => {
+    setZoomLevel(prev => Math.max(prev - 20, 60));
+  };
+
+  const handleResetZoom = () => {
+    setZoomLevel(100);
   };
 
   return (
@@ -95,7 +84,7 @@ export const ResumeModal: React.FC = () => {
       role="dialog"
       aria-modal="true"
       aria-labelledby="resume-title"
-      className="resume-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-[#0D0D0C]/85 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200"
+      className="resume-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-[#0D0D0C]/90 backdrop-blur-md overflow-y-auto animate-in fade-in duration-200"
       onClick={() => setIsResumeOpen(false)}
     >
       <div
@@ -105,7 +94,7 @@ export const ResumeModal: React.FC = () => {
         {/* ========================================================================= */}
         {/* TOP CONTROLS & ACTION BAR (HIDDEN IN PRINT)                               */}
         {/* ========================================================================= */}
-        <div className="no-print flex flex-wrap items-center justify-between gap-3 px-2 py-1 border-b border-[#2A2A26]">
+        <div className="no-print flex flex-wrap items-center justify-between gap-3 px-2 py-1.5 border-b border-[#2A2A26]">
           {/* Status Label & View Switcher */}
           <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2">
@@ -122,21 +111,21 @@ export const ResumeModal: React.FC = () => {
             <div className="flex items-center rounded-lg bg-[#22221F] p-0.5 border border-[#2E2E2A]">
               <button
                 type="button"
-                onClick={() => setViewMode('pdf')}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
-                  viewMode === 'pdf'
+                onClick={() => setViewMode('original')}
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
+                  viewMode === 'original'
                     ? 'bg-[#2E2E2A] text-[#F2EFE8] shadow-xs'
                     : 'text-[#ABA79E] hover:text-[#F2EFE8]'
                 }`}
-                title="View authentic PDF file"
+                title="View authentic high-definition resume document"
               >
                 <FileText className="w-3.5 h-3.5" />
-                <span>Original PDF</span>
+                <span>Original Document</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode('web')}
-                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-colors cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-md text-xs font-semibold transition-colors cursor-pointer ${
                   viewMode === 'web'
                     ? 'bg-[#2E2E2A] text-[#F2EFE8] shadow-xs'
                     : 'text-[#ABA79E] hover:text-[#F2EFE8]'
@@ -147,6 +136,48 @@ export const ResumeModal: React.FC = () => {
                 <span>Web View</span>
               </button>
             </div>
+
+            {/* Zoom Controls (when viewing original document) */}
+            {viewMode === 'original' && (
+              <div className="hidden md:flex items-center gap-1 rounded-lg bg-[#22221F] px-1.5 py-0.5 border border-[#2E2E2A] text-[#ABA79E]">
+                <button
+                  type="button"
+                  onClick={handleZoomOut}
+                  disabled={zoomLevel <= 60}
+                  className="p-1 hover:text-[#F2EFE8] disabled:opacity-40 cursor-pointer"
+                  title="Zoom Out"
+                >
+                  <ZoomOut className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={handleResetZoom}
+                  className="text-[11px] font-mono px-1 hover:text-[#F2EFE8] cursor-pointer"
+                  title="Reset Zoom (100%)"
+                >
+                  {zoomLevel}%
+                </button>
+                <button
+                  type="button"
+                  onClick={handleZoomIn}
+                  disabled={zoomLevel >= 180}
+                  className="p-1 hover:text-[#F2EFE8] disabled:opacity-40 cursor-pointer"
+                  title="Zoom In"
+                >
+                  <ZoomIn className="w-3.5 h-3.5" />
+                </button>
+                {zoomLevel !== 100 && (
+                  <button
+                    type="button"
+                    onClick={handleResetZoom}
+                    className="p-1 hover:text-[#F2EFE8] cursor-pointer ml-0.5"
+                    title="Reset Zoom"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* Action Buttons */}
@@ -158,7 +189,7 @@ export const ResumeModal: React.FC = () => {
               rel="noopener noreferrer"
               aria-label="Open original PDF in new tab"
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-[#2E2E2A] bg-[#1C1C1A] text-[#CBC7BD] hover:text-[#F2EFE8] transition-colors cursor-pointer"
-              title="Open PON VIJAYA PRABU S own.pdf in new tab"
+              title="Open PON VIJAYA PRABU S own.pdf in standalone viewer"
             >
               <ExternalLink className="w-3.5 h-3.5" />
               <span>Open PDF</span>
@@ -167,13 +198,13 @@ export const ResumeModal: React.FC = () => {
             {/* Download PDF button */}
             <button
               onClick={handleDownloadPdf}
-              disabled={isGeneratingPdf}
+              disabled={isDownloading}
               aria-label="Download PON VIJAYA PRABU S own.pdf"
               className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-md transition-all hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
               style={{ backgroundColor: accent }}
               title="Download PON VIJAYA PRABU S own.pdf"
             >
-              {isGeneratingPdf ? (
+              {isDownloading ? (
                 <>
                   <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   <span>Downloading...</span>
@@ -191,7 +222,7 @@ export const ResumeModal: React.FC = () => {
               onClick={handlePrint}
               aria-label="Print resume"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-[#2E2E2A] bg-[#1C1C1A] text-[#CBC7BD] hover:text-[#F2EFE8] transition-colors cursor-pointer"
-              title="Print PON VIJAYA PRABU S own.pdf (Ctrl+P / Cmd+P)"
+              title="Print Resume (Ctrl+P / Cmd+P)"
             >
               <Printer className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Print</span>
@@ -209,36 +240,24 @@ export const ResumeModal: React.FC = () => {
         </div>
 
         {/* ========================================================================= */}
-        {/* RESUME DISPLAY: EITHER AUTHENTIC PDF EMBED OR CLASSIC WEB SHEET           */}
+        {/* RESUME DISPLAY: HIGH RESOLUTION 300DPI DOCUMENT PREVIEW                   */}
         {/* ========================================================================= */}
-        {viewMode === 'pdf' ? (
-          <div className="w-full h-[76vh] rounded-xl overflow-hidden bg-[#242422] border border-[#2E2E2A] flex flex-col relative">
-            <iframe
-              src={`${pdfUrl}#toolbar=1&navpanes=0`}
-              className="w-full h-full rounded-xl bg-white border-0"
-              title="PON VIJAYA PRABU S own.pdf"
-            />
-            {/* Fallback overlay in case client browser cannot render iframe PDF */}
-            <div className="no-print p-2 bg-[#1C1C1A] border-t border-[#2A2A26] flex items-center justify-between text-xs text-[#ABA79E]">
-              <span>Viewing: <strong>PON VIJAYA PRABU S own.pdf</strong></span>
-              <div className="flex items-center gap-3">
-                <a
-                  href={pdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-[#F2EFE8] underline underline-offset-2 flex items-center gap-1"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  <span>Open Fullscreen</span>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => setViewMode('web')}
-                  className="hover:text-[#F2EFE8] underline underline-offset-2"
-                >
-                  Switch to Web View
-                </button>
-              </div>
+        {viewMode === 'original' ? (
+          <div className="resume-scroll-container max-h-[calc(86vh-90px)] overflow-y-auto overflow-x-auto rounded-xl bg-[#20201D] p-2 sm:p-4 border border-[#2A2A26] flex justify-center items-start">
+            <div
+              className="relative shadow-2xl rounded-sm overflow-hidden bg-white max-w-[800px] w-full transition-all duration-150 origin-top"
+              style={{
+                width: zoomLevel !== 100 ? `${zoomLevel}%` : '100%',
+                maxWidth: zoomLevel > 100 ? `${(800 * zoomLevel) / 100}px` : '800px'
+              }}
+            >
+              <img
+                src={resumePreviewImg}
+                alt="Pon Vijaya Prabu S - Official Resume"
+                className="w-full h-auto block select-none resume-print-image"
+                loading="eager"
+                decoding="sync"
+              />
             </div>
           </div>
         ) : (
@@ -685,18 +704,18 @@ export const ResumeModal: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={handleDownloadPdf}
-              disabled={isGeneratingPdf}
+              disabled={isDownloading}
               className="px-4 py-1.5 rounded-full font-bold text-[#0D0D0C] shadow-md transition-all hover:scale-105 active:scale-95 disabled:opacity-70 flex items-center gap-1.5 cursor-pointer"
               style={{ backgroundColor: accent }}
             >
-              {isGeneratingPdf ? (
+              {isDownloading ? (
                 <>
-                  <Loader2 className="w-3 h-3 animate-spin" />
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
                   <span>Downloading...</span>
                 </>
               ) : (
                 <>
-                  <Download className="w-3 h-3 stroke-[2.5]" />
+                  <Download className="w-3.5 h-3.5 stroke-[2.5]" />
                   <span>Download Resume (PDF)</span>
                 </>
               )}
