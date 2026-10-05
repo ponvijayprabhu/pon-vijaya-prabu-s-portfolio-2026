@@ -6,8 +6,8 @@ import {
   Download,
   Mail,
   Phone,
-  Globe,
   Linkedin,
+  Github,
   Loader2
 } from 'lucide-react';
 
@@ -134,40 +134,40 @@ export const ResumeModal: React.FC = () => {
         <div className="resume-scroll-container max-h-[calc(86vh-90px)] overflow-y-auto rounded-xl">
           <div
             id="printable-resume"
-            className="w-full bg-[#FFFFFF] text-[#111827] shadow-xl p-6 sm:p-8 md:p-10 font-sans"
+            className="w-full bg-[#FFFFFF] text-[#1A1A1A] shadow-xl p-6 sm:p-8 md:p-10"
             style={{
-              fontFamily: "'Bricolage Grotesque', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+              fontFamily: "'Times New Roman', Times, Georgia, serif"
             }}
           >
             {/* ===================================================================== */}
             {/* HEADER: NAME, TITLE, AND CONTACT BADGES MATRIX                        */}
             {/* ===================================================================== */}
-            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-3">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-2">
               {/* Left: Name and Title with Underline */}
               <div className="flex flex-col">
                 <h1
                   id="resume-title"
-                  className="text-2xl sm:text-3xl lg:text-[34px] font-serif tracking-tight font-bold uppercase text-[#111827] leading-none"
-                  style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                  className="text-2xl sm:text-3xl lg:text-[34px] tracking-tight font-bold uppercase text-[#111827] leading-none"
+                  style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                 >
                   PON VIJAYA PRABU S
                 </h1>
-                <div className="w-full h-[1px] bg-[#111827] my-1.5" />
+                <div className="w-full max-w-[280px] h-[1.5px] bg-[#111827] my-1.5" />
                 <div
-                  className="text-base sm:text-lg font-serif text-[#1F2937] font-normal"
-                  style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                  className="text-base sm:text-lg text-[#1F2937] font-normal"
+                  style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                 >
                   UI/UX Designer
                 </div>
               </div>
 
               {/* Right: Contact Details with Circular Icon Badges */}
-              <div className="flex flex-col sm:items-end gap-1.5 text-xs text-[#374151]">
+              <div className="flex flex-col sm:items-end gap-1 text-[13px] text-[#222222]">
                 <a
                   href={`tel:${profile.phone}`}
                   className="flex items-center gap-2 hover:text-[#111827] transition-colors"
                 >
-                  <span className="font-medium text-[#111827]">{profile.phone}</span>
+                  <span className="text-[#222222]">{profile.phone}</span>
                   <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Phone className="w-2.5 h-2.5 stroke-[2.5]" />
                   </span>
@@ -177,7 +177,7 @@ export const ResumeModal: React.FC = () => {
                   href={`mailto:${profile.email}`}
                   className="flex items-center gap-2 hover:text-[#111827] transition-colors"
                 >
-                  <span className="font-medium underline underline-offset-2 text-[#111827]">{profile.email}</span>
+                  <span className="underline underline-offset-2 text-[#222222]">{profile.email}</span>
                   <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Mail className="w-2.5 h-2.5 stroke-[2.5]" />
                   </span>
@@ -189,8 +189,8 @@ export const ResumeModal: React.FC = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 hover:text-[#111827] transition-colors"
                 >
-                  <span className="underline underline-offset-2 text-[#374151]">www.linkedin.com/in/pon-vijay-prabhu3774</span>
-                  <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <span className="underline underline-offset-2 text-[#222222]">www.linkedin.com/in/pon-vijay-prabhu3774</span>
+                  <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs text-[9px] font-bold">
                     <Linkedin className="w-2.5 h-2.5 stroke-[2.5]" />
                   </span>
                 </a>
@@ -201,34 +201,34 @@ export const ResumeModal: React.FC = () => {
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 hover:text-[#111827] transition-colors truncate max-w-xs"
                 >
-                  <span className="underline underline-offset-2 text-[#374151]">https://ponvijayprabhu.github.io/Pon-vijaya-prabu-S-portfolio/</span>
+                  <span className="underline underline-offset-2 text-[#222222]">https://ponvijayprabhu.github.io/Pon-vijaya-prabu-S-portfolio/</span>
                   <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs">
-                    <Globe className="w-2.5 h-2.5 stroke-[2.5]" />
+                    <Github className="w-2.5 h-2.5 stroke-[2.5]" />
                   </span>
                 </a>
               </div>
             </div>
 
             {/* FULL-WIDTH DIVIDER */}
-            <div className="w-full h-[1.5px] bg-[#111827] mb-2.5" />
+            <div className="w-full h-[1px] bg-[#999999] my-2" />
 
             {/* ===================================================================== */}
             {/* PROFESSIONAL SUMMARY (CENTERED WITH DIVIDER LINES)                    */}
             {/* ===================================================================== */}
             <div className="py-2 text-center">
               <h2
-                className="text-xs sm:text-[13px] font-serif tracking-[0.2em] uppercase font-bold text-[#111827] mb-1.5"
-                style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                className="text-[13px] sm:text-[14px] tracking-[0.2em] uppercase font-bold text-[#111827] mb-1.5"
+                style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
               >
                 PROFESSIONAL SUMMARY
               </h2>
-              <p className="text-xs sm:text-[12.5px] leading-relaxed text-[#374151] max-w-3xl mx-auto">
+              <p className="text-[13px] leading-relaxed text-[#2D3748] max-w-3xl mx-auto">
                 Passionate UI/UX Designer with experience in designing responsive web and mobile applications using Figma. Skilled in wireframing, prototyping, and creating user-centered interfaces that improve usability and user experience.
               </p>
             </div>
 
             {/* FULL-WIDTH DIVIDER */}
-            <div className="w-full h-[1px] bg-[#D1D5DB] my-2" />
+            <div className="w-full h-[1px] bg-[#999999] my-2" />
 
             {/* ===================================================================== */}
             {/* TWO COLUMNS SEPARATED BY A VERTICAL DIVIDER                           */}
@@ -237,83 +237,83 @@ export const ResumeModal: React.FC = () => {
               {/* ------------------------------------------------------------------- */}
               {/* LEFT COLUMN: EDUCATION, TOOLS, CORE SKILLS, CERTS, LANGUAGES        */}
               {/* ------------------------------------------------------------------- */}
-              <div className="sm:col-span-5 flex flex-col gap-4 sm:pr-4 sm:border-r sm:border-[#D1D5DB]">
+              <div className="sm:col-span-5 flex flex-col gap-4 sm:pr-4 sm:border-r sm:border-[#CCCCCC]">
                 {/* EDUCATION */}
                 <div className="flex flex-col gap-2">
-                  <div className="pb-1 border-b border-[#333333]">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       EDUCATION
                     </h3>
                   </div>
 
-                  <div className="flex flex-col gap-2.5 text-xs">
+                  <div className="flex flex-col gap-2 text-[12.5px]">
                     {/* Bachelor */}
                     <div>
-                      <div className="font-bold uppercase tracking-tight text-[11px] text-[#111827] leading-tight">
+                      <div className="font-bold uppercase tracking-tight text-[12px] text-[#111827] leading-tight">
                         BACHELOR IN MECHANICAL ENGINEERING
                       </div>
-                      <div className="text-[11px] text-[#4B5563]">Stella Mary's college of engineering</div>
-                      <div className="text-[10.5px] text-[#6B7280]">Nagercoil, Kanyakumari</div>
-                      <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2022-2025</div>
+                      <div className="text-[12px] text-[#333333]">Stella Mary's college of engineering</div>
+                      <div className="text-[11.5px] text-[#555555]">Nagercoil, Kanyakumari</div>
+                      <div className="font-bold text-[11.5px] text-[#111827] mt-0.5">2022-2025</div>
                     </div>
 
                     {/* Diploma */}
                     <div>
-                      <div className="font-bold uppercase tracking-tight text-[11px] text-[#111827] leading-tight">
+                      <div className="font-bold uppercase tracking-tight text-[12px] text-[#111827] leading-tight">
                         DIPLOMA IN MECHANICAL ENGINEERING
                       </div>
-                      <div className="text-[11px] text-[#4B5563]">N.M.S Kamaraj polytechnic college</div>
-                      <div className="text-[10.5px] text-[#6B7280]">Nagercoil, Kanyakumari</div>
-                      <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2019-2022</div>
+                      <div className="text-[12px] text-[#333333]">N.M.S Kamaraj polytechnic college</div>
+                      <div className="text-[11.5px] text-[#555555]">Nagercoil, Kanyakumari</div>
+                      <div className="font-bold text-[11.5px] text-[#111827] mt-0.5">2019-2022</div>
                     </div>
 
                     {/* SSLC */}
                     <div>
-                      <div className="font-bold uppercase tracking-tight text-[11px] text-[#111827] leading-tight">
+                      <div className="font-bold uppercase tracking-tight text-[12px] text-[#111827] leading-tight">
                         SSLC
                       </div>
-                      <div className="text-[11px] text-[#4B5563]">Sri Ramji Matric.Hr.Sec.School</div>
-                      <div className="text-[10.5px] text-[#6B7280]">Ganapathipuram, Kanyakumari</div>
-                      <div className="font-semibold text-[10.5px] text-[#111827] mt-0.5">2019</div>
+                      <div className="text-[12px] text-[#333333]">Sri Ramji Matric.Hr.Sec.School</div>
+                      <div className="text-[11.5px] text-[#555555]">Ganapathipuram, Kanyakumari</div>
+                      <div className="font-bold text-[11.5px] text-[#111827] mt-0.5">2019</div>
                     </div>
                   </div>
                 </div>
 
                 {/* DESIGN TOOLS */}
                 <div className="flex flex-col gap-1.5">
-                  <div className="pb-1 border-b border-[#333333]">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       DESIGN TOOLS
                     </h3>
                   </div>
-                  <ul className="text-xs flex flex-col gap-1 pl-0.5 text-[#374151]">
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                  <ul className="flex flex-col gap-0.5 pl-0.5 text-[#222222] text-[12.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Figma</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Adobe XD</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Adobe Photoshop</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Adobe Illustrator</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Canva</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Miro</span>
                     </li>
@@ -322,32 +322,32 @@ export const ResumeModal: React.FC = () => {
 
                 {/* CORE UI/UX SKILLS */}
                 <div className="flex flex-col gap-1.5">
-                  <div className="pb-1 border-b border-[#333333]">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       CORE UI/UX SKILLS
                     </h3>
                   </div>
-                  <ul className="text-xs flex flex-col gap-1 pl-0.5 text-[#374151]">
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                  <ul className="flex flex-col gap-0.5 pl-0.5 text-[#222222] text-[12.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>User Research</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Wireframing</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Prototyping</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>User Flows</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Responsive Design</span>
                     </li>
@@ -356,32 +356,32 @@ export const ResumeModal: React.FC = () => {
 
                 {/* CERTIFICATIONS */}
                 <div className="flex flex-col gap-1.5">
-                  <div className="pb-1 border-b border-[#333333]">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       CERTIFICATIONS
                     </h3>
                   </div>
-                  <ul className="text-xs flex flex-col gap-1.5 pl-0.5 text-[#374151]">
-                    <li className="flex items-start gap-2 text-[11px] leading-tight">
+                  <ul className="flex flex-col gap-1 pl-0.5 text-[#222222] text-[12px]">
+                    <li className="flex items-start gap-2 leading-tight">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1 shrink-0" />
                       <span>UI/UX Design Certification</span>
                     </li>
-                    <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <li className="flex items-start gap-2 leading-tight">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1 shrink-0" />
                       <span>AI and Machine Learning Fundamentals (2024)</span>
                     </li>
-                    <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <li className="flex items-start gap-2 leading-tight">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1 shrink-0" />
                       <span>Internet of Things (IoT) Certification (2024)</span>
                     </li>
-                    <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <li className="flex items-start gap-2 leading-tight">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1 shrink-0" />
                       <span>Non-Destructive Testing (NDT) Level 2 Certification (2024)</span>
                     </li>
-                    <li className="flex items-start gap-2 text-[11px] leading-tight">
+                    <li className="flex items-start gap-2 leading-tight">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1 shrink-0" />
                       <span>Master CAM-CNC Lathe and Milling Certification (2023)</span>
                     </li>
@@ -390,15 +390,15 @@ export const ResumeModal: React.FC = () => {
 
                 {/* LANGUAGES */}
                 <div className="flex flex-col gap-1.5">
-                  <div className="pb-1 border-b border-[#333333]">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       LANGUAGES
                     </h3>
                   </div>
-                  <div className="flex items-center gap-4 text-xs font-medium pl-0.5 text-[11.5px] text-[#374151]">
+                  <div className="flex items-center gap-4 pl-0.5 text-[12.5px] text-[#222222]">
                     <span className="flex items-center gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827]" />
                       <span>Tamil</span>
@@ -417,26 +417,26 @@ export const ResumeModal: React.FC = () => {
               <div className="sm:col-span-7 flex flex-col gap-4 sm:pl-2">
                 {/* WORK EXPERIENCE */}
                 <div className="flex flex-col gap-1.5">
-                  <div className="pb-1 border-b border-[#333333]">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       WORK EXPERIENCE
                     </h3>
                   </div>
 
-                  <div className="flex flex-col gap-0.5 text-xs">
-                    <div className="font-bold text-[13px] text-[#111827] leading-snug">
+                  <div className="flex flex-col gap-0.5 text-[12.5px]">
+                    <div className="font-bold text-[13.5px] text-[#111827] leading-snug">
                       UI/UX Designer
                     </div>
-                    <div className="font-bold text-[12px] text-[#1F2937]">
+                    <div className="font-bold text-[13px] text-[#1F2937]">
                       Canvendor software solutions private limited - Nagercoil
                     </div>
-                    <div className="text-[#6B7280] text-[11px] font-medium">
+                    <div className="text-[#555555] text-[12px]">
                       (Nov 2025) Present
                     </div>
-                    <ul className="flex flex-col gap-1 pt-1 text-[11.5px] leading-relaxed text-[#374151]">
+                    <ul className="flex flex-col gap-1 pt-1 text-[12.5px] leading-relaxed text-[#222222]">
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1.5 shrink-0" />
                         <span>Designed web and mobile interfaces for EMR, AI, HRMS, logistics, and landing page projects.</span>
@@ -455,27 +455,27 @@ export const ResumeModal: React.FC = () => {
 
                 {/* INTERNSHIP EXPERIENCE */}
                 <div className="flex flex-col gap-2.5">
-                  <div className="pb-1 border-b border-[#333333]">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       INTERNSHIP EXPERIENCE
                     </h3>
                   </div>
 
                   {/* Canvendor Intern */}
-                  <div className="flex flex-col gap-0.5 text-xs">
-                    <div className="font-bold text-[12.5px] text-[#111827] leading-snug">
+                  <div className="flex flex-col gap-0.5 text-[12.5px]">
+                    <div className="font-bold text-[13px] text-[#111827] leading-snug">
                       UI/UX Design Intern
                     </div>
-                    <div className="font-bold text-[12px] text-[#1F2937]">
+                    <div className="font-bold text-[12.5px] text-[#1F2937]">
                       Canvendor software solutions private limited - Nagercoil
                     </div>
-                    <div className="text-[#6B7280] text-[11px] font-medium">
+                    <div className="text-[#555555] text-[12px]">
                       Nagercoil, (Jun 2025 – Oct 2025)
                     </div>
-                    <ul className="flex flex-col gap-1 pt-1 text-[11.5px] leading-relaxed text-[#374151]">
+                    <ul className="flex flex-col gap-1 pt-1 text-[12.5px] leading-relaxed text-[#222222]">
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1.5 shrink-0" />
                         <span>Assisted in designing responsive web and mobile interfaces using Figma.</span>
@@ -492,14 +492,14 @@ export const ResumeModal: React.FC = () => {
                   </div>
 
                   {/* AK Infopark */}
-                  <div className="flex flex-col gap-0.5 text-xs pt-1 border-t border-[#E5E7EB]">
-                    <div className="font-bold text-[12px] text-[#111827]">
+                  <div className="flex flex-col gap-0.5 text-[12.5px] pt-1">
+                    <div className="font-bold text-[12.5px] text-[#111827]">
                       AK Infopark private limited
                     </div>
-                    <div className="text-[#6B7280] text-[11px] font-medium">
+                    <div className="text-[#555555] text-[12px]">
                       Nagercoil, (Jan 2025 )
                     </div>
-                    <ul className="flex flex-col gap-1 pt-0.5 text-[11.5px] leading-relaxed text-[#374151]">
+                    <ul className="flex flex-col gap-1 pt-0.5 text-[12.5px] leading-relaxed text-[#222222]">
                       <li className="flex items-start gap-2">
                         <span className="w-1.5 h-1.5 rounded-full bg-[#111827] mt-1.5 shrink-0" />
                         <span>Designed responsive web and mobile interfaces using Figma.</span>
@@ -512,60 +512,60 @@ export const ResumeModal: React.FC = () => {
                   </div>
 
                   {/* R.K. Motors */}
-                  <div className="flex flex-col gap-0.5 text-xs pt-1 border-t border-[#E5E7EB]">
-                    <div className="font-bold text-[12px] text-[#111827]">
+                  <div className="flex flex-col gap-0.5 text-[12.5px] pt-1">
+                    <div className="font-bold text-[12.5px] text-[#111827]">
                       R.K. Motors (BOSCH Car Service Center), Nagercoil
                     </div>
-                    <div className="text-[#6B7280] text-[11px] font-medium">
+                    <div className="text-[#555555] text-[12px]">
                       (Jul 2024)
                     </div>
-                    <p className="text-[11.5px] text-[#374151] pl-3">
+                    <p className="text-[12.5px] text-[#222222] pl-3">
                       • Assisted in vehicle diagnostics, maintenance, and repair operations.
                     </p>
                   </div>
 
                   {/* Bajaj Bike Service */}
-                  <div className="flex flex-col gap-0.5 text-xs pt-1 border-t border-[#E5E7EB]">
-                    <div className="font-bold text-[12px] text-[#111827]">
+                  <div className="flex flex-col gap-0.5 text-[12.5px] pt-1">
+                    <div className="font-bold text-[12.5px] text-[#111827]">
                       Bajaj Bike Service Center, Nagercoil
                     </div>
-                    <div className="text-[#6B7280] text-[11px] font-medium">
+                    <div className="text-[#555555] text-[12px]">
                       (Jul 2023)
                     </div>
-                    <p className="text-[11.5px] text-[#374151] pl-3">
+                    <p className="text-[12.5px] text-[#222222] pl-3">
                       Gained practical experience in motorcycle maintenance and workshop operations.
                     </p>
                   </div>
                 </div>
 
                 {/* SOFT SKILLS */}
-                <div className="flex flex-col gap-1.5 pt-1 border-t border-[#E5E7EB]">
-                  <div className="pb-1 border-b border-[#333333]">
+                <div className="flex flex-col gap-1.5 pt-1">
+                  <div className="pb-0.5 border-b border-[#333333]">
                     <h3
-                      className="text-xs font-serif tracking-[0.15em] uppercase font-bold text-[#111827]"
-                      style={{ fontFamily: "'Instrument Serif', Georgia, serif" }}
+                      className="text-[13px] tracking-[0.15em] uppercase font-bold text-[#111827]"
+                      style={{ fontFamily: "'Times New Roman', Times, Georgia, serif" }}
                     >
                       SOFT SKILLS
                     </h3>
                   </div>
-                  <ul className="text-xs flex flex-col gap-1 pl-0.5 text-[#374151]">
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                  <ul className="flex flex-col gap-0.5 pl-0.5 text-[#222222] text-[12.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Problem Solving</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Leadership</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Project & Time Management</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Team Collaboration</span>
                     </li>
-                    <li className="flex items-center gap-2 text-[11.5px]">
+                    <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#111827] shrink-0" />
                       <span>Communication</span>
                     </li>
