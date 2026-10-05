@@ -20,6 +20,7 @@ function generatePdf() {
     fs.copyFileSync(userOwnPdf, path.join(outDir, 'PON VIJAYA PRABU S own.pdf'));
     fs.copyFileSync(userOwnPdf, path.join(outDir, 'PON_VIJAYA_PRABU_S_own.pdf'));
     fs.copyFileSync(userOwnPdf, path.join(outDir, 'Pon_Vijaya_Prabu_S_Resume.pdf'));
+    fs.copyFileSync(userOwnPdf, path.join(outDir, 'Pon-Vijaya-Prabu-S-Resume.pdf'));
 
     // Render high-res 300 DPI preview image for bulletproof in-app viewing
     try {

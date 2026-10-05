@@ -9,7 +9,6 @@ import {
   Linkedin,
   Github,
   Loader2,
-  ExternalLink,
   FileText,
   Eye,
   ZoomIn,
@@ -23,9 +22,6 @@ export const ResumeModal: React.FC = () => {
   const [isDownloading, setIsDownloading] = useState(false);
   const [viewMode, setViewMode] = useState<'original' | 'web'>('original');
   const [zoomLevel, setZoomLevel] = useState<number>(100);
-
-  const base = import.meta.env.BASE_URL || '/';
-  const pdfUrl = `${base.replace(/\/$/, '')}/PON%20VIJAYA%20PRABU%20S%20own.pdf`;
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -48,31 +44,52 @@ export const ResumeModal: React.FC = () => {
   };
 
   /**
-   * Downloads the user's authentic "PON VIJAYA PRABU S own.pdf" document directly.
+   * Secure, reliable download via Blob.
+   * Completely avoids window.open or target="_blank" navigations
+   * which Chrome blocks inside iframe sandboxes.
    */
-  const handleDownloadPdf = () => {
+  const handleDownloadPdf = async () => {
     setIsDownloading(true);
     try {
+      const base = import.meta.env.BASE_URL || '/';
+      const cleanBase = base.endsWith('/') ? base : `${base}/`;
+      // Fetch via safe slugified path
+      const response = await fetch(`${cleanBase}Pon-Vijaya-Prabu-S-Resume.pdf`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
-      link.href = pdfUrl;
-      link.setAttribute('download', 'PON VIJAYA PRABU S own.pdf');
+      link.style.display = 'none';
+      link.href = blobUrl;
+      link.download = 'PON VIJAYA PRABU S own.pdf';
       document.body.appendChild(link);
       link.click();
+      window.URL.revokeObjectURL(blobUrl);
       document.body.removeChild(link);
     } catch (err) {
-      console.error('Error downloading resume PDF:', err);
-      window.open(pdfUrl, '_blank');
+      console.warn('Blob download fallback:', err);
+      // Fallback direct anchor download
+      const base = import.meta.env.BASE_URL || '/';
+      const cleanBase = base.endsWith('/') ? base : `${base}/`;
+      const fallbackLink = document.createElement('a');
+      fallbackLink.href = `${cleanBase}Pon-Vijaya-Prabu-S-Resume.pdf`;
+      fallbackLink.download = 'PON VIJAYA PRABU S own.pdf';
+      document.body.appendChild(fallbackLink);
+      fallbackLink.click();
+      document.body.removeChild(fallbackLink);
     } finally {
-      setTimeout(() => setIsDownloading(false), 400);
+      setTimeout(() => setIsDownloading(false), 500);
     }
   };
 
   const handleZoomIn = () => {
-    setZoomLevel(prev => Math.min(prev + 20, 180));
+    setZoomLevel((prev) => Math.min(prev + 20, 180));
   };
 
   const handleZoomOut = () => {
-    setZoomLevel(prev => Math.max(prev - 20, 60));
+    setZoomLevel((prev) => Math.max(prev - 20, 60));
   };
 
   const handleResetZoom = () => {
@@ -182,20 +199,7 @@ export const ResumeModal: React.FC = () => {
 
           {/* Action Buttons */}
           <div className="flex items-center gap-2">
-            {/* Open in new tab */}
-            <a
-              href={pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Open original PDF in new tab"
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-[#2E2E2A] bg-[#1C1C1A] text-[#CBC7BD] hover:text-[#F2EFE8] transition-colors cursor-pointer"
-              title="Open PON VIJAYA PRABU S own.pdf in standalone viewer"
-            >
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span>Open PDF</span>
-            </a>
-
-            {/* Download PDF button */}
+            {/* Download PDF button (Safe blob download, no popup/blank navigations) */}
             <button
               onClick={handleDownloadPdf}
               disabled={isDownloading}
@@ -212,7 +216,7 @@ export const ResumeModal: React.FC = () => {
               ) : (
                 <>
                   <Download className="w-3.5 h-3.5 stroke-[2.5]" />
-                  <span>Download Resume</span>
+                  <span>Download Resume (PDF)</span>
                 </>
               )}
             </button>
@@ -289,49 +293,33 @@ export const ResumeModal: React.FC = () => {
                 </div>
 
                 <div className="flex flex-col sm:items-end gap-1 text-[13px] text-[#222222]">
-                  <a
-                    href={`tel:${profile.phone}`}
-                    className="flex items-center gap-2 hover:text-[#111827] transition-colors"
-                  >
+                  <div className="flex items-center gap-2">
                     <span className="text-[#222222]">{profile.phone}</span>
                     <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs">
                       <Phone className="w-2.5 h-2.5 stroke-[2.5]" />
                     </span>
-                  </a>
+                  </div>
 
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="flex items-center gap-2 hover:text-[#111827] transition-colors"
-                  >
+                  <div className="flex items-center gap-2">
                     <span className="underline underline-offset-2 text-[#222222]">{profile.email}</span>
                     <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs">
                       <Mail className="w-2.5 h-2.5 stroke-[2.5]" />
                     </span>
-                  </a>
+                  </div>
 
-                  <a
-                    href={profile.socials.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-[#111827] transition-colors"
-                  >
+                  <div className="flex items-center gap-2">
                     <span className="underline underline-offset-2 text-[#222222]">www.linkedin.com/in/pon-vijay-prabhu3774</span>
                     <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs text-[9px] font-bold">
                       <Linkedin className="w-2.5 h-2.5 stroke-[2.5]" />
                     </span>
-                  </a>
+                  </div>
 
-                  <a
-                    href="https://ponvijayprabhu.github.io/Pon-vijaya-prabu-S-portfolio/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2 hover:text-[#111827] transition-colors truncate max-w-xs"
-                  >
+                  <div className="flex items-center gap-2 truncate max-w-xs">
                     <span className="underline underline-offset-2 text-[#222222]">https://ponvijayprabhu.github.io/Pon-vijaya-prabu-S-portfolio/</span>
                     <span className="w-5 h-5 rounded-full bg-[#374151] text-white flex items-center justify-center shrink-0 shadow-xs">
                       <Github className="w-2.5 h-2.5 stroke-[2.5]" />
                     </span>
-                  </a>
+                  </div>
                 </div>
               </div>
 

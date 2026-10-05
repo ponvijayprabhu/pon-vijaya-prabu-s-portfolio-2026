@@ -190,4 +190,15 @@
     page-break-inside: avoid;
     break-inside: avoid;
   }
+
+  .resume-print-image {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
 }
