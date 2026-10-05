@@ -7,6 +7,22 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 function generatePdf() {
+  const outDir = path.join(__dirname, '..', 'public');
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+  }
+
+  // If user provided their own PDF file, use and deploy it directly!
+  const userOwnPdf = path.join(__dirname, '..', 'PON VIJAYA PRABU S own.pdf');
+  if (fs.existsSync(userOwnPdf)) {
+    console.log('Found user uploaded "PON VIJAYA PRABU S own.pdf", synchronizing to public folder...');
+    fs.copyFileSync(userOwnPdf, path.join(outDir, 'PON VIJAYA PRABU S own.pdf'));
+    fs.copyFileSync(userOwnPdf, path.join(outDir, 'PON_VIJAYA_PRABU_S_own.pdf'));
+    fs.copyFileSync(userOwnPdf, path.join(outDir, 'Pon_Vijaya_Prabu_S_Resume.pdf'));
+    console.log('Successfully synchronized user own.pdf to all public endpoints!');
+    return;
+  }
+
   const doc = new jsPDF({
     orientation: 'portrait',
     unit: 'mm',
@@ -432,10 +448,6 @@ function generatePdf() {
   });
 
   // Write file to public/Pon_Vijaya_Prabu_S_Resume.pdf
-  const outDir = path.join(__dirname, '..', 'public');
-  if (!fs.existsSync(outDir)) {
-    fs.mkdirSync(outDir, { recursive: true });
-  }
   const outFile = path.join(outDir, 'Pon_Vijaya_Prabu_S_Resume.pdf');
   const buffer = Buffer.from(doc.output('arraybuffer'));
   fs.writeFileSync(outFile, buffer);
