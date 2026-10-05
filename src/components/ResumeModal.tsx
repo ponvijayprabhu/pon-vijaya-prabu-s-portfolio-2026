@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import {
   X,
-  Printer,
   Download,
   Mail,
   Phone,
@@ -38,10 +37,6 @@ export const ResumeModal: React.FC = () => {
   }, [isResumeOpen, setIsResumeOpen]);
 
   if (!isResumeOpen) return null;
-
-  const handlePrint = () => {
-    window.print();
-  };
 
   /**
    * Secure, reliable download via Blob.
@@ -219,17 +214,6 @@ export const ResumeModal: React.FC = () => {
                   <span>Download Resume (PDF)</span>
                 </>
               )}
-            </button>
-
-            {/* Print button */}
-            <button
-              onClick={handlePrint}
-              aria-label="Print resume"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border border-[#2E2E2A] bg-[#1C1C1A] text-[#CBC7BD] hover:text-[#F2EFE8] transition-colors cursor-pointer"
-              title="Print Resume (Ctrl+P / Cmd+P)"
-            >
-              <Printer className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Print</span>
             </button>
 
             {/* Close button */}
