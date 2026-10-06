@@ -7,11 +7,15 @@
 }
 
 @layer base {
+  html {
+    overflow-anchor: none;
+  }
   body {
     font-family: var(--font-sans);
     background-color: #0D0D0C;
     color: #F2EFE8;
     overflow-x: hidden;
+    overflow-anchor: none;
   }
 }
 
