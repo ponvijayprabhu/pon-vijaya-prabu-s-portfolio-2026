@@ -135,31 +135,28 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 4. CapCut (3D Circular Token, Bottom Left) */}
+          {/* 4. Miro (3D Yellow Tile, Bottom Left) */}
           <div
             className="absolute bottom-6 left-6 sm:bottom-12 sm:left-20 -rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default"
             style={{ perspective: '800px' }}
-            title="CapCut Video"
+            title="Miro Whiteboard"
           >
             <div
-              className="w-13 h-13 sm:w-15 sm:h-15 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+              className="w-13 h-13 sm:w-15 sm:h-15 rounded-[20px] p-0.5 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center"
               style={{
-                background: 'linear-gradient(145deg, #FFFFFF 0%, #E0E0E0 60%, #B8B8B8 100%)',
-                boxShadow: '0 14px 26px -6px rgba(0, 0, 0, 0.6), inset 0 2px 2px rgba(255,255,255,0.9), inset 0 -3px 4px rgba(0,0,0,0.3)',
+                background: 'linear-gradient(145deg, #FFE033 0%, #FFD02F 50%, #D4A000 100%)',
+                boxShadow: '0 16px 30px -6px rgba(255, 208, 47, 0.45), inset 0 2px 2px rgba(255,255,255,0.7), inset 0 -3px 5px rgba(0,0,0,0.3)',
                 transform: 'rotateX(-6deg) rotateY(-8deg)',
               }}
             >
-              {/* Authentic 3D CapCut Polygon Ribbon Icon */}
-              <svg className="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_3px_rgba(0,0,0,0.35)]" viewBox="0 0 24 24" fill="none">
-                <path
-                  d="M4 6L11 11L4 16L7 12L4 6Z"
-                  fill="#0D0D0C"
-                />
-                <path
-                  d="M20 6L13 11L20 16L17 12L20 6Z"
-                  fill="#0D0D0C"
-                />
-              </svg>
+              <div className="w-full h-full rounded-[18px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/20 to-transparent">
+                {/* Official 3D Miro Flag Stripes Icon */}
+                <svg className="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_3px_rgba(0,0,0,0.35)]" viewBox="0 0 24 24" fill="none">
+                  <path d="M4.5 17.5L7.8 4L11.5 9.5L8.2 23L4.5 17.5Z" fill="#050038" />
+                  <path d="M10.2 17.5L13.5 4L17.2 9.5L13.9 23L10.2 17.5Z" fill="#050038" />
+                  <path d="M15.9 17.5L19.2 4L22.9 9.5L19.6 23L15.9 17.5Z" fill="#050038" />
+                </svg>
+              </div>
             </div>
           </div>
 
