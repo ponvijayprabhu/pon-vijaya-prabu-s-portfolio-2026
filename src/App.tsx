@@ -16,11 +16,13 @@ import { ContactSection } from './components/ContactSection';
 import { CaseStudyModal } from './components/CaseStudyModal';
 import { CustomizerModal } from './components/CustomizerModal';
 import { ResumeModal } from './components/ResumeModal';
+import { CustomCursor } from './components/CustomCursor';
 
 export default function App() {
   return (
     <PortfolioProvider>
       <div className="min-h-screen bg-[#0D0D0C] text-[#F2EFE8] flex flex-col font-sans selection:bg-[#D4F36B] selection:text-[#0D0D0C]">
+        <CustomCursor />
         <Navbar />
         <main className="flex-1 flex flex-col">
           <Hero />
