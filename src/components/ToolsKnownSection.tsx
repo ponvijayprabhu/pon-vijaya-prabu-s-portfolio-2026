@@ -84,32 +84,28 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 2. Blender 3D (Authentic 3D Blender Logo, Top Center-Left) */}
+          {/* 2. VN Video Editor (3D Sleek Tile, Top Center-Left) */}
           <div
             className="absolute -top-4 sm:top-0 left-1/2 -translate-x-24 sm:-translate-x-36 md:-translate-x-44 rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default z-20"
             style={{ perspective: '800px' }}
-            title="Blender 3D"
+            title="VN Video Editor"
           >
             <div
-              className="w-13 h-13 sm:w-15 sm:h-15 lg:w-16 lg:h-16 rounded-[22px] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 relative"
+              className="w-13 h-13 sm:w-15 sm:h-15 lg:w-16 lg:h-16 rounded-[22px] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 relative p-0.5"
               style={{
-                background: 'linear-gradient(145deg, #FF9E2C 0%, #E87D0D 60%, #994800 100%)',
-                boxShadow: '0 16px 28px -6px rgba(232, 125, 13, 0.55), inset 0 2px 2px rgba(255,255,255,0.6), inset 0 -3px 5px rgba(0,0,0,0.4)',
+                background: 'linear-gradient(145deg, #2A2A2D 0%, #121214 60%, #060608 100%)',
+                border: '1.5px solid rgba(255, 255, 255, 0.22)',
+                boxShadow: '0 16px 28px -6px rgba(0, 0, 0, 0.7), inset 0 2px 2px rgba(255,255,255,0.4), inset 0 -3px 5px rgba(0,0,0,0.6)',
                 transform: 'rotateX(10deg) rotateY(6deg)',
               }}
             >
-              {/* 3D Blender Vector Emblem */}
-              <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 drop-shadow-[0_3px_5px_rgba(0,0,0,0.4)]" viewBox="0 0 24 24" fill="none">
-                {/* 3 radiating 3D arms */}
-                <path d="M12 4.5L12 9" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
-                <path d="M5.5 8L9.5 10.5" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
-                <path d="M18.5 8L14.5 10.5" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
-                {/* Orange outer circle with white ring */}
-                <circle cx="12" cy="14" r="6" fill="#EA7600" stroke="#FFFFFF" strokeWidth="2.2" />
-                {/* 3D blue pupil core */}
-                <circle cx="12" cy="14" r="3" fill="#2255EE" />
-                <circle cx="11.2" cy="13.2" r="1" fill="#FFFFFF" opacity="0.8" />
-              </svg>
+              <div className="w-full h-full rounded-[18px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/12 to-transparent">
+                {/* Authentic Bold 3D "VN" Brandmark */}
+                <div className="flex items-center tracking-tighter select-none font-black text-white text-xl sm:text-2xl lg:text-3xl drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                  <span>V</span>
+                  <span className="ml-0.5">N</span>
+                </div>
+              </div>
             </div>
           </div>
 
