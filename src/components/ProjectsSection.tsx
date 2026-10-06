@@ -160,81 +160,30 @@ export const ProjectsSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* PROJECT 3: AI SMART STUDIO & PROMPT INTERACTION */}
+                {/* PROJECT 3: AI SMART STUDIO COVER IMAGE */}
                 {project.categoryType === 'ecommerce' && (
-                  <div className="relative w-full h-full bg-[#181512] flex justify-center items-start pt-14 px-4 transition-transform duration-500 group-hover:scale-[1.01]">
-                    <div className="w-full max-w-[560px] h-[370px] rounded-xl border border-[#2E2822] bg-[#110E0B] overflow-hidden flex flex-col shadow-2xl">
-                      {/* Browser header */}
-                      <div className="h-9 px-3 bg-[#1B1612] border-b border-[#29221C] flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#3D332B]" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#3D332B]" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#3D332B]" />
-                          <span className="ml-2 font-mono text-[10px] text-[#8C7D70]">ai-studio.internal/prompt-generator</span>
-                        </div>
-                        <span className="text-[10px] font-mono text-[#8C7D70]">LATENCY: 42ms</span>
-                      </div>
+                  <div className="relative w-full h-full bg-[#181512] overflow-hidden group/img">
+                    <img
+                      src={getAssetUrl(project.coverImage || '/AI-Smart-Studio.jpg')}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {/* Cinematic vignette & contrast gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0C] via-[#0D0D0C]/25 to-[#0D0D0C]/60" />
 
-                      {/* AI Studio Interface */}
-                      <div className="flex-1 p-4 flex flex-col gap-3">
-                        {/* Prompt Mode Selector */}
-                        <div
-                          className="flex items-center justify-between pb-2 border-b border-[#241D17]"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          <span className="text-xs font-serif italic text-[#EAE2D8]">
-                            AI Workflow Studio
-                          </span>
-                          <div className="flex items-center gap-1.5">
-                            {(['Summary', 'Analysis', 'Code Flow'] as const).map((mode) => (
-                              <button
-                                key={mode}
-                                onClick={() => setEcommerceMaterial(mode as unknown as typeof ecommerceMaterial)}
-                                className={`px-2.5 py-0.5 text-[10px] rounded-full transition-colors ${
-                                  ecommerceMaterial === (mode as unknown as typeof ecommerceMaterial)
-                                    ? 'bg-[#EAE2D8] text-[#0D0D0C] font-semibold'
-                                    : 'text-[#8C7D70] hover:text-[#EAE2D8]'
-                                }`}
-                              >
-                                {mode}
-                              </button>
-                            ))}
-                          </div>
-                        </div>
-
-                        {/* Interactive Prompt Cards */}
-                        <div className="grid grid-cols-3 gap-2.5 flex-1">
-                          <div className="rounded-lg bg-[#1B1612] border border-[#2B231D] p-2.5 flex flex-col justify-between">
-                            <div className="w-full h-16 rounded bg-[#251E18] flex items-center justify-center text-xs font-mono text-[#D4F36B]" style={{ color: accent }}>
-                              ⚡ Summarizer
-                            </div>
-                            <div>
-                              <div className="text-xs font-semibold text-[#F2EFE8]">Executive Brief</div>
-                              <div className="text-[10px] text-[#8C7D70]">1-Click document digest</div>
-                            </div>
-                          </div>
-
-                          <div className="rounded-lg bg-[#1B1612] border border-[#2B231D] p-2.5 flex flex-col justify-between">
-                            <div className="w-full h-16 rounded bg-[#251E18] flex items-center justify-center text-xs font-mono text-[#D4F36B]" style={{ color: accent }}>
-                              📊 Predictive AI
-                            </div>
-                            <div>
-                              <div className="text-xs font-semibold text-[#F2EFE8]">Trend Forecast</div>
-                              <div className="text-[10px] text-[#8C7D70]">Historical extrapolation</div>
-                            </div>
-                          </div>
-
-                          <div className="rounded-lg bg-[#1B1612] border border-[#2B231D] p-2.5 flex flex-col justify-between">
-                            <div className="w-full h-16 rounded bg-[#251E18] flex items-center justify-center text-xs font-mono text-[#D4F36B]" style={{ color: accent }}>
-                              💬 Assistant
-                            </div>
-                            <div>
-                              <div className="text-xs font-semibold text-[#F2EFE8]">Chat Copilot</div>
-                              <div className="text-[10px] text-[#8C7D70]">Contextual responses</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    {/* Bottom overlay badge */}
+                    <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between pointer-events-none">
+                      <span
+                        className="px-3 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-lg flex items-center gap-1.5"
+                        style={{ backgroundColor: accent }}
+                      >
+                        <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span>View AI Studio Case Study</span>
+                      </span>
+                      <span className="text-[11px] font-mono text-[#F2EFE8]/90 bg-[#0D0D0C]/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#2E2E2A]">
+                        AI Smart Studio
+                      </span>
                     </div>
                   </div>
                 )}

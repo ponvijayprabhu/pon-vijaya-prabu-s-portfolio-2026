@@ -52,6 +52,17 @@ function generatePdf() {
     }
   }
 
+  // If user uploaded "AI Smart Studio.jpg", synchronize to public & assets
+  const aiStudioPath = path.join(__dirname, '..', 'AI Smart Studio.jpg');
+  if (fs.existsSync(aiStudioPath)) {
+    fs.copyFileSync(aiStudioPath, path.join(outDir, 'AI Smart Studio.jpg'));
+    fs.copyFileSync(aiStudioPath, path.join(outDir, 'AI-Smart-Studio.jpg'));
+    const srcAssetsDir = path.join(__dirname, '..', 'src', 'assets');
+    if (fs.existsSync(srcAssetsDir)) {
+      fs.copyFileSync(aiStudioPath, path.join(srcAssetsDir, 'AI-Smart-Studio.jpg'));
+    }
+  }
+
   // If user provided their own PDF file, use and deploy it directly!
   const userOwnPdf = path.join(__dirname, '..', 'PON VIJAYA PRABU S own.pdf');
   if (fs.existsSync(userOwnPdf)) {

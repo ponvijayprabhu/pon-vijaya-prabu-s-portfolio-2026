@@ -156,6 +156,7 @@ export const projectsData: Project[] = [
     number: '03',
     category: 'AI Application · Generative Suite',
     categoryType: 'ecommerce',
+    coverImage: '/AI-Smart-Studio.jpg',
     title: 'AI Smart Studio & Analytics',
     tagline: 'Intuitive AI workflow platform for prompt generation, automated content summarization, and data insights.',
     client: 'Canvendor Software Solutions',
