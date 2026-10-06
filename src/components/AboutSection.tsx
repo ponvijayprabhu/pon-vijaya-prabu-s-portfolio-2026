@@ -13,7 +13,7 @@ export const AboutSection: React.FC = () => {
         {/* Left Column: Index & Big Statement */}
         <div className="lg:col-span-7 flex flex-col gap-6">
           <p className="font-mono text-xs md:text-sm tracking-widest uppercase text-[#8C8981]">
-            04 — About & Philosophy
+            03 — About & Philosophy
           </p>
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold tracking-tight text-[#F2EFE8] leading-[1.08] text-balance">
             Good design isn't decoration. It's the{' '}

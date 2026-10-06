@@ -162,13 +162,6 @@ export const Navbar: React.FC = () => {
             About & Experience
           </a>
           <a
-            href="#lab"
-            onClick={() => setMobileMenuOpen(false)}
-            className="text-base text-[#F2EFE8] py-1 font-medium"
-          >
-            Interactive Design Lab
-          </a>
-          <a
             href="#contact"
             onClick={() => setMobileMenuOpen(false)}
             className="text-base text-[#F2EFE8] py-1 font-medium"

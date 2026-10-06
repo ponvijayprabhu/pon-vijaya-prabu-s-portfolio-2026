@@ -9,7 +9,6 @@ import { Hero } from './components/Hero';
 import { TickerRibbon } from './components/TickerRibbon';
 import { ProjectsSection } from './components/ProjectsSection';
 import { ServicesSection } from './components/ServicesSection';
-import { DesignLabSection } from './components/DesignLabSection';
 import { AboutSection } from './components/AboutSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { ContactSection } from './components/ContactSection';
@@ -27,7 +26,6 @@ export default function App() {
           <TickerRibbon />
           <ProjectsSection />
           <ServicesSection />
-          <DesignLabSection />
           <AboutSection />
           <TestimonialsSection />
           <ContactSection />
