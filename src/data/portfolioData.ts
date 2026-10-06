@@ -195,6 +195,7 @@ export const projectsData: Project[] = [
     number: '04',
     category: 'Logistics · Dispatch & Tracking App',
     categoryType: 'system',
+    coverImage: '/Logistics.jpg',
     title: 'Logistics Fleet & Route Tracker',
     tagline: 'Real-time logistics coordination app for fleet dispatchers, driver navigation, and package delivery status.',
     client: 'Canvendor Software Solutions',

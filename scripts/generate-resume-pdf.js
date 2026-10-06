@@ -63,6 +63,16 @@ function generatePdf() {
     }
   }
 
+  // If user uploaded "Logistics.jpg", synchronize to public & assets
+  const logisticsPath = path.join(__dirname, '..', 'Logistics.jpg');
+  if (fs.existsSync(logisticsPath)) {
+    fs.copyFileSync(logisticsPath, path.join(outDir, 'Logistics.jpg'));
+    const srcAssetsDir = path.join(__dirname, '..', 'src', 'assets');
+    if (fs.existsSync(srcAssetsDir)) {
+      fs.copyFileSync(logisticsPath, path.join(srcAssetsDir, 'Logistics.jpg'));
+    }
+  }
+
   // If user provided their own PDF file, use and deploy it directly!
   const userOwnPdf = path.join(__dirname, '..', 'PON VIJAYA PRABU S own.pdf');
   if (fs.existsSync(userOwnPdf)) {

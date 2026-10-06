@@ -188,75 +188,30 @@ export const ProjectsSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* PROJECT 4: LOGISTICS FLEET & ROUTE DISPATCH TRACKER */}
+                {/* PROJECT 4: LOGISTICS FLEET COVER IMAGE */}
                 {project.categoryType === 'system' && (
-                  <div className="relative w-full h-full bg-[#121416] flex justify-center items-start pt-14 px-4 transition-transform duration-500 group-hover:scale-[1.01]">
-                    <div className="w-full max-w-[560px] h-[370px] rounded-xl border border-[#23292E] bg-[#0C0E10] p-4 flex flex-col justify-between shadow-2xl">
-                      {/* Top Fleet Specimen */}
-                      <div className="flex items-center justify-between pb-3 border-b border-[#1E2328]">
-                        <div className="flex items-baseline gap-3">
-                          <span className="text-4xl font-black text-[#F2EFE8] leading-none">GPS</span>
-                          <div>
-                            <div className="text-xs font-semibold text-[#F2EFE8]">Fleet Dispatch & Telemetry</div>
-                            <div className="text-[10px] font-mono text-[#7D8894]">Route: Nagercoil ⇄ Chennai Express</div>
-                          </div>
-                        </div>
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded border border-[#283138] text-[#93A1B0]">
-                          LIVE DISPATCH
-                        </span>
-                      </div>
+                  <div className="relative w-full h-full bg-[#121416] overflow-hidden group/img">
+                    <img
+                      src={getAssetUrl(project.coverImage || '/Logistics.jpg')}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {/* Cinematic vignette & contrast gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0C] via-[#0D0D0C]/25 to-[#0D0D0C]/60" />
 
-                      {/* Interactive Logistics Route Info */}
-                      <div
-                        className="grid grid-cols-2 gap-3"
-                        onClick={(e) => e.stopPropagation()}
+                    {/* Bottom overlay badge */}
+                    <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between pointer-events-none">
+                      <span
+                        className="px-3 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-lg flex items-center gap-1.5"
+                        style={{ backgroundColor: accent }}
                       >
-                        {/* Driver & Truck Status */}
-                        <div className="p-3 rounded-lg bg-[#14171A] border border-[#20262C] flex flex-col gap-1.5">
-                          <span className="text-[10px] font-mono text-[#7D8894]">ACTIVE SHIPMENT</span>
-                          <div className="text-xs font-bold text-[#F2EFE8]">TRK-9824 · Express Van</div>
-                          <div className="text-[11px] text-[#8FD400]">On Schedule (ETA 2.4 hrs)</div>
-                        </div>
-
-                        {/* Interactive Toggle */}
-                        <div className="p-3 rounded-lg bg-[#14171A] border border-[#20262C] flex flex-col gap-2">
-                          <span className="text-[10px] font-mono text-[#7D8894]">GPS RADAR SYNC</span>
-                          <div className="flex items-center justify-between pt-1">
-                            <button
-                              onClick={() => setDesignSystemSwitch(!designSystemSwitch)}
-                              className={`w-12 h-6 rounded-full p-0.5 transition-colors ${
-                                designSystemSwitch ? '' : 'bg-[#29323C]'
-                              }`}
-                              style={{
-                                backgroundColor: designSystemSwitch ? accent : undefined,
-                              }}
-                            >
-                              <div
-                                className={`w-5 h-5 rounded-full bg-[#0D0D0C] transition-transform ${
-                                  designSystemSwitch ? 'translate-x-6' : 'translate-x-0'
-                                }`}
-                              />
-                            </button>
-
-                            <div
-                              className="w-6 h-6 rounded-md flex items-center justify-center text-[#0D0D0C]"
-                              style={{ backgroundColor: accent }}
-                            >
-                              <Check className="w-4 h-4 stroke-[3]" />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Route Waypoints */}
-                      <div className="flex items-center justify-between pt-2 border-t border-[#1E2328] text-xs">
-                        <span className="text-[10px] font-mono text-[#7D8894]">WAYPOINTS:</span>
-                        <span className="text-[#8C8981]">Origin: Warehouse A</span>
-                        <span className="text-[#8C8981]">→</span>
-                        <span className="text-[#8C8981]">Hub: Madurai</span>
-                        <span className="text-[#8C8981]">→</span>
-                        <span className="text-[#F2EFE8] font-bold">Destination: Chennai</span>
-                      </div>
+                        <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span>View Logistics Case Study</span>
+                      </span>
+                      <span className="text-[11px] font-mono text-[#F2EFE8]/90 bg-[#0D0D0C]/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#2E2E2A]">
+                        Logistics Fleet & Route Tracker
+                      </span>
                     </div>
                   </div>
                 )}

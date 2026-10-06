@@ -4,8 +4,17 @@ import defaultAvatar from '../assets/avatar.png';
 import healthcareCover from '../assets/Healthcare.jpg';
 import hrmsCover from '../assets/HRMS-Banner.jpg';
 import aiStudioCover from '../assets/AI-Smart-Studio.jpg';
+import logisticsCover from '../assets/Logistics.jpg';
 
-export { defaultHeroPortrait, defaultHeroPortraitPng, defaultAvatar, healthcareCover, hrmsCover, aiStudioCover };
+export {
+  defaultHeroPortrait,
+  defaultHeroPortraitPng,
+  defaultAvatar,
+  healthcareCover,
+  hrmsCover,
+  aiStudioCover,
+  logisticsCover,
+};
 
 /**
  * Resolves static image URLs to ensure they work reliably in all environments
@@ -59,6 +68,16 @@ export function getAssetUrl(url?: string | null): string {
     url?.includes('AI Smart Studio')
   ) {
     return aiStudioCover;
+  }
+
+  // Handle Logistics project cover image
+  if (
+    url === '/Logistics.jpg' ||
+    url === 'Logistics.jpg' ||
+    url === './Logistics.jpg' ||
+    url?.toLowerCase().includes('logistics')
+  ) {
+    return logisticsCover;
   }
 
   // Handle avatar icon references and My pic.jpg
