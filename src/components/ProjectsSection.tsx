@@ -132,82 +132,30 @@ export const ProjectsSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* PROJECT 2: HRMS WORKFORCE DASHBOARD CONSOLE */}
+                {/* PROJECT 2: HRMS WORKFORCE DASHBOARD COVER IMAGE */}
                 {project.categoryType === 'saas' && (
-                  <div className="relative w-full h-full bg-[#111317] flex justify-center items-start pt-14 px-4 transition-transform duration-500 group-hover:scale-[1.01]">
-                    <div className="w-full max-w-[560px] h-[370px] rounded-xl border border-[#262B33] bg-[#0B0D10] overflow-hidden flex flex-col shadow-2xl">
-                      {/* Browser Mockup Top Bar */}
-                      <div className="h-9 px-3 bg-[#151920] border-b border-[#20252E] flex items-center justify-between">
-                        <div className="flex items-center gap-1.5">
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#E05252]/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#E0A852]/80" />
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#52E073]/80" />
-                          <span className="ml-2 font-mono text-[10px] text-[#7A8394]">canvendor-hrms.app/workforce/attendance</span>
-                        </div>
+                  <div className="relative w-full h-full bg-[#111317] overflow-hidden group/img">
+                    <img
+                      src={getAssetUrl(project.coverImage || '/HRMS-Banner.jpg')}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {/* Cinematic vignette & contrast gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0C] via-[#0D0D0C]/25 to-[#0D0D0C]/60" />
 
-                        {/* Interactive Range Selector */}
-                        <div
-                          className="flex items-center gap-1"
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {(['24h', '7d', '30d'] as const).map((range) => (
-                            <button
-                              key={range}
-                              onClick={() => setSelectedDashboardRange(range)}
-                              className={`px-2 py-0.5 text-[10px] font-mono rounded transition-colors ${
-                                selectedDashboardRange === range
-                                  ? 'bg-[#293240] text-[#F2EFE8] font-bold'
-                                  : 'text-[#6A7282] hover:text-[#CCD2DC]'
-                              }`}
-                            >
-                              {range}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Dashboard Interior */}
-                      <div className="flex-1 p-4 flex flex-col gap-3">
-                        {/* 3 Metric Cards */}
-                        <div className="grid grid-cols-3 gap-2">
-                          <div className="p-2.5 rounded-lg bg-[#14181F] border border-[#212732]">
-                            <div className="text-[10px] font-mono text-[#7A8394]">ATTENDANCE</div>
-                            <div className="text-base font-bold text-[#F2EFE8] tabular-nums">98.2% On-time</div>
-                          </div>
-                          <div className="p-2.5 rounded-lg bg-[#14181F] border border-[#212732]">
-                            <div className="text-[10px] font-mono text-[#7A8394]">LEAVE REQUESTS</div>
-                            <div className="text-base font-bold text-[#F2EFE8] tabular-nums">3 Pending</div>
-                          </div>
-                          <div className="p-2.5 rounded-lg bg-[#14181F] border border-[#212732]">
-                            <div className="text-[10px] font-mono text-[#7A8394]">PAYROLL AUDIT</div>
-                            <div className="text-base font-bold text-[#F2EFE8] tabular-nums">100% Synced</div>
-                          </div>
-                        </div>
-
-                        {/* Interactive Live Bar Chart */}
-                        <div className="flex-1 p-3 rounded-lg bg-[#14181F] border border-[#212732] flex flex-col justify-between">
-                          <div className="flex justify-between items-center text-[10px] font-mono text-[#7A8394]">
-                            <span>DEPARTMENT ENGAGEMENT INDEX · {selectedDashboardRange.toUpperCase()}</span>
-                            <span className="flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: accent }} />
-                              Active Shifts
-                            </span>
-                          </div>
-
-                          <div className="h-32 flex items-end gap-1.5 sm:gap-2.5 pt-2 pb-1">
-                            {barData.map((h, i) => (
-                              <div
-                                key={i}
-                                className="flex-1 rounded-t-sm transition-all duration-300"
-                                style={{
-                                  height: `${h}%`,
-                                  backgroundColor: i === 9 ? accent : '#2A313E',
-                                }}
-                              />
-                            ))}
-                          </div>
-                        </div>
-                      </div>
+                    {/* Bottom overlay badge */}
+                    <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between pointer-events-none">
+                      <span
+                        className="px-3 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-lg flex items-center gap-1.5"
+                        style={{ backgroundColor: accent }}
+                      >
+                        <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span>View HRMS Case Study</span>
+                      </span>
+                      <span className="text-[11px] font-mono text-[#F2EFE8]/90 bg-[#0D0D0C]/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#2E2E2A]">
+                        HRMS Workforce Platform
+                      </span>
                     </div>
                   </div>
                 )}

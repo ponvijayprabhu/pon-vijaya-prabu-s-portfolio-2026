@@ -41,6 +41,17 @@ function generatePdf() {
     }
   }
 
+  // If user uploaded "HRMS Banner.jpg", synchronize to public & assets
+  const hrmsPath = path.join(__dirname, '..', 'HRMS Banner.jpg');
+  if (fs.existsSync(hrmsPath)) {
+    fs.copyFileSync(hrmsPath, path.join(outDir, 'HRMS Banner.jpg'));
+    fs.copyFileSync(hrmsPath, path.join(outDir, 'HRMS-Banner.jpg'));
+    const srcAssetsDir = path.join(__dirname, '..', 'src', 'assets');
+    if (fs.existsSync(srcAssetsDir)) {
+      fs.copyFileSync(hrmsPath, path.join(srcAssetsDir, 'HRMS-Banner.jpg'));
+    }
+  }
+
   // If user provided their own PDF file, use and deploy it directly!
   const userOwnPdf = path.join(__dirname, '..', 'PON VIJAYA PRABU S own.pdf');
   if (fs.existsSync(userOwnPdf)) {

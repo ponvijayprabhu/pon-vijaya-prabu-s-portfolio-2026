@@ -117,6 +117,7 @@ export const projectsData: Project[] = [
     number: '02',
     category: 'Enterprise SaaS · HRMS Platform',
     categoryType: 'saas',
+    coverImage: '/HRMS-Banner.jpg',
     title: 'HRMS Workforce Platform',
     tagline: 'Unified Human Resource Management platform for employee lifecycles, attendance, payroll, and performance.',
     client: 'Canvendor Software Solutions',

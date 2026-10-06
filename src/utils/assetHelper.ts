@@ -2,8 +2,9 @@ import defaultHeroPortrait from '../assets/Image-hero.webp';
 import defaultHeroPortraitPng from '../assets/Image-hero.png';
 import defaultAvatar from '../assets/avatar.png';
 import healthcareCover from '../assets/Healthcare.jpg';
+import hrmsCover from '../assets/HRMS-Banner.jpg';
 
-export { defaultHeroPortrait, defaultHeroPortraitPng, defaultAvatar, healthcareCover };
+export { defaultHeroPortrait, defaultHeroPortraitPng, defaultAvatar, healthcareCover, hrmsCover };
 
 /**
  * Resolves static image URLs to ensure they work reliably in all environments
@@ -30,6 +31,19 @@ export function getAssetUrl(url?: string | null): string {
     url?.includes('Healthcare')
   ) {
     return healthcareCover;
+  }
+
+  // Handle HRMS project cover image
+  if (
+    url === '/HRMS-Banner.jpg' ||
+    url === 'HRMS-Banner.jpg' ||
+    url === './HRMS-Banner.jpg' ||
+    url === '/HRMS Banner.jpg' ||
+    url === 'HRMS Banner.jpg' ||
+    url === './HRMS Banner.jpg' ||
+    url?.includes('HRMS')
+  ) {
+    return hrmsCover;
   }
 
   // Handle avatar icon references and My pic.jpg
