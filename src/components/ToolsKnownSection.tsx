@@ -56,19 +56,6 @@ export const ToolsKnownSection: React.FC = () => {
           style={{ backgroundColor: accent }}
         />
 
-        {/* Top canvas bar: Vector Mode indicator */}
-        <div className="relative z-10 flex items-center justify-between pb-6 border-b border-[#242420] text-xs font-mono text-[#8C8981] mb-8">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: accent }} />
-            <span className="uppercase tracking-wider">Vector Canvas · 100% Bezier Precision</span>
-          </div>
-          <div className="hidden sm:flex items-center gap-4">
-            <span>TOOLBOX: ACTIVE</span>
-            <span>ZOOM: 100%</span>
-            <span>SNAP: ON</span>
-          </div>
-        </div>
-
         {/* Centerpiece Vector Stage */}
         <div className="relative z-10 py-12 sm:py-20 flex flex-col items-center justify-center">
           {/* FLOATING SATELLITE TOOL BADGES (Positions matching the inspiration graphic) */}
