@@ -58,88 +58,179 @@ export const ToolsKnownSection: React.FC = () => {
 
         {/* Centerpiece Vector Stage */}
         <div className="relative z-10 py-12 sm:py-20 flex flex-col items-center justify-center">
-          {/* FLOATING SATELLITE TOOL BADGES (Positions matching the inspiration graphic) */}
+          {/* FLOATING SATELLITE 3D APP LOGOS (High-Fidelity 3D Lighting & Geometry) */}
           
-          {/* 1. Canva (Top Left) */}
+          {/* 1. Canva (3D App Tile, Top Left) */}
           <div
-            className="absolute top-4 left-4 sm:top-8 sm:left-12 lg:left-24 -rotate-12 hover:rotate-0 transition-transform duration-300 group cursor-default"
+            className="absolute top-4 left-4 sm:top-8 sm:left-12 lg:left-24 -rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            style={{ perspective: '800px' }}
             title="Canva Pro"
           >
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-[#00C4CC] via-[#7D2AE8] to-[#FF6B35] p-0.5 shadow-xl hover:scale-110 transition-transform">
-              <div className="w-full h-full rounded-[14px] bg-[#00C4CC] flex items-center justify-center text-white font-serif italic font-bold text-sm sm:text-base tracking-tight shadow-inner">
-                Canva
+            <div
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-[20px] p-0.5 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(145deg, #00C4CC 0%, #7D2AE8 70%, #250B54 100%)',
+                boxShadow: '0 16px 30px -6px rgba(0, 196, 204, 0.45), 0 8px 12px -4px rgba(125, 42, 232, 0.35), inset 0 2px 2px rgba(255,255,255,0.6), inset 0 -3px 5px rgba(0,0,0,0.4)',
+                transform: 'rotateX(8deg) rotateY(-8deg)',
+              }}
+            >
+              {/* Inner glossy highlight and 3D script */}
+              <div className="w-full h-full rounded-[18px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/20 to-transparent">
+                <span className="text-white font-serif italic font-extrabold text-base sm:text-lg tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                  Canva
+                </span>
               </div>
             </div>
-            <span className="sr-only">Canva</span>
           </div>
 
-          {/* 2. Blender (Top Center) */}
+          {/* 2. Blender 3D (Authentic 3D Blender Logo, Top Center) */}
           <div
-            className="absolute top-0 sm:top-4 left-1/2 -translate-x-16 sm:-translate-x-20 rotate-6 hover:rotate-0 transition-transform duration-300 group cursor-default"
+            className="absolute -top-2 sm:top-2 left-1/2 -translate-x-16 sm:-translate-x-20 rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default z-20"
+            style={{ perspective: '800px' }}
             title="Blender 3D"
           >
-            <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-2xl bg-[#E87D0D] border border-[#FFA544] flex items-center justify-center shadow-lg hover:scale-110 transition-transform">
-              <span className="text-white font-mono font-black text-xs sm:text-sm">3D</span>
+            <div
+              className="w-13 h-13 sm:w-15 sm:h-15 rounded-[22px] flex items-center justify-center transition-transform duration-300 group-hover:scale-110 relative"
+              style={{
+                background: 'linear-gradient(145deg, #FF9E2C 0%, #E87D0D 60%, #994800 100%)',
+                boxShadow: '0 16px 28px -6px rgba(232, 125, 13, 0.55), inset 0 2px 2px rgba(255,255,255,0.6), inset 0 -3px 5px rgba(0,0,0,0.4)',
+                transform: 'rotateX(10deg) rotateY(6deg)',
+              }}
+            >
+              {/* 3D Blender Vector Emblem */}
+              <svg className="w-8 h-8 sm:w-9 sm:h-9 drop-shadow-[0_3px_5px_rgba(0,0,0,0.4)]" viewBox="0 0 24 24" fill="none">
+                {/* 3 radiating 3D arms */}
+                <path d="M12 4.5L12 9" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
+                <path d="M5.5 8L9.5 10.5" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
+                <path d="M18.5 8L14.5 10.5" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
+                {/* Orange outer circle with white ring */}
+                <circle cx="12" cy="14" r="6" fill="#EA7600" stroke="#FFFFFF" strokeWidth="2.2" />
+                {/* 3D blue pupil core */}
+                <circle cx="12" cy="14" r="3" fill="#2255EE" />
+                <circle cx="11.2" cy="13.2" r="1" fill="#FFFFFF" opacity="0.8" />
+              </svg>
             </div>
-            <span className="sr-only">Blender</span>
           </div>
 
-          {/* 3. Adobe Illustrator (Ai) (Top Right) */}
+          {/* 3. Adobe Illustrator (Ai) (3D Beveled Tile, Top Right) */}
           <div
-            className="absolute top-4 right-4 sm:top-8 sm:right-16 lg:right-28 rotate-12 hover:rotate-0 transition-transform duration-300 group cursor-default"
+            className="absolute top-4 right-4 sm:top-8 sm:right-16 lg:right-28 rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            style={{ perspective: '800px' }}
             title="Adobe Illustrator"
           >
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#261300] border-2 border-[#FF9A00] flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-              <span className="font-mono font-extrabold text-xl sm:text-2xl text-[#FF9A00]">Ai</span>
+            <div
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-[20px] p-0.5 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(145deg, #331A00 0%, #1A0D00 100%)',
+                border: '2px solid #FF9A00',
+                boxShadow: '0 16px 30px -6px rgba(255, 154, 0, 0.45), inset 0 2px 2px rgba(255, 200, 100, 0.5), inset 0 -3px 5px rgba(0,0,0,0.6)',
+                transform: 'rotateX(8deg) rotateY(10deg)',
+              }}
+            >
+              <div className="w-full h-full rounded-[18px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/10 to-transparent">
+                <span className="font-mono font-black text-2xl sm:text-3xl text-[#FF9A00] tracking-tight drop-shadow-[0_2px_4px_rgba(255,154,0,0.5)]">
+                  Ai
+                </span>
+              </div>
             </div>
-            <span className="sr-only">Adobe Illustrator</span>
           </div>
 
-          {/* 4. CapCut / Miro (Bottom Left) */}
+          {/* 4. CapCut (3D Circular Token, Bottom Left) */}
           <div
-            className="absolute bottom-6 left-6 sm:bottom-12 sm:left-20 -rotate-6 hover:rotate-0 transition-transform duration-300 group cursor-default"
+            className="absolute bottom-6 left-6 sm:bottom-12 sm:left-20 -rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default"
+            style={{ perspective: '800px' }}
             title="CapCut Video"
           >
-            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white text-black flex items-center justify-center font-black text-xs sm:text-sm shadow-xl hover:scale-110 transition-transform border border-gray-300">
-              <span className="text-black font-extrabold text-base">⧖</span>
+            <div
+              className="w-13 h-13 sm:w-15 sm:h-15 rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110"
+              style={{
+                background: 'linear-gradient(145deg, #FFFFFF 0%, #E0E0E0 60%, #B8B8B8 100%)',
+                boxShadow: '0 14px 26px -6px rgba(0, 0, 0, 0.6), inset 0 2px 2px rgba(255,255,255,0.9), inset 0 -3px 4px rgba(0,0,0,0.3)',
+                transform: 'rotateX(-6deg) rotateY(-8deg)',
+              }}
+            >
+              {/* Authentic 3D CapCut Polygon Ribbon Icon */}
+              <svg className="w-7 h-7 sm:w-8 sm:h-8 drop-shadow-[0_2px_3px_rgba(0,0,0,0.35)]" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M4 6L11 11L4 16L7 12L4 6Z"
+                  fill="#0D0D0C"
+                />
+                <path
+                  d="M20 6L13 11L20 16L17 12L20 6Z"
+                  fill="#0D0D0C"
+                />
+              </svg>
             </div>
-            <span className="sr-only">CapCut</span>
           </div>
 
-          {/* 5. Adobe After Effects (Ae) (Bottom Center-Left) */}
+          {/* 5. Adobe After Effects (Ae) (3D Indigo Tile, Bottom Center-Left) */}
           <div
-            className="absolute bottom-2 left-1/2 -translate-x-24 sm:-translate-x-32 rotate-12 hover:rotate-0 transition-transform duration-300 group cursor-default"
+            className="absolute bottom-2 left-1/2 -translate-x-24 sm:-translate-x-32 rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            style={{ perspective: '800px' }}
             title="Adobe After Effects"
           >
-            <div className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl bg-[#000033] border-2 border-[#9999FF] flex items-center justify-center shadow-xl hover:scale-110 transition-transform">
-              <span className="font-mono font-bold text-sm sm:text-base text-[#9999FF]">Ae</span>
+            <div
+              className="w-13 h-13 sm:w-14 sm:h-14 rounded-[18px] p-0.5 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(145deg, #1A0033 0%, #0A0019 100%)',
+                border: '2px solid #9999FF',
+                boxShadow: '0 16px 28px -6px rgba(153, 153, 255, 0.45), inset 0 2px 2px rgba(200, 200, 255, 0.5), inset 0 -3px 5px rgba(0,0,0,0.6)',
+                transform: 'rotateX(-8deg) rotateY(-6deg)',
+              }}
+            >
+              <div className="w-full h-full rounded-[16px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/10 to-transparent">
+                <span className="font-mono font-black text-xl sm:text-2xl text-[#9999FF] tracking-tight drop-shadow-[0_2px_4px_rgba(153,153,255,0.5)]">
+                  Ae
+                </span>
+              </div>
             </div>
-            <span className="sr-only">After Effects</span>
           </div>
 
-          {/* 6. Adobe Photoshop (Ps) (Bottom Right) */}
+          {/* 6. Adobe Photoshop (Ps) (3D Cyan Tile, Bottom Right) */}
           <div
-            className="absolute bottom-6 right-6 sm:bottom-12 sm:right-20 -rotate-12 hover:rotate-0 transition-transform duration-300 group cursor-default"
+            className="absolute bottom-6 right-6 sm:bottom-12 sm:right-20 -rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            style={{ perspective: '800px' }}
             title="Adobe Photoshop"
           >
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-[#001E36] border-2 border-[#31A8FF] flex items-center justify-center shadow-2xl hover:scale-110 transition-transform">
-              <span className="font-mono font-extrabold text-xl sm:text-2xl text-[#31A8FF]">Ps</span>
+            <div
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-[20px] p-0.5 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center"
+              style={{
+                background: 'linear-gradient(145deg, #001A33 0%, #000D1A 100%)',
+                border: '2px solid #31A8FF',
+                boxShadow: '0 16px 30px -6px rgba(49, 168, 255, 0.45), inset 0 2px 2px rgba(100, 210, 255, 0.5), inset 0 -3px 5px rgba(0,0,0,0.6)',
+                transform: 'rotateX(-8deg) rotateY(10deg)',
+              }}
+            >
+              <div className="w-full h-full rounded-[18px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/10 to-transparent">
+                <span className="font-mono font-black text-2xl sm:text-3xl text-[#31A8FF] tracking-tight drop-shadow-[0_2px_4px_rgba(49,168,255,0.5)]">
+                  Ps
+                </span>
+              </div>
             </div>
-            <span className="sr-only">Adobe Photoshop</span>
           </div>
 
-          {/* 7. Figma (Top Floating Banner Pill) */}
+          {/* 7. Figma (3D Glassmorphic Badge Pill, Top Floating) */}
           <div
-            className="absolute -top-3 sm:top-0 right-1/2 translate-x-28 sm:translate-x-36 rotate-6 hover:rotate-0 transition-transform duration-300 group z-20 cursor-default"
+            className="absolute -top-3 sm:top-0 right-1/2 translate-x-28 sm:translate-x-36 rotate-6 hover:rotate-0 transition-all duration-300 group z-20 cursor-default"
+            style={{ perspective: '800px' }}
             title="Figma UI/UX"
           >
-            <div className="px-3.5 py-1.5 rounded-full bg-[#1E1E1E] border border-[#3E3E38] shadow-2xl flex items-center gap-2 hover:scale-110 transition-transform">
-              <div className="flex items-center gap-0.5">
-                <span className="w-2 h-2 rounded-full bg-[#F24E1E]" />
-                <span className="w-2 h-2 rounded-full bg-[#A259FF]" />
-                <span className="w-2 h-2 rounded-full bg-[#0ACF83]" />
+            <div
+              className="px-4 py-2 rounded-full flex items-center gap-2.5 transition-transform duration-300 group-hover:scale-110"
+              style={{
+                background: 'linear-gradient(145deg, #2A2A28 0%, #141412 100%)',
+                border: '1.5px solid rgba(255,255,255,0.18)',
+                boxShadow: '0 16px 28px -6px rgba(0, 0, 0, 0.6), inset 0 2px 2px rgba(255,255,255,0.25), inset 0 -2px 4px rgba(0,0,0,0.5)',
+                transform: 'rotateX(8deg) rotateY(4deg)',
+              }}
+            >
+              {/* 3D Figma Spherical Color Nodes */}
+              <div className="flex items-center gap-1">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#F24E1E] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#A259FF] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-[#0ACF83] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]" />
               </div>
-              <span className="text-xs font-bold text-white tracking-wide">Figma</span>
+              <span className="text-xs font-black text-white tracking-wider drop-shadow-sm">Figma</span>
             </div>
           </div>
 
