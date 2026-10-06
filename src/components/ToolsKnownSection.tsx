@@ -192,13 +192,28 @@ export const ToolsKnownSection: React.FC = () => {
 
           {/* MAIN TYPOGRAPHIC CENTERPIECE: "portfolio" WITH BOUNDING BOXES */}
           <div className="relative flex items-center justify-center select-none py-6">
-            {/* Vector Bounding Box around "port" */}
-            <div className="relative border-2 border-[#FF6B35]/70 px-2 py-1 rounded-sm flex items-center">
-              {/* 4 Corner Anchor Handles */}
-              <span className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
-              <span className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
-              <span className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
-              <span className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
+            {/* Vector Bounding Box around "port" in GREEN */}
+            <div
+              className="relative border-2 px-2 py-1 rounded-sm flex items-center"
+              style={{ borderColor: accent }}
+            >
+              {/* 4 Corner Anchor Handles in GREEN */}
+              <span
+                className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
+              <span
+                className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
+              <span
+                className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
+              <span
+                className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
 
               {/* Left Word Segment: "port" */}
               <span className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#F2EFE8] leading-none">
@@ -206,23 +221,41 @@ export const ToolsKnownSection: React.FC = () => {
               </span>
             </div>
 
-            {/* THE TALL SWEEPING SCRIPT 'f' LIGATURE */}
+            {/* THE TALL SWEEPING SCRIPT 'f' LIGATURE IN GREEN */}
             <div className="relative mx-1 sm:mx-2 z-20 flex items-center justify-center">
-              {/* Top and Bottom Bezier Handle Bars */}
-              <div className="absolute -top-6 sm:-top-8 w-12 sm:w-16 h-0.5 bg-[#FF6B35] flex justify-between items-center">
-                <span className="w-2 h-2 rounded-full bg-white border border-[#FF6B35]" />
-                <span className="w-2 h-2 rounded-full bg-white border border-[#FF6B35]" />
+              {/* Top and Bottom Bezier Handle Bars in GREEN */}
+              <div
+                className="absolute -top-6 sm:-top-8 w-12 sm:w-16 h-0.5 flex justify-between items-center"
+                style={{ backgroundColor: accent }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full bg-white border"
+                  style={{ borderColor: accent }}
+                />
+                <span
+                  className="w-2 h-2 rounded-full bg-white border"
+                  style={{ borderColor: accent }}
+                />
               </div>
-              <div className="absolute -bottom-6 sm:-bottom-8 w-12 sm:w-16 h-0.5 bg-[#FF6B35] flex justify-between items-center">
-                <span className="w-2 h-2 rounded-full bg-white border border-[#FF6B35]" />
-                <span className="w-2 h-2 rounded-full bg-white border border-[#FF6B35]" />
+              <div
+                className="absolute -bottom-6 sm:-bottom-8 w-12 sm:w-16 h-0.5 flex justify-between items-center"
+                style={{ backgroundColor: accent }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full bg-white border"
+                  style={{ borderColor: accent }}
+                />
+                <span
+                  className="w-2 h-2 rounded-full bg-white border"
+                  style={{ borderColor: accent }}
+                />
               </div>
 
-              {/* Calligraphic Script 'f' */}
+              {/* Calligraphic Script 'f' in GREEN */}
               <span
                 className="font-serif italic text-7xl sm:text-9xl md:text-[140px] lg:text-[170px] leading-none select-none drop-shadow-2xl font-normal"
                 style={{
-                  color: accent === '#D4F36B' ? '#FF6B35' : accent,
+                  color: accent,
                   transform: 'translateY(-4px)',
                 }}
               >
@@ -230,13 +263,28 @@ export const ToolsKnownSection: React.FC = () => {
               </span>
             </div>
 
-            {/* Vector Bounding Box around "olio" */}
-            <div className="relative border-2 border-[#FF6B35]/70 px-2 py-1 rounded-sm flex items-center">
-              {/* 4 Corner Anchor Handles */}
-              <span className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
-              <span className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
-              <span className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
-              <span className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border-2 border-[#FF6B35] rounded-xs" />
+            {/* Vector Bounding Box around "olio" in GREEN */}
+            <div
+              className="relative border-2 px-2 py-1 rounded-sm flex items-center"
+              style={{ borderColor: accent }}
+            >
+              {/* 4 Corner Anchor Handles in GREEN */}
+              <span
+                className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
+              <span
+                className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
+              <span
+                className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
+              <span
+                className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border-2 rounded-xs"
+                style={{ borderColor: accent }}
+              />
 
               {/* Right Word Segment: "olio" */}
               <span className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#F2EFE8] leading-none">
@@ -251,12 +299,15 @@ export const ToolsKnownSection: React.FC = () => {
               UI/UX & PRODUCT DESIGNER
             </span>
 
-            {/* Color Swatch Dots */}
+            {/* Color Swatch Dots in GREEN theme */}
             <div className="flex items-center gap-1.5">
-              <span className="w-3 h-3 rounded-full bg-[#FF6B35] border border-black/40 shadow-sm" />
+              <span
+                className="w-3 h-3 rounded-full border border-black/40 shadow-sm"
+                style={{ backgroundColor: accent }}
+              />
               <span className="w-3 h-3 rounded-full bg-[#0D0D0C] border border-[#444] shadow-sm" />
               <span className="w-3 h-3 rounded-full bg-[#F2EFE8] border border-black/40 shadow-sm" />
-              <span className="w-3 h-3 rounded-full" style={{ backgroundColor: accent }} />
+              <span className="w-3 h-3 rounded-full bg-[#8FD400] border border-black/40 shadow-sm" />
             </div>
 
             <span className="font-extrabold text-[#F2EFE8] tracking-wider">
