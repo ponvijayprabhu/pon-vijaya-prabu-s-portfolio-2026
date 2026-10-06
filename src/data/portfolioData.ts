@@ -78,6 +78,7 @@ export const projectsData: Project[] = [
     number: '01',
     category: 'Healthcare · Web & Mobile EMR',
     categoryType: 'mobile',
+    coverImage: '/Healthcare.jpg',
     title: 'EMR Healthcare Clinical System',
     tagline: 'Streamlined Electronic Medical Records system for clinical specialists, doctor triage, and patient vitals tracking.',
     client: 'Canvendor Software Solutions',

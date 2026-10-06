@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { X, CheckCircle, Wrench, Quote, ExternalLink } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export const CaseStudyModal: React.FC = () => {
   const { selectedProject, setSelectedProject, accent } = usePortfolio();
@@ -59,6 +60,24 @@ export const CaseStudyModal: React.FC = () => {
             <X className="w-5 h-5" />
           </button>
         </div>
+
+        {/* Project Cover Image Showcase */}
+        {selectedProject.coverImage && (
+          <div className="relative w-full h-56 sm:h-72 md:h-84 rounded-2xl overflow-hidden border border-[#2E2E2A] shadow-xl bg-[#0D0D0C]">
+            <img
+              src={getAssetUrl(selectedProject.coverImage)}
+              alt={selectedProject.title}
+              className="w-full h-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0C]/80 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-xs font-mono text-[#CBC7BD]">
+              <span className="px-2.5 py-1 rounded-md bg-[#0D0D0C]/80 backdrop-blur-md border border-[#2E2E2A]">
+                Cover Preview · {selectedProject.title}
+              </span>
+              <span className="hidden sm:inline text-[#8C8981]">UI/UX Case Study</span>
+            </div>
+          </div>
+        )}
 
         {/* Quick Project Overview Stats Bar */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-[#181815] border border-[#262622]">

@@ -1,8 +1,9 @@
 import defaultHeroPortrait from '../assets/Image-hero.webp';
 import defaultHeroPortraitPng from '../assets/Image-hero.png';
 import defaultAvatar from '../assets/avatar.png';
+import healthcareCover from '../assets/Healthcare.jpg';
 
-export { defaultHeroPortrait, defaultHeroPortraitPng, defaultAvatar };
+export { defaultHeroPortrait, defaultHeroPortraitPng, defaultAvatar, healthcareCover };
 
 /**
  * Resolves static image URLs to ensure they work reliably in all environments
@@ -19,6 +20,16 @@ export function getAssetUrl(url?: string | null): string {
     url.startsWith('https://')
   ) {
     return url;
+  }
+
+  // Handle Healthcare project cover image
+  if (
+    url === '/Healthcare.jpg' ||
+    url === 'Healthcare.jpg' ||
+    url === './Healthcare.jpg' ||
+    url?.includes('Healthcare')
+  ) {
+    return healthcareCover;
   }
 
   // Handle avatar icon references and My pic.jpg

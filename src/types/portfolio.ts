@@ -5,6 +5,7 @@ export interface Project {
   number: string;
   category: string;
   categoryType: 'mobile' | 'saas' | 'ecommerce' | 'system';
+  coverImage?: string;
   title: string;
   tagline: string;
   client: string;

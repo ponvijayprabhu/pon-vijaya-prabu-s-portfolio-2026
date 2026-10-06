@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import { Project } from '../types/portfolio';
 import { ArrowUpRight, Check, Eye } from 'lucide-react';
+import { getAssetUrl } from '../utils/assetHelper';
 
 export const ProjectsSection: React.FC = () => {
   const { projects, accent, setSelectedProject, activeCategory, setActiveCategory } = usePortfolio();
@@ -103,93 +104,30 @@ export const ProjectsSection: React.FC = () => {
                   <span>{project.year}</span>
                 </div>
 
-                {/* PROJECT 1: EMR HEALTHCARE CLINICAL MOBILE & VITALS SHELL */}
+                {/* PROJECT 1: EMR HEALTHCARE CLINICAL COVER IMAGE */}
                 {project.categoryType === 'mobile' && (
-                  <div className="relative w-full h-full bg-[#141611] flex justify-center items-start pt-16 transition-transform duration-500 group-hover:scale-[1.01]">
-                    <div className="w-[240px] sm:w-[260px] h-[480px] rounded-[38px] border-4 border-[#2A2E22] bg-[#0E100B] p-4 flex flex-col gap-3 shadow-2xl">
-                      {/* Phone Speaker & Camera Notch */}
-                      <div className="w-20 h-3 rounded-full bg-[#22261B] mx-auto mb-1 flex items-center justify-center">
-                        <div className="w-2 h-2 rounded-full bg-[#141611]" />
-                      </div>
+                  <div className="relative w-full h-full bg-[#141611] overflow-hidden group/img">
+                    <img
+                      src={getAssetUrl(project.coverImage || '/Healthcare.jpg')}
+                      alt={project.title}
+                      className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                      loading="lazy"
+                    />
+                    {/* Cinematic vignette & contrast gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D0D0C] via-[#0D0D0C]/25 to-[#0D0D0C]/60" />
 
-                      {/* Header in Phone */}
-                      <div className="flex justify-between items-center px-1">
-                        <div>
-                          <div className="text-[10px] font-mono text-[#7D8270]">EMR PATIENT #8412</div>
-                          <div className="text-sm font-bold text-[#F2EFE8]">
-                            Sarah Jenkins, 34
-                          </div>
-                        </div>
-                        <div
-                          className="px-2 py-0.5 rounded-full text-[9px] font-bold text-[#0D0D0C]"
-                          style={{ backgroundColor: accent }}
-                        >
-                          ROUNDING
-                        </div>
-                      </div>
-
-                      {/* Interactive Vitals Card Canvas */}
-                      <div
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setIsFintechRebalanced(!isFintechRebalanced);
-                        }}
-                        className="rounded-2xl p-3.5 flex flex-col justify-between transition-all duration-300 cursor-pointer shadow-md"
-                        style={{
-                          backgroundColor: accent,
-                          color: '#0D0D0C',
-                        }}
-                        title="Click to toggle vitals status"
+                    {/* Bottom overlay badge */}
+                    <div className="absolute bottom-5 left-5 right-5 z-20 flex items-center justify-between pointer-events-none">
+                      <span
+                        className="px-3 py-1.5 rounded-full text-xs font-bold text-[#0D0D0C] shadow-lg flex items-center gap-1.5"
+                        style={{ backgroundColor: accent }}
                       >
-                        <div className="flex justify-between items-center">
-                          <span className="text-[10px] font-mono tracking-wider uppercase opacity-80">
-                            Heart Rate · SpO2
-                          </span>
-                          <span className="text-[11px] font-bold">
-                            {isFintechRebalanced ? 'NORMAL (STABLE)' : 'VITALS MONITORED'}
-                          </span>
-                        </div>
-                        <div className="my-1.5 flex items-baseline justify-between">
-                          <div className="text-xl font-black tracking-tight">
-                            74 <span className="text-xs font-medium">BPM</span>
-                          </div>
-                          <div className="text-sm font-bold">
-                            98% <span className="text-[10px] font-medium">SpO2</span>
-                          </div>
-                        </div>
-                        <div className="text-[10px] font-semibold opacity-85">
-                          Tap to verify prescription status ✓
-                        </div>
-                      </div>
-
-                      {/* Patient Medication & Lab Rows */}
-                      <div className="flex flex-col gap-2 mt-1">
-                        <div className="flex items-center justify-between p-2 rounded-xl bg-[#171A12] border border-[#22271A]">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-lg bg-[#272D1E] flex items-center justify-center text-[10px] text-[#A5AB95]">
-                              Rx
-                            </div>
-                            <div>
-                              <div className="text-xs font-medium text-[#F2EFE8]">Amoxicillin 500mg</div>
-                              <div className="text-[9px] text-[#7D8270]">2x Daily · With meals</div>
-                            </div>
-                          </div>
-                          <span className="text-xs font-semibold text-[#8FD400]">Verified</span>
-                        </div>
-
-                        <div className="flex items-center justify-between p-2 rounded-xl bg-[#171A12] border border-[#22271A]">
-                          <div className="flex items-center gap-2">
-                            <div className="w-6 h-6 rounded-lg bg-[#272D1E] flex items-center justify-center text-[10px] text-[#A5AB95]">
-                              ECG
-                            </div>
-                            <div>
-                              <div className="text-xs font-medium text-[#F2EFE8]">Sinus Rhythm</div>
-                              <div className="text-[9px] text-[#7D8270]">Recorded: Today 08:30</div>
-                            </div>
-                          </div>
-                          <span className="text-xs font-semibold text-[#8FD400]">Optimal</span>
-                        </div>
-                      </div>
+                        <Eye className="w-3.5 h-3.5 stroke-[2.5]" />
+                        <span>View Clinical Case Study</span>
+                      </span>
+                      <span className="text-[11px] font-mono text-[#F2EFE8]/90 bg-[#0D0D0C]/75 backdrop-blur-md px-2.5 py-1 rounded-md border border-[#2E2E2A]">
+                        EMR Healthcare
+                      </span>
                     </div>
                   </div>
                 )}
