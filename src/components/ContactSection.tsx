@@ -77,7 +77,7 @@ export const ContactSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto w-full relative z-10 flex flex-col items-center text-center my-auto">
         <p className="font-mono text-xs md:text-sm tracking-widest uppercase text-[#8C8981] mb-6">
-          05 — Get In Touch
+          06 — Get In Touch
         </p>
 
         {/* Massive Headline with Central Portrait Badge */}

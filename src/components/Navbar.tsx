@@ -75,6 +75,12 @@ export const Navbar: React.FC = () => {
             Services
           </a>
           <a
+            href="#tools"
+            className="text-sm font-medium text-[#9E9B93] hover:text-[#F2EFE8] transition-colors whitespace-nowrap"
+          >
+            Tools
+          </a>
+          <a
             href="#about"
             className="text-sm font-medium text-[#9E9B93] hover:text-[#F2EFE8] transition-colors whitespace-nowrap"
           >
@@ -153,6 +159,13 @@ export const Navbar: React.FC = () => {
             className="text-base text-[#F2EFE8] py-1 font-medium"
           >
             Services & Deliverables
+          </a>
+          <a
+            href="#tools"
+            onClick={() => setMobileMenuOpen(false)}
+            className="text-base text-[#F2EFE8] py-1 font-medium"
+          >
+            Tools & Software Known
           </a>
           <a
             href="#about"

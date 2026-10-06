@@ -11,7 +11,7 @@ export const TestimonialsSection: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
         <div>
           <p className="font-mono text-xs md:text-sm tracking-widest uppercase text-[#8C8981] mb-4">
-            04 — Endorsements & Trust
+            05 — Endorsements & Trust
           </p>
           <h2 className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-[#F2EFE8] leading-[0.95]">
             What teams{' '}
