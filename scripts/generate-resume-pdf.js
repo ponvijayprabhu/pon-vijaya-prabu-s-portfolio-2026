@@ -16,16 +16,16 @@ function generatePdf() {
   // If user uploaded "My pic.jpg", synchronize and crop avatar automatically
   const myPicPath = path.join(__dirname, '..', 'My pic.jpg');
   if (fs.existsSync(myPicPath)) {
-    fs.copyFileSync(myPicPath, path.join(outDir, 'My pic.jpg'));
-    fs.copyFileSync(myPicPath, path.join(outDir, 'My_pic.jpg'));
     try {
-      execSync(`convert "${myPicPath}" -gravity North -crop 2600x2600+0+150 +repage -resize 512x512 -quality 95 "${path.join(outDir, 'avatar.png')}"`, { stdio: 'ignore' });
+      execSync(`convert "${myPicPath}" -resize 1200x -quality 82 "${path.join(outDir, 'My_pic.jpg')}"`, { stdio: 'ignore' });
+      fs.copyFileSync(path.join(outDir, 'My_pic.jpg'), path.join(outDir, 'My pic.jpg'));
+      execSync(`convert "${myPicPath}" -gravity North -crop 2600x2600+0+150 +repage -resize 256x256 -strip -quality 90 "${path.join(outDir, 'avatar.png')}"`, { stdio: 'ignore' });
       const srcAssetsDir = path.join(__dirname, '..', 'src', 'assets');
       if (fs.existsSync(srcAssetsDir)) {
         fs.copyFileSync(path.join(outDir, 'avatar.png'), path.join(srcAssetsDir, 'avatar.png'));
-        fs.copyFileSync(myPicPath, path.join(srcAssetsDir, 'My_pic.jpg'));
+        fs.copyFileSync(path.join(outDir, 'My_pic.jpg'), path.join(srcAssetsDir, 'My_pic.jpg'));
       }
-      console.log('Successfully synchronized and cropped My pic.jpg to avatar.png!');
+      console.log('Successfully synchronized and compressed My pic.jpg & avatar.png!');
     } catch (e) {
       console.warn('Avatar convert note:', e.message);
     }

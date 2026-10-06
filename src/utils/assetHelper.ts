@@ -1,7 +1,8 @@
-import defaultHeroPortrait from '../assets/Image-hero.png';
+import defaultHeroPortrait from '../assets/Image-hero.webp';
+import defaultHeroPortraitPng from '../assets/Image-hero.png';
 import defaultAvatar from '../assets/avatar.png';
 
-export { defaultHeroPortrait, defaultAvatar };
+export { defaultHeroPortrait, defaultHeroPortraitPng, defaultAvatar };
 
 /**
  * Resolves static image URLs to ensure they work reliably in all environments
