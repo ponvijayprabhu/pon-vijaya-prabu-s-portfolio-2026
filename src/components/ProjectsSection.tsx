@@ -39,15 +39,15 @@ export const ProjectsSection: React.FC = () => {
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
         <div>
           <p className="font-mono text-xs md:text-sm tracking-widest uppercase text-[#8C8981] mb-4">
-            01 — Selected work
+            01 — Projects worked on
           </p>
           <h2 className="text-5xl sm:text-6xl md:text-7xl font-semibold tracking-tight text-[#F2EFE8] leading-[0.95]">
-            Selected{' '}
+            Projects{' '}
             <em
               className="font-serif italic font-normal transition-colors"
               style={{ color: accent }}
             >
-              work
+              worked on
             </em>
           </h2>
         </div>
