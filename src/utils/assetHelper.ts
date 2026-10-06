@@ -8,7 +8,7 @@ export { defaultHeroPortrait, defaultAvatar };
  * (local dev, production preview, and GitHub Pages subpaths).
  */
 export function getAssetUrl(url?: string | null): string {
-  if (!url) return defaultHeroPortrait;
+  if (!url) return defaultAvatar;
 
   // Data URLs, blobs, or external absolute URLs are untouched
   if (
@@ -18,6 +18,26 @@ export function getAssetUrl(url?: string | null): string {
     url.startsWith('https://')
   ) {
     return url;
+  }
+
+  // Handle avatar icon references and My pic.jpg
+  if (
+    url === '/avatar.png' ||
+    url === 'avatar.png' ||
+    url === './avatar.png' ||
+    url === '/My_pic.jpg' ||
+    url === 'My_pic.jpg' ||
+    url === './My_pic.jpg' ||
+    url === '/My pic.jpg' ||
+    url === 'My pic.jpg' ||
+    url === './My pic.jpg' ||
+    url === '/my-pic.jpg' ||
+    url === 'my-pic.jpg' ||
+    url.toLowerCase().includes('my pic') ||
+    url.toLowerCase().includes('my_pic') ||
+    url.toLowerCase().includes('avatar')
+  ) {
+    return defaultAvatar;
   }
 
   // Handle portrait hero image references
@@ -32,15 +52,6 @@ export function getAssetUrl(url?: string | null): string {
     url === '/my.jpg'
   ) {
     return defaultHeroPortrait;
-  }
-
-  // Handle avatar icon references
-  if (
-    url === '/avatar.png' ||
-    url === 'avatar.png' ||
-    url === './avatar.png'
-  ) {
-    return defaultAvatar;
   }
 
   // Relative path fallback using Vite's BASE_URL

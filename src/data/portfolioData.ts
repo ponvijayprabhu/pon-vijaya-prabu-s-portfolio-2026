@@ -3,7 +3,7 @@ import { PortfolioProfile, Project, ServiceItem, ExperienceItem, TestimonialItem
 export const initialProfile: PortfolioProfile = {
   name: 'Pon Vijaya Prabu S',
   title: 'UI/UX Designer',
-  avatarUrl: '/Image.png',
+  avatarUrl: '/My_pic.jpg',
   bioHeadline: "Hi, I'm Pon Vijaya Prabu —",
   bioSubtext: 'Passionate UI/UX Designer with experience in designing responsive web and mobile applications using Figma. Skilled in wireframing, prototyping, and creating user-centered interfaces that improve usability and user experience.',
   location: 'Nagercoil, Kanyakumari, Tamil Nadu',

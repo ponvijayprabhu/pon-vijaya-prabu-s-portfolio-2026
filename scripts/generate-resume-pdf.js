@@ -13,6 +13,24 @@ function generatePdf() {
     fs.mkdirSync(outDir, { recursive: true });
   }
 
+  // If user uploaded "My pic.jpg", synchronize and crop avatar automatically
+  const myPicPath = path.join(__dirname, '..', 'My pic.jpg');
+  if (fs.existsSync(myPicPath)) {
+    fs.copyFileSync(myPicPath, path.join(outDir, 'My pic.jpg'));
+    fs.copyFileSync(myPicPath, path.join(outDir, 'My_pic.jpg'));
+    try {
+      execSync(`convert "${myPicPath}" -gravity North -crop 2600x2600+0+150 +repage -resize 512x512 -quality 95 "${path.join(outDir, 'avatar.png')}"`, { stdio: 'ignore' });
+      const srcAssetsDir = path.join(__dirname, '..', 'src', 'assets');
+      if (fs.existsSync(srcAssetsDir)) {
+        fs.copyFileSync(path.join(outDir, 'avatar.png'), path.join(srcAssetsDir, 'avatar.png'));
+        fs.copyFileSync(myPicPath, path.join(srcAssetsDir, 'My_pic.jpg'));
+      }
+      console.log('Successfully synchronized and cropped My pic.jpg to avatar.png!');
+    } catch (e) {
+      console.warn('Avatar convert note:', e.message);
+    }
+  }
+
   // If user provided their own PDF file, use and deploy it directly!
   const userOwnPdf = path.join(__dirname, '..', 'PON VIJAYA PRABU S own.pdf');
   if (fs.existsSync(userOwnPdf)) {

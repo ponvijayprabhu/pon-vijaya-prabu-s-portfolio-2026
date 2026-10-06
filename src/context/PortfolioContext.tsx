@@ -37,7 +37,7 @@ export const PortfolioProvider: React.FC<{ children: React.ReactNode }> = ({ chi
           parsed.avatarUrl === '/Image.png' ||
           parsed.avatarUrl === 'Image.png'
         ) {
-          parsed.avatarUrl = '/Image.png';
+          parsed.avatarUrl = '/My_pic.jpg';
         }
         return { ...initialProfile, ...parsed };
       }

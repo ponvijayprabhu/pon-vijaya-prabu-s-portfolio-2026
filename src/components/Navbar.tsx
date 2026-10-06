@@ -29,13 +29,13 @@ export const Navbar: React.FC = () => {
         <div className="flex items-center gap-3">
           <label
             className="relative group/avatar cursor-pointer"
-            title="Click to replace icon (Image.png)"
+            title="Profile Photo (My pic.jpg) - Pon Vijaya Prabu S"
           >
             <div className="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden border border-[#2E2E2A] bg-[#161614] shadow-md group-hover/avatar:border-[#CEFD4B] transition-all">
               <img
-                src={getAssetUrl(profile.avatarUrl)}
+                src={getAssetUrl(profile.avatarUrl || '/My_pic.jpg')}
                 alt={profile.name}
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-cover object-center"
                 onError={(e) => {
                   if (e.currentTarget.src !== defaultAvatar) {
                     e.currentTarget.src = defaultAvatar;

@@ -113,25 +113,25 @@ export const CustomizerModal: React.FC = () => {
               <div className="flex flex-wrap items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => setAvatarUrl('/Image.png')}
+                  onClick={() => setAvatarUrl('/My_pic.jpg')}
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                    avatarUrl === '/Image.png' || !avatarUrl
+                    avatarUrl === '/My_pic.jpg' || avatarUrl === '/avatar.png' || !avatarUrl
                       ? 'bg-[#2E2E2A] text-[#F2EFE8] border border-[#4A4A44]'
                       : 'bg-[#1C1C1A] text-[#8C8981] hover:text-[#F2EFE8]'
                   }`}
                 >
-                  My Image (Image.png)
+                  My Pic (My pic.jpg)
                 </button>
                 <button
                   type="button"
-                  onClick={() => setAvatarUrl('/avatar.png')}
+                  onClick={() => setAvatarUrl('/Image.png')}
                   className={`px-2.5 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
-                    avatarUrl === '/avatar.png'
+                    avatarUrl === '/Image.png'
                       ? 'bg-[#2E2E2A] text-[#F2EFE8] border border-[#4A4A44]'
                       : 'bg-[#1C1C1A] text-[#8C8981] hover:text-[#F2EFE8]'
                   }`}
                 >
-                  Avatar Icon
+                  Image.png
                 </button>
                 <label className="px-2.5 py-1.5 rounded-lg text-xs font-semibold cursor-pointer border border-[#3A3934] hover:border-[#F2EFE8] text-[#F2EFE8] bg-[#20201D] transition-colors">
                   <input

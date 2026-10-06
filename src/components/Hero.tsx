@@ -131,7 +131,7 @@ export const Hero: React.FC = () => {
         }}
       >
         <img
-          src={getAssetUrl(profile.avatarUrl)}
+          src={defaultHeroPortrait}
           alt={`Portrait of ${profile.name}`}
           referrerPolicy="no-referrer"
           loading="eager"
