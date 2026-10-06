@@ -272,7 +272,7 @@ export const CustomizerModal: React.FC = () => {
               className="w-4 h-4 rounded bg-[#1B1B18] border border-[#2E2E2A] text-[#D4F36B] focus:ring-0 cursor-pointer"
             />
             <label htmlFor="availCheck" className="text-xs text-[#CBC7BD] cursor-pointer">
-              Mark as "Available for new projects"
+              Mark as "Available for Hire"
             </label>
           </div>
 

@@ -72,7 +72,7 @@ export const Hero: React.FC = () => {
             style={{ backgroundColor: accent }}
           />
           <span className="text-xs font-medium text-[#EAE6DE] tracking-wide">
-            {profile.availableForHire ? 'Available for new projects' : 'Currently in design mode'}
+            {profile.availableForHire ? 'Available for Hire' : 'Currently in design mode'}
           </span>
         </div>
 
