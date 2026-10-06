@@ -161,25 +161,38 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 5. Adobe After Effects (Ae) (3D Indigo Tile, Bottom Center-Left) */}
+          {/* 5. Google AI Studio (3D Obsidian Glow Tile, Bottom Center-Left) */}
           <div
             className="absolute -bottom-2 sm:bottom-2 left-1/2 -translate-x-32 sm:-translate-x-44 md:-translate-x-56 rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
             style={{ perspective: '800px' }}
-            title="Adobe After Effects"
+            title="Google AI Studio"
           >
             <div
-              className="w-13 h-13 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-[18px] p-0.5 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center"
+              className="w-13 h-13 sm:w-15 sm:h-15 lg:w-16 lg:h-16 rounded-[20px] p-0.5 transition-transform duration-300 group-hover:scale-110 flex items-center justify-center"
               style={{
-                background: 'linear-gradient(145deg, #1A0033 0%, #0A0019 100%)',
-                border: '2px solid #9999FF',
-                boxShadow: '0 16px 28px -6px rgba(153, 153, 255, 0.45), inset 0 2px 2px rgba(200, 200, 255, 0.5), inset 0 -3px 5px rgba(0,0,0,0.6)',
+                background: 'linear-gradient(145deg, #182238 0%, #0D111A 60%, #05070A 100%)',
+                border: '1.5px solid rgba(138, 180, 248, 0.4)',
+                boxShadow: '0 16px 30px -6px rgba(66, 133, 244, 0.5), 0 8px 16px -4px rgba(197, 138, 249, 0.35), inset 0 2px 2px rgba(255, 255, 255, 0.5), inset 0 -3px 5px rgba(0, 0, 0, 0.6)',
                 transform: 'rotateX(-8deg) rotateY(-6deg)',
               }}
             >
-              <div className="w-full h-full rounded-[16px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/10 to-transparent">
-                <span className="font-mono font-black text-xl sm:text-2xl lg:text-3xl text-[#9999FF] tracking-tight drop-shadow-[0_2px_4px_rgba(153,153,255,0.5)]">
-                  Ae
-                </span>
+              <div className="w-full h-full rounded-[18px] flex items-center justify-center relative overflow-hidden bg-gradient-to-b from-white/15 via-transparent to-transparent">
+                {/* Authentic Google AI Studio Spark Emblem */}
+                <svg className="w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 drop-shadow-[0_2px_8px_rgba(66,133,244,0.7)]" viewBox="0 0 24 24" fill="none">
+                  <defs>
+                    <linearGradient id="googleAiStudioGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#4285F4" />
+                      <stop offset="35%" stopColor="#8AB4F8" />
+                      <stop offset="68%" stopColor="#C58AF9" />
+                      <stop offset="100%" stopColor="#FF7769" />
+                    </linearGradient>
+                  </defs>
+                  <path
+                    d="M12 2C12 7.52 16.48 12 22 12C16.48 12 12 16.48 12 22C12 16.48 7.52 12 2 12C7.52 12 12 7.52 12 2Z"
+                    fill="url(#googleAiStudioGradient)"
+                  />
+                  <circle cx="12" cy="12" r="1.5" fill="#FFFFFF" opacity="0.95" />
+                </svg>
               </div>
             </div>
           </div>
