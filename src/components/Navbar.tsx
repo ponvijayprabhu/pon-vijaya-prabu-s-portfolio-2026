@@ -27,49 +27,33 @@ export const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
         {/* Zone 1: Profile Photo Icon + Brand Name */}
         <div className="flex items-center gap-3">
-          <label
-            className="relative group/avatar cursor-pointer"
-            title="Profile Photo (My pic.jpg) - Pon Vijaya Prabu S"
-          >
-            <div className="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden border border-[#2E2E2A] bg-[#161614] shadow-md group-hover/avatar:border-[#CEFD4B] transition-all">
-              <img
-                src={getAssetUrl(profile.avatarUrl || '/My_pic.jpg')}
-                alt={profile.name}
-                className="w-full h-full object-cover object-center"
-                onError={(e) => {
-                  if (e.currentTarget.src !== defaultAvatar) {
-                    e.currentTarget.src = defaultAvatar;
-                  }
-                }}
-              />
-            </div>
-            <span
-              className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-[#0D0D0C]"
-              style={{ backgroundColor: accent }}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e) => {
-                const file = e.target.files?.[0];
-                if (file) {
-                  const reader = new FileReader();
-                  reader.onload = (event) => {
-                    const res = event.target?.result as string;
-                    if (res) updateProfile({ avatarUrl: res });
-                  };
-                  reader.readAsDataURL(file);
-                }
-              }}
-            />
-          </label>
-
           <a
             href="#top"
-            className="text-lg md:text-xl font-bold tracking-tight text-[#F2EFE8] hover:text-white transition-colors"
+            className="relative group/avatar flex items-center gap-3 cursor-pointer"
+            title={profile.name}
           >
-            {profile.name}
+            <div className="relative">
+              <div className="w-8 h-8 md:w-9 md:h-9 rounded-full overflow-hidden border border-[#2E2E2A] bg-[#161614] shadow-md group-hover/avatar:border-[#CEFD4B] transition-all">
+                <img
+                  src={getAssetUrl(profile.avatarUrl || '/My_pic.jpg')}
+                  alt={profile.name}
+                  className="w-full h-full object-cover object-center"
+                  onError={(e) => {
+                    if (e.currentTarget.src !== defaultAvatar) {
+                      e.currentTarget.src = defaultAvatar;
+                    }
+                  }}
+                />
+              </div>
+              <span
+                className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full border-2 border-[#0D0D0C]"
+                style={{ backgroundColor: accent }}
+              />
+            </div>
+
+            <span className="text-lg md:text-xl font-bold tracking-tight text-[#F2EFE8] group-hover/avatar:text-white transition-colors">
+              {profile.name}
+            </span>
           </a>
         </div>
 
