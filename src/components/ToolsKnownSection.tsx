@@ -56,13 +56,13 @@ export const ToolsKnownSection: React.FC = () => {
           style={{ backgroundColor: accent }}
         />
 
-        {/* Centerpiece Vector Stage */}
-        <div className="relative z-10 py-12 sm:py-20 flex flex-col items-center justify-center">
-          {/* FLOATING SATELLITE 3D APP LOGOS (High-Fidelity 3D Lighting & Geometry) */}
+        {/* Centerpiece Vector Stage (Expansive, Wide Layout with Generous Breathing Room) */}
+        <div className="relative z-10 py-16 sm:py-24 md:py-28 min-h-[540px] sm:min-h-[600px] w-full flex flex-col items-center justify-center">
+          {/* FLOATING SATELLITE 3D APP LOGOS (Wider Distribution Across the Canvas) */}
           
-          {/* 1. Canva (3D App Tile, Top Left) */}
+          {/* 1. Canva (3D App Tile, Far Top Left) */}
           <div
-            className="absolute top-4 left-4 sm:top-8 sm:left-12 lg:left-24 -rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            className="absolute top-2 left-2 sm:top-6 sm:left-6 lg:left-10 -rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
             style={{ perspective: '800px' }}
             title="Canva Pro"
           >
@@ -83,9 +83,9 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 2. Blender 3D (Authentic 3D Blender Logo, Top Center) */}
+          {/* 2. Blender 3D (Authentic 3D Blender Logo, Top Center-Left) */}
           <div
-            className="absolute -top-2 sm:top-2 left-1/2 -translate-x-16 sm:-translate-x-20 rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default z-20"
+            className="absolute -top-4 sm:top-0 left-1/2 -translate-x-20 sm:-translate-x-28 rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default z-20"
             style={{ perspective: '800px' }}
             title="Blender 3D"
           >
@@ -112,9 +112,9 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 3. Adobe Illustrator (Ai) (3D Beveled Tile, Top Right) */}
+          {/* 3. Adobe Illustrator (Ai) (3D Beveled Tile, Far Top Right) */}
           <div
-            className="absolute top-4 right-4 sm:top-8 sm:right-16 lg:right-28 rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            className="absolute top-2 right-2 sm:top-6 sm:right-6 lg:right-10 rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
             style={{ perspective: '800px' }}
             title="Adobe Illustrator"
           >
@@ -135,9 +135,9 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 4. Miro (3D Yellow Tile, Bottom Left) */}
+          {/* 4. Miro (3D Yellow Tile, Far Bottom Left - Plenty of Margin) */}
           <div
-            className="absolute bottom-6 left-6 sm:bottom-12 sm:left-20 -rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default"
+            className="absolute bottom-2 left-2 sm:bottom-6 sm:left-6 lg:left-10 -rotate-6 hover:rotate-0 transition-all duration-300 group cursor-default"
             style={{ perspective: '800px' }}
             title="Miro Whiteboard"
           >
@@ -162,7 +162,7 @@ export const ToolsKnownSection: React.FC = () => {
 
           {/* 5. Adobe After Effects (Ae) (3D Indigo Tile, Bottom Center-Left) */}
           <div
-            className="absolute bottom-2 left-1/2 -translate-x-24 sm:-translate-x-32 rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            className="absolute -bottom-2 sm:bottom-2 left-1/2 -translate-x-28 sm:-translate-x-36 rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
             style={{ perspective: '800px' }}
             title="Adobe After Effects"
           >
@@ -183,9 +183,9 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* 6. Adobe Photoshop (Ps) (3D Cyan Tile, Bottom Right) */}
+          {/* 6. Adobe Photoshop (Ps) (3D Cyan Tile, Far Bottom Right - Plenty of Margin) */}
           <div
-            className="absolute bottom-6 right-6 sm:bottom-12 sm:right-20 -rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
+            className="absolute bottom-2 right-2 sm:bottom-6 sm:right-6 lg:right-10 -rotate-12 hover:rotate-0 transition-all duration-300 group cursor-default"
             style={{ perspective: '800px' }}
             title="Adobe Photoshop"
           >
@@ -208,7 +208,7 @@ export const ToolsKnownSection: React.FC = () => {
 
           {/* 7. Figma (3D Glassmorphic Badge Pill, Top Floating) */}
           <div
-            className="absolute -top-3 sm:top-0 right-1/2 translate-x-28 sm:translate-x-36 rotate-6 hover:rotate-0 transition-all duration-300 group z-20 cursor-default"
+            className="absolute -top-5 sm:-top-2 right-1/2 translate-x-32 sm:translate-x-44 rotate-6 hover:rotate-0 transition-all duration-300 group z-20 cursor-default"
             style={{ perspective: '800px' }}
             title="Figma UI/UX"
           >
@@ -231,45 +231,45 @@ export const ToolsKnownSection: React.FC = () => {
             </div>
           </div>
 
-          {/* SVG Vector Bezier Path Overlay with Pen Tool cursor */}
+          {/* SVG Vector Bezier Path Overlay with Pen Tool cursor (Wide Arc) */}
           <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
             <svg
-              className="w-full max-w-xl h-48 overflow-visible opacity-70"
-              viewBox="0 0 500 150"
+              className="w-full max-w-2xl sm:max-w-3xl md:max-w-4xl h-56 overflow-visible opacity-70"
+              viewBox="0 0 650 160"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Spline curve connecting left to center */}
+              {/* Spline curve connecting left to center with wider wave */}
               <path
-                d="M 60 110 C 140 140, 180 60, 260 90 C 330 115, 390 50, 440 90"
+                d="M 50 115 C 160 150, 240 60, 325 95 C 410 125, 490 55, 600 95"
                 stroke={accent}
                 strokeWidth="2.5"
                 strokeDasharray="6 6"
               />
               {/* Bezier Anchor Points */}
-              <circle cx="60" cy="110" r="4.5" fill="#FFFFFF" stroke={accent} strokeWidth="2" />
-              <circle cx="260" cy="90" r="4.5" fill="#FFFFFF" stroke={accent} strokeWidth="2" />
-              <circle cx="440" cy="90" r="4.5" fill="#FFFFFF" stroke={accent} strokeWidth="2" />
+              <circle cx="50" cy="115" r="4.5" fill="#FFFFFF" stroke={accent} strokeWidth="2" />
+              <circle cx="325" cy="95" r="4.5" fill="#FFFFFF" stroke={accent} strokeWidth="2" />
+              <circle cx="600" cy="95" r="4.5" fill="#FFFFFF" stroke={accent} strokeWidth="2" />
 
               {/* Tangent guide line */}
-              <line x1="220" y1="110" x2="300" y2="70" stroke="#8C8981" strokeWidth="1" strokeDasharray="2 2" />
-              <circle cx="220" cy="110" r="2.5" fill="#8C8981" />
-              <circle cx="300" cy="70" r="2.5" fill="#8C8981" />
+              <line x1="285" y1="115" x2="365" y2="75" stroke="#8C8981" strokeWidth="1" strokeDasharray="2 2" />
+              <circle cx="285" cy="115" r="2.5" fill="#8C8981" />
+              <circle cx="365" cy="75" r="2.5" fill="#8C8981" />
             </svg>
 
             {/* Pen Tool Nib Icon placed on the bezier curve */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-8 translate-y-6 sm:translate-y-8 pointer-events-none">
+            <div className="absolute top-1/2 left-1/2 -translate-x-10 translate-y-7 sm:translate-y-9 pointer-events-none">
               <div className="p-1 rounded bg-[#0D0D0C] border border-[#444] shadow-md rotate-45">
                 <PenTool className="w-4 h-4 text-white" />
               </div>
             </div>
           </div>
 
-          {/* MAIN TYPOGRAPHIC CENTERPIECE: "portfolio" WITH BOUNDING BOXES */}
-          <div className="relative flex items-center justify-center select-none py-6">
-            {/* Vector Bounding Box around "port" in GREEN */}
+          {/* MAIN TYPOGRAPHIC CENTERPIECE: "portfolio" WITH WIDER BOUNDING BOXES */}
+          <div className="relative flex items-center justify-center select-none py-8 my-auto">
+            {/* Vector Bounding Box around "port" in GREEN (Wider padding) */}
             <div
-              className="relative border-2 px-2 py-1 rounded-sm flex items-center"
+              className="relative border-2 px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-sm flex items-center"
               style={{ borderColor: accent }}
             >
               {/* 4 Corner Anchor Handles in GREEN */}
@@ -291,37 +291,37 @@ export const ToolsKnownSection: React.FC = () => {
               />
 
               {/* Left Word Segment: "port" */}
-              <span className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#F2EFE8] leading-none">
+              <span className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-wider text-[#F2EFE8] leading-none">
                 port
               </span>
             </div>
 
-            {/* THE TALL SWEEPING SCRIPT 'f' LIGATURE IN GREEN */}
-            <div className="relative mx-1 sm:mx-2 z-20 flex items-center justify-center">
-              {/* Top and Bottom Bezier Handle Bars in GREEN */}
+            {/* THE TALL SWEEPING SCRIPT 'f' LIGATURE IN GREEN (Wider Spacing) */}
+            <div className="relative mx-3 sm:mx-5 md:mx-7 z-20 flex items-center justify-center">
+              {/* Top and Bottom Bezier Handle Bars in GREEN (Wider handle bar) */}
               <div
-                className="absolute -top-6 sm:-top-8 w-12 sm:w-16 h-0.5 flex justify-between items-center"
+                className="absolute -top-7 sm:-top-9 w-16 sm:w-22 h-0.5 flex justify-between items-center"
                 style={{ backgroundColor: accent }}
               >
                 <span
-                  className="w-2 h-2 rounded-full bg-white border"
+                  className="w-2.5 h-2.5 rounded-full bg-white border"
                   style={{ borderColor: accent }}
                 />
                 <span
-                  className="w-2 h-2 rounded-full bg-white border"
+                  className="w-2.5 h-2.5 rounded-full bg-white border"
                   style={{ borderColor: accent }}
                 />
               </div>
               <div
-                className="absolute -bottom-6 sm:-bottom-8 w-12 sm:w-16 h-0.5 flex justify-between items-center"
+                className="absolute -bottom-7 sm:-bottom-9 w-16 sm:w-22 h-0.5 flex justify-between items-center"
                 style={{ backgroundColor: accent }}
               >
                 <span
-                  className="w-2 h-2 rounded-full bg-white border"
+                  className="w-2.5 h-2.5 rounded-full bg-white border"
                   style={{ borderColor: accent }}
                 />
                 <span
-                  className="w-2 h-2 rounded-full bg-white border"
+                  className="w-2.5 h-2.5 rounded-full bg-white border"
                   style={{ borderColor: accent }}
                 />
               </div>
@@ -338,9 +338,9 @@ export const ToolsKnownSection: React.FC = () => {
               </span>
             </div>
 
-            {/* Vector Bounding Box around "olio" in GREEN */}
+            {/* Vector Bounding Box around "olio" in GREEN (Wider padding) */}
             <div
-              className="relative border-2 px-2 py-1 rounded-sm flex items-center"
+              className="relative border-2 px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-sm flex items-center"
               style={{ borderColor: accent }}
             >
               {/* 4 Corner Anchor Handles in GREEN */}
@@ -362,27 +362,27 @@ export const ToolsKnownSection: React.FC = () => {
               />
 
               {/* Right Word Segment: "olio" */}
-              <span className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tight text-[#F2EFE8] leading-none">
+              <span className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-wider text-[#F2EFE8] leading-none">
                 olio
               </span>
             </div>
           </div>
 
-          {/* SUB-TITLE SIGNATURE BAR (Matching the layout in the uploaded graphic) */}
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3 sm:gap-6 text-xs sm:text-sm font-mono tracking-widest uppercase">
+          {/* SUB-TITLE SIGNATURE BAR (Generous breathing room and wide margins) */}
+          <div className="mt-12 sm:mt-16 flex flex-wrap items-center justify-center gap-3 sm:gap-8 text-xs sm:text-sm font-mono tracking-widest uppercase relative z-10 px-4">
             <span className="font-extrabold text-[#F2EFE8] tracking-wider">
               UI/UX & PRODUCT DESIGNER
             </span>
 
             {/* Color Swatch Dots in GREEN theme */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <span
-                className="w-3 h-3 rounded-full border border-black/40 shadow-sm"
+                className="w-3.5 h-3.5 rounded-full border border-black/40 shadow-sm"
                 style={{ backgroundColor: accent }}
               />
-              <span className="w-3 h-3 rounded-full bg-[#0D0D0C] border border-[#444] shadow-sm" />
-              <span className="w-3 h-3 rounded-full bg-[#F2EFE8] border border-black/40 shadow-sm" />
-              <span className="w-3 h-3 rounded-full bg-[#8FD400] border border-black/40 shadow-sm" />
+              <span className="w-3.5 h-3.5 rounded-full bg-[#0D0D0C] border border-[#444] shadow-sm" />
+              <span className="w-3.5 h-3.5 rounded-full bg-[#F2EFE8] border border-black/40 shadow-sm" />
+              <span className="w-3.5 h-3.5 rounded-full bg-[#8FD400] border border-black/40 shadow-sm" />
             </div>
 
             <span className="font-extrabold text-[#F2EFE8] tracking-wider">
